@@ -31,11 +31,12 @@ void options_t::rotate_callback(GLFWwindow *window, unsigned normal_key, int mod
     {
         switch (normal_key)
         {
-        case 'h':
+        case 'r':
         transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(0.0f,1.0f,0.0f));
             break;
-        case 'l':
-        transform_matrix = glm::rotate(transform_matrix,(float)(-PI*0.25),glm::vec3(0.0f,1.0f,0.0f));
+        case 'u':
+        transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(1.0f,0.0f,0.0f));
+            break;
         default:
             break;
         }
