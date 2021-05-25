@@ -32,10 +32,10 @@ int main(){
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
 
-
-
-    data_t element1;
-    element1.init_buffer();
+    //We need to code the below lines in a seperate cpp file and need to use an enum class and use a procedure similar
+    //to factory method
+    data cubeData;
+    GLsizei indices_size=cubeData.setVertices();//This function returns the size of the indices which will be used in rendering the cube
     glEnable(GL_DEPTH);
 
 
@@ -57,7 +57,7 @@ int main(){
 
         glUniformMatrix4fv( projLoc, 1, GL_FALSE, glm::value_ptr( projection ) );
         //It takes the indices that are loaded into the buffer
-        glDrawElements(GL_TRIANGLES,element1.indices_size(),GL_UNSIGNED_INT,0);
+        glDrawElements(GL_TRIANGLES,indices_size,GL_UNSIGNED_INT,0);
         /*
         *
         *
