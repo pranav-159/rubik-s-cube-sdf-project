@@ -2,12 +2,7 @@
 
 //this complete cpp files is to just generate the transformation_matrix
 
-glm::mat4 options_t::transform_matrix{
-    1.0f,0.0f,0.0f,0.0f,
-    0.0f,1.0f,0.0f,0.0f,
-    0.0f,0.0f,1.0f,0.0f,
-    0.0f,0.0f,0.0f,1.0f
-    };
+glm::mat4 options_t::transform_matrix=glm::mat4(1.0f);
 
 void options_t::pass_transform_matrix(){
     unsigned transform_matrix_loc = glGetUniformLocation(shader_t::get_shader_program_id(),"transform_matrix");
@@ -26,17 +21,23 @@ void options_t::scroll_callback(GLFWwindow *window, double xoffset , double yoff
 }
 
 //contains functions to rotate the cube 
-void options_t::rotate_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
-    if(modifier_key == 0 )
+void options_t::key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
+    if(modifier_key == 1 )
     {
         switch (normal_key)
         {
-        case 'r':
+        case 'Y':
         transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(0.0f,1.0f,0.0f));
             break;
-        case 'u':
+        case 'X':
         transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(1.0f,0.0f,0.0f));
             break;
+        case 'Z':
+        transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(0.0f,0.0f,1.0f));
+        break;
+        case 'R':
+        transform_matrix = glm::mat4(1.0f);
+		pass_transform_matrix();
         default:
             break;
         }
@@ -45,6 +46,8 @@ void options_t::rotate_callback(GLFWwindow *window, unsigned normal_key, int mod
     }
     
 }
+
+
 
 
 /**

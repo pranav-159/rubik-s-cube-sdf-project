@@ -1,5 +1,7 @@
 #include"opengl.h"
 
+
+
 int main(){
 
     GLFWwindow* window = init_window();//creating a window
@@ -9,7 +11,9 @@ int main(){
 
 
     glfwSetScrollCallback(window,options_t::scroll_callback);
-    glfwSetCharModsCallback(window,options_t::rotate_callback);
+    glfwSetCharModsCallback(window,options_t::key_callback);
+
+
 
     unsigned shader_program = shader_t::get_shader_program_id(); //getting shader id
 
@@ -30,7 +34,9 @@ int main(){
 
 
 
-    init_buffer();
+    data_t element1;
+    element1.init_buffer();
+    glEnable(GL_DEPTH);
 
 
 
@@ -39,13 +45,19 @@ int main(){
         processInput(window);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shader_program);
         glBindVertexArray(VAO);
-        
+
+        glm::mat4 projection;
+        projection = glm::perspective( 60.0f, ( GLfloat )800 / ( GLfloat )600, 0.1f, 100.0f );
+        GLint projLoc = glGetUniformLocation( shader_program, "projection" );
+        // Pass them to the shaders
+
+        glUniformMatrix4fv( projLoc, 1, GL_FALSE, glm::value_ptr( projection ) );
         //It takes the indices that are loaded into the buffer
-        glDrawElements(GL_TRIANGLES,indices_size(),GL_UNSIGNED_INT,0);
+        glDrawElements(GL_TRIANGLES,element1.indices_size(),GL_UNSIGNED_INT,0);
         /*
         *
         *
@@ -53,6 +65,7 @@ int main(){
         * 
         *
         */
+   
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         glfwSwapBuffers(window);
