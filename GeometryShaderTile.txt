@@ -1,0 +1,68 @@
+#version 460 core
+
+layout (points) in;
+layout (triangle_strip,max_vertices=10) out;
+
+
+in vec3 Color[];
+in vec3 Normal[];
+
+out vec3 fcolor;
+
+uniform int TL;
+uniform mat4 view;
+uniform mat4 projection;
+
+vec3 centre = (gl_in[0].position).xyz;
+vec3 x1 = abs(Normal[0]).yzx;
+vec3 x2 = abs(Normal[0]).zxy;
+
+
+vec3 p1 = centre - (TL/2)*x1 - (TL/2)*x2;                           //Q3 bottom
+vec3 p2 = centre - 0.95*(TL/2)*x1 - 0.95*(TL/2)*x2 + 0.05*Normal[0];  //Q3 up
+
+vec3 p3 = centre + (TL/2)*x1 - (TL/2)*x2;                           //Q4 bottom
+vec3 p4 = centre + 0.95*(TL/2)*x1 - 0.95*(TL/2)*x2 + 0.05*Normal[0];  //Q4 up
+
+vec3 p5 = centre + (TL/2)*x1 + (TL/2)*x2;                           //Q1 bottom
+vec3 p6 = centre + 0.95*(TL/2)*x1 + 0.95*(TL/2)*x2 + 0.05*Normal[0];  //Q1 up
+
+vec3 p7 = centre - (TL/2)*x1 + (TL/2)*x2;                           //Q2 bottom
+vec3 p8 = centre - 0.95*(TL/2)*x1 + 0.95*(TL/2)*x2 + 0.05*Normal[0];  //Q2 up
+
+void main()
+{
+    fcolor=vec3(0.0,0.0,0.0);
+    gl_Position=projection*view*vec4(p1,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p2,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p3,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p4,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p5,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p6,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p7,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p8,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p1,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p2,1.0);
+    EmitVertex();
+    EndPrimitive();
+    
+    fcolor=Color[0];
+    gl_Position=projection*view*vec4(p2,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p4,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p6,1.0);
+    EmitVertex();
+    gl_Position=projection*view*vec4(p8,1.0);
+    EmitVertex();
+    EndPrimitive();   
+}

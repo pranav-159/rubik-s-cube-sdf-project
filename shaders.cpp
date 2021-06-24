@@ -1,6 +1,24 @@
 #include"opengl.h"
+#include <fstream>
+#include <sstream>
 
 
+void FileToString(const char* FileName,std::string& ShaderCode)
+{
+    std::ifstream ShaderFile;
+    std::stringstream ShaderStream;
+    ShaderFile.exceptions(std::fstream::failbit|std::fstream::badbit);
+    try{
+        ShaderFile.open(FileName);
+        ShaderStream<<ShaderFile.rdbuf();   
+        ShaderFile.close();  
+    }
+    catch(std::ifstream::failure e)
+    {
+        std::cout<<"ERROR::SHADER::FILE_NOT_SUCESSFULLY_READ"<<std::endl;
+    }
+    ShaderCode=ShaderStream.str();
+}  
 /**
  *  This uses a singleton design pattern because there should be only one shader creator in 
  *  the program  
@@ -12,24 +30,18 @@
     shader_t::shader_t(){shader_program_id = 0;}
 
     void shader_t::set_shaders(){
-    const char *vertexShaderSource ="#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "layout (location = 1) in vec3 aColor;\n"
-    "out vec3 ourColor;\n"
-    "uniform mat4 transform_matrix ;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = transform_matrix*vec4(aPos, 1.0f);\n"
-    "   ourColor = aColor;\n"
-    "}\0";
 
-    const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "in vec3 ourColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(ourColor,1.0);\n"
-    "}\n\0";
+
+    std::string VShaderCode,GShaderCode,FShaderCode;
+
+    FileToString("vertexShaderTile.txt",VShaderCode);
+    FileToString("GeometryShaderTile.txt",GShaderCode);
+    FileToString("FragmentShaderTile.txt",FShaderCode);
+
+    const char *vertexShaderSource   =VShaderCode.c_str();
+    const char *geometryShaderSource =GShaderCode.c_str();
+    const char *fragmentShaderSource =FShaderCode.c_str();
+
     // build and compile our shader program
     // vertex shader
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -45,6 +57,17 @@
         std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
         
     }
+    //geometric shader
+    unsigned int geometryShader= glCreateShader(GL_GEOMETRY_SHADER);
+    glShaderSource(geometryShader,1,&geometryShaderSource,NULL);
+    glCompileShader(geometryShader);
+    glGetShaderiv(geometryShader,GL_COMPILE_STATUS,&success);
+    if(!success)
+    {
+        glGetShaderInfoLog(geometryShader,512,NULL,infoLog);
+        std::cout << "ERROR::SHADER::GEOMETRY::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+
     // fragment shader
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
@@ -60,6 +83,7 @@
     // link shaders
     shader_program_id = glCreateProgram();
     glAttachShader(shader_program_id, vertexShader);
+    glAttachShader(shader_program_id,geometryShader);
     glAttachShader(shader_program_id, fragmentShader);
     glLinkProgram(shader_program_id);
     // check for linking errors
@@ -70,6 +94,7 @@
         
     }
     glDeleteShader(vertexShader);
+    glDeleteShader(geometryShader);
     glDeleteShader(fragmentShader);
 }
 
