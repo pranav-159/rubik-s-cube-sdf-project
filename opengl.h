@@ -5,7 +5,6 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <stack>
-#include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,7 +16,14 @@
 
 GLFWwindow* init_window();
 
-//a singleton class because we should have only one shader 
+//CallBackfunctions
+void scroll_callback(GLFWwindow *window, double xoffset , double yoffset); //Defined in options.cpp file
+void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key);//Defined in options.cpp file
+void processInput(GLFWwindow *window); //Defined in window.cpp file
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);//Defined in window.cpp file
+
+//a singleton class because we should have only one shader
+//This class creates the shaders and atlast what we want is the id of shader program created
 
 class shader_t{
     private:
@@ -29,49 +35,29 @@ class shader_t{
 };
 
 
-
+// In this atlast we want the size of indices to render the cube
 class set_buffer{
     public:
-    //only this changes for its derived classes
     set_buffer()=default;
-	float vertices[24*6] = {} ;
+	static float vertices[216*6] ;
+    static unsigned indices[54][6];
+	GLsizei indices_size();
 
-unsigned indices[36]={   
-     0, 1, 2, 2, 3, 0,
-    4, 5, 6, 6, 7, 4,
-    8, 9, 10, 10, 11, 8,
-    12, 13, 14, 14, 15, 12,
-    16, 17, 18, 18, 19, 16,
-    20, 21, 22, 22, 23, 20};
-GLsizei indices_size();
 /**
- * 
- * It loads (saves) the data in to the buffer that is binded 
- *   
+ * It loads (saves) the data in to the buffer that is binded to GPU
 */
-void init_buffer();
-
-
+	void init_buffer();
 };
 
 
-
-//call back functions
-
-void processInput(GLFWwindow *window);
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-
-// On introducing the term static , we don't need to create seprate instances for the options_t class
-//we can directly use the functions and I defined a class  to organize things
-
+//This class takes care of additional options 
 class options_t{
 private:
-static glm::mat4 transform_matrix ; 
-
+	data tempDataObj; 
 public:
-static void pass_transform_matrix();
-static void scroll_callback(GLFWwindow *window, double xoffset , double yoffset);
-static void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key);
+	void increaseCubesize();
+	void decreaseCubesize();
+	//void rotateRight();
 
 };
 
@@ -85,9 +71,8 @@ private:
 	static std::stack<unsigned>history;
 	movement_t()=delete;
 public:
-	//need to add the actual movement matrices here 
+	//need to add the actual movement matrices here
 	static movement_t* getInstance();
 	static void undo_option();
-	//static void move_callback(GLFWwindow *window,unsigned unicode);
 };
 #endif

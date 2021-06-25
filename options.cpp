@@ -1,59 +1,41 @@
 #include"opengl.h"
 
-//this complete cpp files is to just generate the transformation_matrix
-
-glm::mat4 options_t::transform_matrix=glm::mat4(1.0f);
-
-void options_t::pass_transform_matrix(){
-    unsigned transform_matrix_loc = glGetUniformLocation(shader_t::get_shader_program_id(),"transform_matrix");
-    glUniformMatrix4fv(transform_matrix_loc,1,GL_FALSE, glm::value_ptr(transform_matrix));
-} 
-
-
-// zoom in and zoom out function
-void options_t::scroll_callback(GLFWwindow *window, double xoffset , double yoffset){
-    if(yoffset<0){
-        transform_matrix = glm::scale(transform_matrix,glm::vec3(0.75f,0.75f,0.75f));
-    }
-    else transform_matrix = glm::scale(transform_matrix,glm::vec3(1.25f,1.25f,1.25f));
-    pass_transform_matrix();
-    
-}
-
-//contains functions to rotate the cube 
-void options_t::key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
-    if(modifier_key == 1 )
-    {
-        switch (normal_key)
-        {
-        case 'Y':
-        transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(0.0f,1.0f,0.0f));
-            break;
-        case 'X':
-        transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(1.0f,0.0f,0.0f));
-            break;
-        case 'Z':
-        transform_matrix = glm::rotate(transform_matrix,(float)(PI*0.25),glm::vec3(0.0f,0.0f,1.0f));
-        break;
-        case 'R':
-        transform_matrix = glm::mat4(1.0f);
-		pass_transform_matrix();
-        default:
-            break;
-        }
-        
-        pass_transform_matrix();
-    }
-    
-}
-
-
-
-
 /**
- *  view_function();
- * 
- *  should display all the faces of cube side by side
- *  
- *  
- **/
+ * Here we have a call back function which calls the suitable functions to change the view of the cube
+ * **/
+
+void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
+	options_t tempOptionsObj;
+	if(modifier_key == GLFW_MOD_SHIFT){
+		//Add all the functions related to extra options like rotate right , undo etc..
+		std::cout<<"Shift key is pressed \n";
+		//tempOptionsObj.rotateRight();
+	}
+	if(modifier_key == GLFW_MOD_ALT){
+		//Add all the functions related to movement options 
+		std::cout<<"Alt key is pressed \n";
+	}
+}
+
+void scroll_callback(GLFWwindow *window, double xoffset , double yoffset){
+	options_t tempOptionsObj;
+	if(yoffset < 0 ){
+	std::cout<<"Size is increased \n";
+	tempOptionsObj.increaseCubesize();
+	}
+	else if(yoffset > 0){
+	std::cout<<"Size is decreased \n";
+	tempOptionsObj.decreaseCubesize();
+	}
+}
+
+void options_t::increaseCubesize(){
+	tempDataObj.cubeSize = tempDataObj.cubeSize + 25.0f ;
+	tempDataObj.setVertices();
+}
+
+void options_t::decreaseCubesize(){
+	tempDataObj.cubeSize = tempDataObj.cubeSize - 25.0f ;
+	tempDataObj.setVertices();
+}
+

@@ -5,110 +5,599 @@
  * 
  * This file contains only the data used in making cubes
  * The data used here is just an example, we need to carefully calculate the points and modify the arrays below accordingly
+ * Whatever changes we make via function calls, the changes are applied on the shuffledFaces array and then it is copied
+ * to shuffled array and then to vertices array which is used to render cube
+ * 
+ * changes to be done :
+ * 	1. It would be better to make shuffledFaces and shuffled static
+ * 	2. It would be better to make a 3d matrix shuffledFaces instead of two seperate arrays : shuffledFaces and patternFaces
  * 
  * **/
+struct vectorCord{
+	float xCord, yCord, zCord, rCol, gCol, bCol;
+};//Need to use this struct effectively inorder to make less changes while building movements
+
+enum class choice_t{shuffled, pattern};
+
 class data{
-private:
-    float shuffled[24*6]= {
-
-        //back face red color
-
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        
-        //front face green color 
-
-        -0.5f, -0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-         0.5f, -0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-         0.5f,  0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-        -0.5f,  0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-        
-        
-        //left face blue color
-
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-        
-        
-        //right face yellow color
-
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 1.0f,0.0f,
-       
-        
-        //down face
-
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,1.0f,
-        0.5f, -0.5f, -0.5f,   0.0f, 1.0f,1.0f,
-        0.5f, -0.5f,  0.5f,   0.0f, 1.0f,1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f,1.0f,
-        
-        
-        //top face
-
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f,1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f,1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,1.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,1.0f};
-
-
-    float pattern[24*6]={
-
-        //back face red color
-
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f,0.0f,
-        
-        //front face green color 
-
-        -0.5f, -0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-         0.5f, -0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-         0.5f,  0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-        -0.5f,  0.5f,  0.5f,   0.0f, 1.0f,0.0f,
-        
-        
-        //left face blue color
-
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-        
-        
-        //right face yellow color
-
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 1.0f,0.0f,
-       
-        
-        //down face
-
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,1.0f,
-        0.5f, -0.5f, -0.5f,   0.0f, 1.0f,1.0f,
-        0.5f, -0.5f,  0.5f,   0.0f, 1.0f,1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f,1.0f,
-        
-        
-        //top face
-
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f,1.0f,
-        0.5f,  0.5f,  0.5f,  0.0f, 0.0f,1.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,1.0f};
 public:
-    float* getShuffle(){return shuffled;}
-    float*  getPattern(){return pattern;}
-    GLsizei setVertices();
+    static float cubeSize;
+
+
+    float shuffled[216*6];
+	float pattern[216*6];
+
+struct vectorCord shuffledFaces[54][4] = {
+//front face green color {{{
+
+		  0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+		  0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+	cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+  2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+	  cubeSize,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+		  0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+		  0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+		  0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+		  0.0f,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+	cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+  2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+//right face yellow color
+
+	  cubeSize,      cubeSize,      cubeSize,  1.0f, 1.0f, 0.0f,
+	  cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,      cubeSize,          0.0f,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,      cubeSize,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+	  cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,          0.0f,  1.0f, 1.0f, 0.0f,
+	  cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+//back face blue color
+
+	  cubeSize,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	  cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+  2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+	cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+		  0.0f,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+		  0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+	  cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	  cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+		  0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+		  0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f, 
+
+	  cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+	  cubeSize,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+
+  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+  2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+
+	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+		  0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+		  0.0f,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+	cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f, 
+
+//left face white color
+
+		  0.0f,     cubeSize,           0.0f,   1.0f, 1.0f, 1.0f,
+		  0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+
+		  0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+		  0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,     cubeSize,       cubeSize,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+		  0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+
+		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  
+		  0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,         0.0f,           0.0f,   1.0f, 1.0f, 1.0f,
+
+		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+		  0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+		  0.0f,         0.0f,       cubeSize,   1.0f, 1.0f, 1.0f,
+		  0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+//top face red colour
+
+		  0.0f,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+		  0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+	cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+  2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+	  cubeSize,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+	  cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+		  0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+		  0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+	  cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+	  cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+		  
+		  0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+		  0.0f,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+
+	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+	cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+
+  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+	  cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+	  cubeSize,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+  2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+
+//bottom face
+
+		  0.0f,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+		  0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+	cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+  2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+	  cubeSize,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+	  cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+		  0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+		  0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+	  cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+	  cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+		  
+		  0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+		  0.0f,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+
+	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+	cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+
+  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+	  cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+	  cubeSize,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+  2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f/*}}}*/
+};
+	struct vectorCord patternFaces[54][4] = {
+  //front face green color 
+/*{{{*/
+              0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+              0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+        cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+      2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+          cubeSize,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+              0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+              0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+              0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+              0.0f,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+        cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+      2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+
+    //right face yellow color
+
+          cubeSize,      cubeSize,      cubeSize,  1.0f, 1.0f, 0.0f,
+          cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+
+          cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+    
+          cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,      cubeSize,          0.0f,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+          cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+
+          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+    
+          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+          cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,      cubeSize,  1.0f, 1.0f, 0.0f,
+
+          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
+    
+          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+          cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,          0.0f,  1.0f, 1.0f, 0.0f,
+          cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
+
+    //back face blue color
+
+          cubeSize,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+          cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+      2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+        cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+              0.0f,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+              0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+          cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+          cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+
+        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+              0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+              0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f, 
+
+          cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+          cubeSize,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+
+      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+      2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+
+        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+              0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
+              0.0f,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
+        cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f, 
+
+    //left face white color
+
+              0.0f,     cubeSize,           0.0f,   1.0f, 1.0f, 1.0f,
+              0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+
+              0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+              0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,     cubeSize,       cubeSize,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+              0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+
+              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              
+              0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,         0.0f,           0.0f,   1.0f, 1.0f, 1.0f,
+
+              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+              0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
+              0.0f,         0.0f,       cubeSize,   1.0f, 1.0f, 1.0f,
+              0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
+
+    //top face red colour
+
+              0.0f,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+              0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+        cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+      2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+          cubeSize,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
+          cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+              0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+              0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+
+      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+          cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
+          cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+              
+              0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+              0.0f,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+
+        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+        cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+
+      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+          cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
+          cubeSize,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+      2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
+
+    //bottom face
+
+              0.0f,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+              0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+        cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+      2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+          cubeSize,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
+          cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+              0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+              0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+
+      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+          cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
+          cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+              
+              0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+              0.0f,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+
+        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+        cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+
+      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+          cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
+          cubeSize,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
+      2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f/*}}}*/
+	};
+
+    static unsigned choice;
+//	static choice_t choice;
+	void buildCube();
+    void setVertices();
 
 };
 

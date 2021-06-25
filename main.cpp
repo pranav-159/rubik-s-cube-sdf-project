@@ -8,10 +8,8 @@ int main(){
     if(window == NULL) std::cout<<"Error in creating the window \n";
 
     //callback functions
-
-
-    glfwSetScrollCallback(window,options_t::scroll_callback);
-    glfwSetCharModsCallback(window,options_t::key_callback);
+   glfwSetScrollCallback(window,scroll_callback);
+   glfwSetCharModsCallback(window,key_callback);
 
 
 
@@ -32,10 +30,12 @@ int main(){
     glBindBuffer(GL_ARRAY_BUFFER,VBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
 
-    //We need to code the below lines in a seperate cpp file and need to use an enum class and use a procedure similar
-    //to factory method
+
     data cubeData;
-    GLsizei indices_size=cubeData.setVertices();//This function returns the size of the indices which will be used in rendering the cube
+    std::cout<<"Please enter 1 to get a shuffledCube cube and 2 to get patterns of the cube \n";
+    std::cin>>data::choice;
+    cubeData.setVertices();//This function accepts a choice from the user and copies the specified data to the vertices array which is static
+    set_buffer cubeBuffer;
     glEnable(GL_DEPTH);
 
 
@@ -50,32 +50,27 @@ int main(){
         glUseProgram(shader_program);
         glBindVertexArray(VAO);
 
-        glm::mat4 projection;
-        projection = glm::perspective( 60.0f, ( GLfloat )800 / ( GLfloat )600, 0.1f, 100.0f );
-        GLint projLoc = glGetUniformLocation( shader_program, "projection" );
-        // Pass them to the shaders
-
-        glUniformMatrix4fv( projLoc, 1, GL_FALSE, glm::value_ptr( projection ) );
+        
+        glm::mat4 projection    = glm::mat4(1.0f);
+		glm::mat4 view  		= glm::mat4(1.0f);
+        
+         projection = glm::ortho( -500.0f, 500.0f, -500.0f, 500.0f, -500.0f, 500.0f);
+		 view  = glm::translate(view, glm::vec3(- data::cubeSize/2 ,- data::cubeSize/2 ,- data::cubeSize/2  ));
+		 //projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1000.0f, 1000.0f);
+        // retrieve the matrix uniform locations
+        unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
+        // pass them to the shaders (3 different ways)
+        
+		projection = projection*view;
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         //It takes the indices that are loaded into the buffer
-        glDrawElements(GL_TRIANGLES,indices_size,GL_UNSIGNED_INT,0);
-        /*
-        *
-        *
-        *  write your code here  
-        * 
-        *
-        */
-   
+        cubeBuffer.init_buffer();
+        GLsizei indices_size = cubeBuffer.indices_size();
 
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+        glDrawElements(GL_TRIANGLES,indices_size,GL_UNSIGNED_INT,0);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-
-
-
-
     
     //deleting all kind of objects
 
