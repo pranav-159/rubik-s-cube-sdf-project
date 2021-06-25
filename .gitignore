@@ -1,0 +1,7 @@
+#vscode settings
+.vscode
+# ignore object files
+*.o
+*.out
+#ignore replit
+.replit
