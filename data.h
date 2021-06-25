@@ -17,17 +17,15 @@ struct vectorCord{
 	float xCord, yCord, zCord, rCol, gCol, bCol;
 };//Need to use this struct effectively inorder to make less changes while building movements
 
-enum class choice_t{shuffled, pattern};
+enum class choice_t{shuffled, pattern, noCubes};
 
 class data{
 public:
     static float cubeSize;
 
+    float filledCube[216*6];
 
-    float shuffled[216*6];
-	float pattern[216*6];
-
-struct vectorCord shuffledFaces[54][4] = {
+struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][54][4] = {
 //front face green color {{{
 
 		  0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
@@ -308,9 +306,8 @@ struct vectorCord shuffledFaces[54][4] = {
   2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
 	  cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
 	  cubeSize,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f/*}}}*/
-};
-	struct vectorCord patternFaces[54][4] = {
+  2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,/*}}}*/
+
   //front face green color 
 /*{{{*/
               0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
