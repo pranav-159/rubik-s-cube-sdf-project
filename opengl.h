@@ -39,7 +39,6 @@ class shader_t{
 class set_buffer{
     public:
     set_buffer()=default;
-	static float vertices[216*6] ;
     static unsigned indices[54][6];
 	GLsizei indices_size();
 

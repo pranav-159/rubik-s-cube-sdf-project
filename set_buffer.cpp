@@ -68,7 +68,7 @@ unsigned set_buffer::indices[54][6]={
     212, 213, 214, 214, 215, 212};/*}}}*/
 
 void set_buffer::init_buffer(){
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(data::filledCube), data::filledCube, GL_DYNAMIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(indices),indices,GL_DYNAMIC_DRAW);
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
@@ -78,7 +78,6 @@ void set_buffer::init_buffer(){
     glEnableVertexAttribArray(1);
 }
 
-float set_buffer::vertices[216*6];
 GLsizei set_buffer::indices_size(){return sizeof(indices);}
 
 

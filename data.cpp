@@ -2,6 +2,7 @@
 
 //choice-1_t data::choice-1;
 unsigned data::choice;
+float data::filledCube[6*216];
 float data::cubeSize = 300.0f; //We change this in options_t class inorder to zoom the cube
 
 void data::buildCube(){
@@ -20,9 +21,9 @@ void data::buildCube(){
 void data::setVertices(){
     set_buffer dataRenderd;
 		buildCube();
-        std::copy(filledCube,filledCube+(216*6),dataRenderd.vertices);
         dataRenderd.init_buffer();
         
+	//need to change this 
     if(choice !=1 && choice !=2){
         std::cout<<"Please enter 1 or 2 \n";
         setVertices();

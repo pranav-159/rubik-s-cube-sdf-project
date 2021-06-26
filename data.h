@@ -23,7 +23,7 @@ class data{
 public:
     static float cubeSize;
 
-    float filledCube[216*6];
+    static float filledCube[216*6];
 
 struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][54][4] = {
 //front face green color {{{
