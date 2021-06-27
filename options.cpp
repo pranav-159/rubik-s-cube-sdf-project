@@ -27,11 +27,11 @@ void scroll_callback(GLFWwindow *window, double xoffset , double yoffset){
 
 void options_t::increaseCubesize(){
 	tempDataObj.cubeSize = tempDataObj.cubeSize + 25.0f ;
-	tempDataObj.setVertices();
+	tempDataObj.buildCube();
 }
 
 void options_t::decreaseCubesize(){
 	tempDataObj.cubeSize = tempDataObj.cubeSize - 25.0f ;
-	tempDataObj.setVertices();
+	tempDataObj.buildCube();
 }
 

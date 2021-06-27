@@ -1,21 +1,15 @@
 #ifndef _DATA_
 #define _DATA_
 
-/**
- * 
- * This file contains only the data used in making cubes
- * The data used here is just an example, we need to carefully calculate the points and modify the arrays below accordingly
- * Whatever changes we make via function calls, the changes are applied on the shuffledFaces array and then it is copied
- * to shuffled array and then to vertices array which is used to render cube
- * 
- * changes to be done :
- * 	1. It would be better to make shuffledFaces and shuffled static
- * 	2. It would be better to make a 3d matrix shuffledFaces instead of two seperate arrays : shuffledFaces and patternFaces
- * 
- * **/
+/*
+ * Changes to be made :
+ * 1. Move the whole data into an external text, yml or json file to retain the state at which the user stopped
+ * 2. Need to impliment the enum class properly 
+ * */
+
 struct vectorCord{
 	float xCord, yCord, zCord, rCol, gCol, bCol;
-};//Need to use this struct effectively inorder to make less changes while building movements
+};
 
 enum class choice_t{shuffled, pattern, noCubes};
 
@@ -594,7 +588,6 @@ struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][54][4] = {
     static unsigned choice;
 //	static choice_t choice;
 	void buildCube();
-    void setVertices();
 
 };
 

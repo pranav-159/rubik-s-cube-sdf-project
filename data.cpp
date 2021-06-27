@@ -1,9 +1,13 @@
 #include"opengl.h"
 
-//choice-1_t data::choice-1;
+//choice_t data::choice;
 unsigned data::choice;
 float data::filledCube[6*216];
 float data::cubeSize = 300.0f; //We change this in options_t class inorder to zoom the cube
+
+/*
+ * we need a single array to render the cube so we copy all the splits into an array and send that into buffer
+ * */
 
 void data::buildCube(){
     for (unsigned j = 0; j < 54; j++) {
@@ -17,17 +21,4 @@ void data::buildCube(){
       }
     }
 }
-
-void data::setVertices(){
-    set_buffer dataRenderd;
-		buildCube();
-        dataRenderd.init_buffer();
-        
-	//need to change this 
-    if(choice !=1 && choice !=2){
-        std::cout<<"Please enter 1 or 2 \n";
-        setVertices();
-    }
-}
-
 

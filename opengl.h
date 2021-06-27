@@ -40,12 +40,12 @@ class set_buffer{
     public:
     set_buffer()=default;
     static unsigned indices[54][6];
-	GLsizei indices_size();
+	static GLsizei indices_size();
 
 /**
  * It loads (saves) the data in to the buffer that is binded to GPU
 */
-	void init_buffer();
+	static void init_buffer();
 };
 
 

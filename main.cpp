@@ -34,8 +34,7 @@ int main(){
     data cubeData;
     std::cout<<"Please enter 1 to get a shuffledCube cube and 2 to get patterns of the cube \n";
     std::cin>>data::choice;
-    cubeData.setVertices();//This function accepts a choice from the user and copies the specified data to the vertices array which is static
-    set_buffer cubeBuffer;
+	cubeData.buildCube();
     glEnable(GL_DEPTH);
 
 
@@ -63,10 +62,8 @@ int main(){
 		projection = projection*view;
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         //It takes the indices that are loaded into the buffer
-        cubeBuffer.init_buffer();
-        GLsizei indices_size = cubeBuffer.indices_size();
-
-        glDrawElements(GL_TRIANGLES,indices_size,GL_UNSIGNED_INT,0);
+		set_buffer::init_buffer();
+        glDrawElements(GL_TRIANGLES,set_buffer::indices_size(),GL_UNSIGNED_INT,0);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
