@@ -52,8 +52,11 @@ class set_buffer{
 //This class takes care of additional options 
 class options_t{
 private:
-	data tempDataObj; 
+	static options_t* instance;
+	options_t()=default;
 public:
+	data tempDataObj;
+	static options_t* getOptionsInstance();
 	void increaseCubesize();
 	void decreaseCubesize();
 	//void rotateRight();

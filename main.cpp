@@ -31,10 +31,9 @@ int main(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
 
 
-    data cubeData;
     std::cout<<"Please enter 1 to get a shuffledCube cube and 2 to get patterns of the cube \n";
     std::cin>>data::choice;
-	cubeData.buildCube();
+	data::buildCube();
     glEnable(GL_DEPTH);
 
 
