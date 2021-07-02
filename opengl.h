@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <stack>
+#include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -17,7 +18,6 @@
 GLFWwindow* init_window();
 
 //CallBackfunctions
-void scroll_callback(GLFWwindow *window, double xoffset , double yoffset); //Defined in options.cpp file
 void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key);//Defined in options.cpp file
 void processInput(GLFWwindow *window); //Defined in window.cpp file
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);//Defined in window.cpp file
@@ -55,11 +55,8 @@ private:
 	static options_t* instance;
 	options_t()=default;
 public:
-	data tempDataObj;
 	static options_t* getOptionsInstance();
-	void increaseCubesize();
-	void decreaseCubesize();
-	//void rotateRight();
+	void rotateRight();
 
 };
 
@@ -71,10 +68,18 @@ class movement_t{
 private:
 	static movement_t* Instance;
 	static std::stack<unsigned>history;
-	movement_t()=delete;
+	movement_t()=default;
+	glm::mat4 movePeices = glm::mat4(1.0f); //rotation matrix
 public:
+	std::vector<unsigned>peiceNumbers;
+	float angleDeg;
+	glm::vec3 rotateAbout;
 	//need to add the actual movement matrices here
 	static movement_t* getInstance();
-	static void undo_option();
+	void move();
+	void oppositeDirection();
+	void leftUp();
+	void undo_option();
 };
+
 #endif

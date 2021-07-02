@@ -8,7 +8,6 @@ int main(){
     if(window == NULL) std::cout<<"Error in creating the window \n";
 
     //callback functions
-   glfwSetScrollCallback(window,scroll_callback);
    glfwSetCharModsCallback(window,key_callback);
 
 
@@ -54,7 +53,7 @@ int main(){
         
          projection = glm::ortho( -500.0f, 500.0f, -500.0f, 500.0f, -500.0f, 500.0f);
 		 view  = glm::translate(view, glm::vec3(- data::cubeSize/2 ,- data::cubeSize/2 ,- data::cubeSize/2  ));
-		 //projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1000.0f, 1000.0f);
+		// projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1000.0f, 1000.0f);
          //retrieve the matrix uniform locations
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         

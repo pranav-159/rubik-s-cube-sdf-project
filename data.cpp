@@ -3,7 +3,7 @@
 //choice_t data::choice;
 unsigned data::choice;
 float data::filledCube[6*216];
-float data::cubeSize = 300.0f; //We change this in options_t class inorder to zoom the cube
+float data::cubeSize = 400.0f; //We change this in options_t class inorder to zoom the cube
 
 /*
  * we need a single array to render the cube so we copy all the splits into an array and send that into buffer
