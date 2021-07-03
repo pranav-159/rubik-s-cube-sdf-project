@@ -29,7 +29,7 @@ void options_t::rotateRight(){
 	movement_t* movement = movement_t::getInstance();
 	movement->angleDeg = 90.0f;
 	movement->rotateAbout = glm::vec3 (0.0f,1.0f,0.0f);
-	for(unsigned i=0 ; i<54; i++) movement->peiceNumbers.push_back(i);
+	for(unsigned i=0 ; i<NOPEICES; i++) movement->peiceNumbers.push_back(i);
 	movement->move();
 
 }

@@ -1,6 +1,9 @@
 #ifndef _DATA_
 #define _DATA_
 
+#define NOPEICES 6*9
+#define NODATAPOINTS 6*9*4*6
+
 /*
  * Changes to be made :
  * 1. Move the whole data into an external text, yml or json file to retain the state at which the user stopped
@@ -17,8 +20,8 @@ class data{
 public:
     static float cubeSize;
 
-    static float filledCube[216*6];
-	static struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][54][4] ;
+    static float filledCube[NODATAPOINTS];
+	static struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] ;
     static unsigned choice;
 //	static choice_t choice;
 	static void buildCube();

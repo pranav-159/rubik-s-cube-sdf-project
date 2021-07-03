@@ -39,7 +39,7 @@ class shader_t{
 class set_buffer{
     public:
     set_buffer()=default;
-    static unsigned indices[54][6];
+    static unsigned indices[NOPEICES][6];
 	static GLsizei indices_size();
 
 /**

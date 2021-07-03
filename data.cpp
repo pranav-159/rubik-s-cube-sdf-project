@@ -2,7 +2,7 @@
 
 //choice_t data::choice;
 unsigned data::choice;
-float data::filledCube[6*216];
+float data::filledCube[NODATAPOINTS];
 float data::cubeSize = 400.0f; //We change this in options_t class inorder to zoom the cube
 
 /*
@@ -10,7 +10,7 @@ float data::cubeSize = 400.0f; //We change this in options_t class inorder to zo
  * */
 
 void data::buildCube(){
-    for (unsigned j = 0; j < 54; j++) {
+    for (unsigned j = 0; j < NOPEICES; j++) {
       for (unsigned i = 0; i < 4; i++) {
         filledCube[6* i + 24 * j] 	   = splitCube[choice-1][j][i].xCord;
         filledCube[6 * i + 24 * j + 1] = splitCube[choice-1][j][i].yCord;
@@ -28,7 +28,7 @@ void data::equateCUbes(){
 
 
 
-struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][54][4] = {
+struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] = {
 //front face green color {{{
 
 		  0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,

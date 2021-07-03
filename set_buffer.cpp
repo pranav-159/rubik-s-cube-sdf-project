@@ -1,6 +1,6 @@
 #include"opengl.h"
 
-unsigned set_buffer::indices[54][6]={   
+unsigned set_buffer::indices[NOPEICES][6]={   
     // squares on front face{{{
      0, 1, 2, 2, 3, 0,
     4, 5, 6, 6, 7, 4,
