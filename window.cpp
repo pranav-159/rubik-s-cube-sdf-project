@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include "window.h"
 #include <iostream>
+#include "rotator.h"
 extern float TL;
 
 GLFWwindow* init_window();
@@ -47,10 +48,18 @@ GLFWwindow* init_window(){
 //call back functions
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-void processInput(GLFWwindow *window)
+void processInput(GLFWwindow *window,Rotator* & rot,bool& KEY)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);    
+        glfwSetWindowShouldClose(window, true); 
+    if(glfwGetKey(window,GLFW_KEY_R)==GLFW_PRESS)
+    {
+        delete rot;
+        rot=new Rotator(Face::FRONT,Turn::CLOCKWISE,Stack::WHOLE);
+        KEY=true;
+    }
+    
+           
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

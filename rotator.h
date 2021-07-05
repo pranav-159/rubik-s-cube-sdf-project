@@ -14,7 +14,7 @@ struct TestCondition{
 };
 enum class Face{FRONT,BACK,UP,DOWN,RIGHT,LEFT};
 enum class Turn{CLOCKWISE,ANTI_CLOCKWISE};
-enum class Stack{FIRST,SECOND,THIRD};
+enum class Stack{FIRST,SECOND,THIRD,WHOLE};
 
 
 class Rotator{
@@ -28,7 +28,7 @@ class Rotator{
     glm::mat4 rotateMatrixCreator(float angle);
     glm::vec3 rotatingAxis();
     std::array<float,6> coverPoints();
-    
+    Stack getStack(); 
 };
 
 #endif

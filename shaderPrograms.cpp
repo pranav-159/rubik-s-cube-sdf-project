@@ -5,6 +5,11 @@
 #include "shader.h"
 #include "shaderPrograms.h"
 
+/**
+ * @brief Creates a Draw Program object
+ * 
+ * @return unsigned int handle of the program.
+ */
 unsigned int createDrawProgram()
 {
 
@@ -23,6 +28,7 @@ unsigned int createDrawProgram()
 
     return drawShaderProgram;
 }
+
 unsigned int createCoverDrawProgram()
 {
     unsigned int coverDrawProgram =glCreateProgram();

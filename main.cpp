@@ -25,8 +25,14 @@ int main()
     unsigned int coverDrawProgram=createCoverDrawProgram();
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
+
+    std::array<float,54> feedback;
+    std::array<float,6> coverPoints;
     std::array<float,54*9> vertexData;
+    glm::mat4 projection,view,model=glm::mat4(1.0f);
+    Rotator* rot;
     VertexInitializer vertexInit;
+    
     vertexInit.setTL(TL);
     
     vertexInit.vertexPopulator(vertexData);
@@ -55,110 +61,136 @@ int main()
     
     
     glBindVertexArray(0);
-    std::array<float,54> feedback;
-    Rotator rot(Face::DOWN,Turn::CLOCKWISE,Stack::FIRST);
-    feedback=launchDetectingProgram(detectingshaderProgram,vao[0],rot.conditionTransformer());
+    
+    rot=new Rotator(Face::DOWN,Turn::CLOCKWISE,Stack::FIRST);
+    rot=new Rotator(Face::FRONT,Turn::ANTI_CLOCKWISE,Stack::FIRST);
+    // feedback=launchDetectingProgram(detectingshaderProgram,vao[0],rot->conditionTransformer());
 
-    std::array<float,6> coverPoints;
-    coverPoints=rot.coverPoints();
+    // coverPoints=rot->coverPoints();
     unsigned int vao1;
     unsigned int vbo1;
     glGenVertexArrays(1,&vao1);
     glGenBuffers(1,&vbo1);
     glBindVertexArray(vao1);
     glBindBuffer(GL_ARRAY_BUFFER,vbo1);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(coverPoints),(void*)&coverPoints[0],GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(coverPoints),NULL,GL_DYNAMIC_DRAW);
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3*sizeof(float),(void*)0);
     glEnableVertexAttribArray(0);
     glBindVertexArray(0);
 
-    std::cout<<sizeof(feedback)<<std::endl;
-    for(int i=0;i<54;i++)
-    {
-        std::cout<<feedback[i]<<" ";
-    }
-    std::cout<<std::endl;
+    // std::cout<<sizeof(feedback)<<std::endl;
+    // for(int i=0;i<54;i++)
+    // {
+    //     std::cout<<feedback[i]<<" ";
+    // }
+    // std::cout<<std::endl;
+
     
     glBindVertexArray(0); 
 
 
 
-    glm::mat4 projection,view,model=glm::mat4(1.0f);
     
     glEnable(GL_DEPTH); 
     glEnable(GL_DEPTH_TEST);
     // uncomment this call to draw in wireframe polygons.
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    for(int i=0;i<54;i++)
-    {
-        std::cout<<i+" ";
-        for(int j=0;j<3;j++)
-        {
-            for(int k=0;k<3;k++)
-            {
-            std::cout<<vertexData[9*i+3*j+k]<<" ";
-            }
-            std::cout<<"  ";
-        }
-        std::cout<<std::endl;
-    }
-    for(int i=0;i<2;i++)
-    {
-        std::cout<<i<<" ";
-        for(int j=0;j<3;j++)
-            std::cout<<coverPoints[3*i+j];
-        std::cout<<std::endl;    
-    }
+    // for(int i=0;i<54;i++)
+    // {
+    //     std::cout<<i+" ";
+    //     for(int j=0;j<3;j++)
+    //     {
+    //         for(int k=0;k<3;k++)
+    //         {
+    //         std::cout<<vertexData[9*i+3*j+k]<<" ";
+    //         }
+    //         std::cout<<"  ";
+    //     }
+    //     std::cout<<std::endl;
+    // }
+    // for(int i=0;i<2;i++)
+    // {
+    //     std::cout<<i<<" ";
+    //     for(int j=0;j<3;j++)
+    //         std::cout<<coverPoints[3*i+j];
+    //     std::cout<<std::endl;    
+    // }
     // projection=glm::perspective(90.0f,800.0f/800.0f,3.0f,30.0f); 
-    projection=glm::ortho(-10.0f,10.0f,-10.0f,10.0f,1.0f,100.0f);
-    view=glm::lookAt(glm::vec3(4.0f,4.0f,-4.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+    projection=glm::ortho(-5.0f,5.0f,-5.0f,5.0f,1.0f,100.0f);
+    view=glm::lookAt(glm::vec3(4.0f,4.0f,4.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 
     //buffer rotation
     int draw_buffer=0;
     //timer timings
-    bool KEY=true;
+    bool KEY=false;
     float time=0.0f;
     float now,delta=0.0f,previous=glfwGetTime();
-    int setter=0;
+    int setter=1;
     float process_time=0.5f;
     while (!glfwWindowShouldClose(window))
     {
         
         // input
         // -----
-        processInput(window);
+        processInput(window,rot,KEY);
 
-        // render
-        // -----
+        //render
+        //------
         glClearColor(0.1f, 0.1f,0.1f,1.0f);
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
         if(KEY)
         {
             now=glfwGetTime();
-            if(setter++) delta=now-previous;
+            delta=now-previous;
+            
+            if(setter) 
+            {
+                delta=0.0f;
+                if(rot->getStack()!=Stack::WHOLE)
+                {    
+                    feedback=launchDetectingProgram(detectingshaderProgram,vao[0],rot->conditionTransformer()); 
+                    coverPoints=rot->coverPoints();
+                    glBindVertexArray(0);
+                    glBindBuffer(GL_ARRAY_BUFFER,vbo1);
+                    glBufferData(GL_ARRAY_BUFFER,sizeof(coverPoints),(void*)&coverPoints[0],GL_DYNAMIC_DRAW);
+                }
+                else
+                {
+                    feedback.fill(1);
+                }
+                
+                setter--;
+            }
+            
+
             previous=now;
             time+=delta;
             if(time<=process_time)
             {
                 model=glm::mat4(1.0f);
-                model=rot.rotateMatrixCreator(glm::half_pi<float>()*time/process_time);
+                model=rot->rotateMatrixCreator(glm::half_pi<float>()*time/process_time);
+                if(rot->getStack()!=Stack::WHOLE)
+                launchCoverDrawProgram(coverDrawProgram,vao1,model,view,projection);
             }
             else{
-                model=rot.rotateMatrixCreator(glm::half_pi<float>());
+            
+                model=rot->rotateMatrixCreator(glm::half_pi<float>());
         
                 launchTransformingProgram(transformingshaderProgram,vao[draw_buffer],vbo[(draw_buffer+1)%no_of_buffers],model,feedback);
                 delta=0.0f;
-                setter=0;
+                setter=1;
                 time=0.0f;
                 draw_buffer=(draw_buffer+1)%no_of_buffers;
+                model=glm::mat4(1.0f);
                 KEY=false;
             }
             
         }
+        
+        
+        
         launchDrawProgram(drawshaderProgram,vao[draw_buffer],model,view,projection,feedback); 
-        launchCoverDrawProgram(coverDrawProgram,vao1,model,view,projection);
  
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -169,7 +201,9 @@ int main()
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(no_of_buffers,vao);
-    glDeleteBuffers(no_of_buffers, vbo);
+    glDeleteVertexArrays(no_of_buffers,&vao1);
+    glDeleteBuffers(no_of_buffers,&vbo1);
+    glDeleteBuffers(1,&vbo1);
     glDeleteProgram(drawshaderProgram);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.

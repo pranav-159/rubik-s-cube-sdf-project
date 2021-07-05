@@ -12,16 +12,25 @@ Rotator::Rotator(Face face_,Turn turn_,Stack stack_){
     stack=(int)stack_;
     turn=2*(int)turn_-1;
     axis=2-face/2;
-    if(face%2)
+    if(stack_!=Stack::WHOLE)
     {
-        plane1=-3*TL/2+stack*TL;
-        plane2=-TL/2+stack*TL;
+        if(face%2)
+        {
+            plane1=-3*TL/2+stack*TL;
+            plane2=-TL/2+stack*TL;
+        }
+        else
+        {
+            plane1=TL/2-stack*TL;
+            plane2=3*TL/2-stack*TL;
+        }
     }
     else
     {
-        plane1=TL/2-stack*TL;
-        plane2=3*TL/2-stack*TL;
+        plane1=-3*TL/2;
+        plane2=3*TL/2;
     }
+    
 }
 
 TestCondition Rotator::conditionTransformer()
@@ -62,7 +71,7 @@ std::array<float,6> Rotator::coverPoints(){
         arr[3+(axis+1)%3]=0.0f;
         arr[3+(axis+2)%3]=0.0f;
     }
-    else
+    if(stack!=3)
     {
         float plane=fabs(plane1)>fabs(plane2)?plane2:plane1;
         arr[axis]=plane;
@@ -74,3 +83,6 @@ std::array<float,6> Rotator::coverPoints(){
     }
     return arr;
 } 
+Stack Rotator::getStack(){
+    return static_cast<Stack>(stack);
+}
