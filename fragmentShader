@@ -1,0 +1,8 @@
+#version 460 core
+
+in vec3 fcolor;
+out vec4 frag_Color;
+
+void main(){
+    frag_Color=vec4(fcolor,1.0f);
+}

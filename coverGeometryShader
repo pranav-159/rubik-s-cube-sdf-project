@@ -1,0 +1,41 @@
+#version 460 core
+
+layout(points) in;
+layout(triangle_strip,max_vertices=8) out;
+
+uniform mat4 projection;
+uniform mat4 view;
+uniform mat4 model;
+uniform float TL;
+
+void main()
+{
+    vec4 center=gl_in[0].gl_Position;
+    vec4 x1=vec4(normalize(center.xyz),0.0f);
+    vec4 x2=x1.yzxw;
+    vec4 x3=x1.zxyw;
+
+    vec4 p1=center + 3*TL/2*x2 + 3*TL/2*x3;
+    vec4 p2=center + 3*TL/2*x2 - 3*TL/2*x3;
+    vec4 p3=center - 3*TL/2*x2 + 3*TL/2*x3;
+    vec4 p4=center - 3*TL/2*x2 - 3*TL/2*x3;
+
+    gl_Position= projection*view*p1;
+    EmitVertex();
+    gl_Position= projection*view*p2;
+    EmitVertex();
+    gl_Position= projection*view*p3;
+    EmitVertex();
+    gl_Position= projection*view*p4;
+    EmitVertex();
+    EndPrimitive();
+    gl_Position= projection*view*model*p1;
+    EmitVertex();
+    gl_Position= projection*view*model*p2;
+    EmitVertex();
+    gl_Position= projection*view*model*p3;
+    EmitVertex();
+    gl_Position= projection*view*model*p4;
+    EmitVertex();
+    EndPrimitive();
+}

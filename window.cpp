@@ -1,13 +1,16 @@
-#include"opengl.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "window.h"
+#include <iostream>
+extern float TL;
 
-
-
+GLFWwindow* init_window();
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 800;
 
 GLFWwindow* init_window(){
         // glfw: initialize and configure
@@ -47,7 +50,7 @@ GLFWwindow* init_window(){
 void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(window, true);    
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
