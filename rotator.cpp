@@ -6,7 +6,13 @@
 #include "iostream"
 #include <cmath>
 
-
+/**
+ * @brief Construct a new Rotator:: Rotator object which simplifies the input data into more mathematical interest
+ * 
+ * @param face_ Face with respective which we are rotating
+ * @param turn_ whether it is clockwise or anticlockwise
+ * @param stack_ whether it is total 3 stacks(whole) or seperate stacks with respective to us
+ */
 Rotator::Rotator(Face face_,Turn turn_,Stack stack_){        
     face=(int)face_;
     stack=(int)stack_;
@@ -32,7 +38,11 @@ Rotator::Rotator(Face face_,Turn turn_,Stack stack_){
     }
     
 }
-
+/**
+ * @brief which transforms the input data into test condition.
+ * 
+ * @return TestCondition data redirected to shader program for detection
+ */
 TestCondition Rotator::conditionTransformer()
 {
     
@@ -45,6 +55,12 @@ TestCondition Rotator::conditionTransformer()
    
    return cond; 
 }
+/**
+ * @brief creates the model matrix for the rotation
+ * 
+ * @param angle how much angle to ratate the cube
+ * @return glm::mat4 model matrix produced
+ */
 glm::mat4 Rotator::rotateMatrixCreator(float angle){
 
     glm::vec3 normal=rotatingAxis();
@@ -53,6 +69,11 @@ glm::mat4 Rotator::rotateMatrixCreator(float angle){
     std::cout<<normal[0]<<" "<<normal[1]<<" "<<normal[2]<<" "<<plane1<< " "<<plane2<< " "<<stack<<std::endl;
     return matrix;
 }
+/**
+ * @brief detects the rotating axis
+ * 
+ * @return glm::vec3 axis to be rotated around
+ */
 glm::vec3 Rotator::rotatingAxis(){
     glm::vec3 normal;
     normal[axis]=turn*(1-2*(face%2))*1.0f;
@@ -60,6 +81,13 @@ glm::vec3 Rotator::rotatingAxis(){
     normal[(axis+2)%3]=0.0f;
     return normal;
 }
+/**
+ * @brief detects the centres of cover points
+ * 
+ * @return std::array<float,6> contains the two cover points if middle stack is rotating.
+ * same point repeated twice if the corner stacks are rotating
+ * nothing if the whole stack is rotating
+ */
 std::array<float,6> Rotator::coverPoints(){
     std::array<float,6> arr;
     if(stack==1)
@@ -83,6 +111,11 @@ std::array<float,6> Rotator::coverPoints(){
     }
     return arr;
 } 
+/**
+ * @brief returns the stack which we are rotating
+ * 
+ * @return Stack rotating Stack
+ */
 Stack Rotator::getStack(){
     return static_cast<Stack>(stack);
 }

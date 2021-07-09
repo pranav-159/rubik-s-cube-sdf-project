@@ -28,7 +28,11 @@ unsigned int createDrawProgram()
 
     return drawShaderProgram;
 }
-
+/**
+ * @brief Create a Cover Draw Program object
+ * 
+ * @return unsigned int handle to the program
+ */
 unsigned int createCoverDrawProgram()
 {
     unsigned int coverDrawProgram =glCreateProgram();
@@ -49,6 +53,13 @@ unsigned int createCoverDrawProgram()
     return coverDrawProgram;
 }
 
+/**
+ * @brief checks the link status of a program and handles error messages
+ * 
+ * @param handle program handle
+ * @return true if link is successful
+ * @return false if link is not successful
+ */
 bool checkProgramLinkStatus(unsigned int handle)
 {
 
@@ -66,6 +77,11 @@ bool checkProgramLinkStatus(unsigned int handle)
     }
     return success;
 }
+/**
+ * @brief Create a Detecting Program object
+ * 
+ * @return unsigned int program handle
+ */
 unsigned int createDetectingProgram()
 {
     unsigned program = glCreateProgram();
@@ -77,6 +93,11 @@ unsigned int createDetectingProgram()
     checkProgramLinkStatus(program);
     return program;
 }
+/**
+ * @brief Create a Transforming Program object
+ * 
+ * @return unsigned int program handle
+ */
 unsigned int createTransformingProgram()
 {
     unsigned int program = glCreateProgram();
@@ -88,6 +109,14 @@ unsigned int createTransformingProgram()
     checkProgramLinkStatus(program);
     return program;
 }
+/**
+ * @brief launches and detects the particular tile coordinates which need to be rotated
+ * 
+ * @param detectingShaderProgram program used to detect rotating tiles
+ * @param VAO vertex array buffer of the tile coordinates
+ * @param cond input condition specific for rotating tiles
+ * @return std::array<float, 54> an array of 0's and 1's saying whether the tile satisfy the cond
+ */
 std::array<float, 54> launchDetectingProgram(unsigned int detectingShaderProgram, unsigned int VAO,TestCondition cond)
 {
 
@@ -117,6 +146,16 @@ std::array<float, 54> launchDetectingProgram(unsigned int detectingShaderProgram
     glDeleteBuffers(1, &TBO);
     return tfData;
 }
+/**
+ * @brief transforms the vertex co-ordinates and normals which are rotated
+ * 
+ * @param transformingProgram shader program which is used for transforming vertex coordinates and normals 
+ * @param vao vertex array object containing the required vertices
+ * @param tbo transform buffer which takes the new vertex coords after transformation
+ * @param model model matrix which is used to transform vertex coordinates and normals
+ * @param feedback array containing 0's and 1's representing which tiles should be rotated
+ * @return unsigned int handle of vertex buffer containing the transformed coordinates
+ */
 unsigned int launchTransformingProgram(unsigned int transformingProgram, unsigned int vao, unsigned int tbo, const glm::mat4& model,const std::array<float, 54>& feedback)
 {
     glUseProgram(transformingProgram);
@@ -131,6 +170,16 @@ unsigned int launchTransformingProgram(unsigned int transformingProgram, unsigne
     glDisable(GL_RASTERIZER_DISCARD);
     return tbo;
 }
+/**
+ * @brief launches and draws the tiles of the cube
+ * 
+ * @param drawProgram shader program which is used to draw the tile
+ * @param vao vertex array buffer containing the data of the vertices
+ * @param model model matrix for the program
+ * @param view view matrix for the program
+ * @param projection projection matrix
+ * @param feedback contains data whether tile to be rotated or not
+ */
 void launchDrawProgram(unsigned int drawProgram,unsigned int vao,const glm::mat4& model,const glm::mat4& view,const glm::mat4& projection,const std::array<float,54>& feedback)
 {
     glUseProgram(drawProgram);
@@ -147,7 +196,15 @@ void launchDrawProgram(unsigned int drawProgram,unsigned int vao,const glm::mat4
     // glDrawArrays(GL_POINTS,27,9);
     glDrawArrays(GL_POINTS,0,54);
 }
-
+/**
+ * @brief launches and draws the black covers while rotating which blocks the internal of cube to be seen
+ * 
+ * @param coverDrawProgram shader program which is used to draw cover
+ * @param vao containing data of centre points of covers
+ * @param model model matrix 
+ * @param view view matrix
+ * @param projection projection matrix;
+ */
 void launchCoverDrawProgram(unsigned int coverDrawProgram,unsigned int vao,glm::mat4&model,const glm::mat4&view,const glm::mat4& projection)
 {
     glUseProgram(coverDrawProgram);

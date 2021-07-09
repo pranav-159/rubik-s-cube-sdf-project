@@ -1,6 +1,12 @@
 #include <iostream>
 #include "vertexInitializer.h"
 #include <array>
+
+/**
+ * @brief populates the initial vertices into vertexData
+ * 
+* @param vertexData which is used to store the initial vertices
+ */
 void VertexInitializer::vertexPopulator(std::array<float,54*9>& vertexData)
 {
 	int i=0;
@@ -35,9 +41,19 @@ void VertexInitializer::vertexPopulator(std::array<float,54*9>& vertexData)
 	}
 
 }
+/**
+ * @brief gets the tile length used for vertex initialization
+ * 
+ * @return float tile length.
+ */
 float VertexInitializer::getTL(){
 	return TL;
 }
+/**
+ * @brief sets the tile length used for vertex initialization
+ * 
+ * @param tileLength length of the tile.
+ */
 void VertexInitializer::setTL(float tileLength){
 	TL=tileLength;
 }
