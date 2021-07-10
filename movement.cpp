@@ -12,10 +12,11 @@ movement_t* movement_t::getInstance(){
 	return Instance;
 }
 
-//If you press a key then the function of that key should be performed  and the complementary key of that should be 
-//stored into the stack. And when the undo option is called the top element on the stack should be poped and that 
-//particular function should be performed.
 
+/*
+ * This function multiplies the rotate matrix to the elements of the vector(a class memeber) which contains the index number of the piece
+ * that we want to rotate 
+ * */
 void movement_t::move(){
 	movePeices = glm::rotate(movePeices,glm::radians(angleDeg),rotateAbout);
 	for(unsigned j : peiceNumbers){
@@ -38,6 +39,6 @@ void movement_t::leftUp(){
 	angleDeg = 90.0f;
 	rotateAbout = glm::vec3 (1.0f,0.0f,0.0f);
 	peiceNumbers = {0,3,6,36,39,42,20,23,26,45,48,51};
-	for(unsigned i=26; i<36; i++) peiceNumbers.push_back(i);
+	for(unsigned i=27; i<36; i++) peiceNumbers.push_back(i);
 	move();
 }

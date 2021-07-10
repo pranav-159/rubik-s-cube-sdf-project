@@ -22,15 +22,11 @@ void data::buildCube(){
     }
 }
 
-void data::equateCUbes(){
-	cubeSize = tempCubeSize;
-}
 
 
 
 struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] = {
 //front face green color {{{
-
 		  0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
 	cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
 	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
@@ -75,6 +71,16 @@ struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES]
 	  cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
 	  cubeSize,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
   2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
+/*	//front face green color
+	0.0f, 		0.0f, 		cubeSize,  			0.0f,1.0f,0.0f ,
+	cubeSize/3, 0.0f, 		cubeSize,  			0.0f,1.0f,0.0f ,
+	cubeSize/3, cubeSize/3, cubeSize,  			0.0f,1.0f,0.0f ,
+	0.0f, 		cubeSize/3, cubeSize,  			0.0f,1.0f,0.0f ,
+
+	cubeSize, 0.0f, cubeSize, 		0.0f,1.0f,0.0f ,
+	cubeSize, cubeSize, cubeSize,	0.0f,1.0f,0.0f ,
+	0.0f, cubeSize, cubeSize,		0.0f,1.0f,0.0f ,
+	*/
 
 //right face yellow color
 
@@ -407,7 +413,7 @@ struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES]
 
     //back face blue color
 
-          cubeSize,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
+          cubeSize,      cubeSize,          0.0f,  0.0f, 1.0f, 1.0f,
       2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
       2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
           cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,

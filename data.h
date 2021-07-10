@@ -25,7 +25,6 @@ public:
     static unsigned choice;
 //	static choice_t choice;
 	static void buildCube();
-	float  tempCubeSize = 300.0f;
 	void equateCUbes();
 
 };
