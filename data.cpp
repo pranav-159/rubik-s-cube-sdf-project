@@ -3,7 +3,7 @@
 //choice_t data::choice;
 unsigned data::choice;
 float data::filledCube[NODATAPOINTS];
-float data::cubeSize = 400.0f; //We change this in options_t class inorder to zoom the cube
+float data::cubeSize = 2.0f;
 
 /*
  * we need a single array to render the cube so we copy all the splits into an array and send that into buffer
@@ -27,575 +27,571 @@ void data::buildCube(){
 
 struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] = {
 //front face green color {{{
-		  0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-		  0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-	cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-  2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-	  cubeSize,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-		  0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-		  0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-	cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-  2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-		  0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-		  0.0f,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-	cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-	cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-  2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-  2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-/*	//front face green color
-	0.0f, 		0.0f, 		cubeSize,  			0.0f,1.0f,0.0f ,
-	cubeSize/3, 0.0f, 		cubeSize,  			0.0f,1.0f,0.0f ,
-	cubeSize/3, cubeSize/3, cubeSize,  			0.0f,1.0f,0.0f ,
-	0.0f, 		cubeSize/3, cubeSize,  			0.0f,1.0f,0.0f ,
-
-	cubeSize, 0.0f, cubeSize, 		0.0f,1.0f,0.0f ,
-	cubeSize, cubeSize, cubeSize,	0.0f,1.0f,0.0f ,
-	0.0f, cubeSize, cubeSize,		0.0f,1.0f,0.0f ,
-	*/
-
-//right face yellow color
-
-	  cubeSize,      cubeSize,      cubeSize,  1.0f, 1.0f, 0.0f,
-	  cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,      cubeSize,          0.0f,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,      cubeSize,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-	  cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-	  cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,          0.0f,  1.0f, 1.0f, 0.0f,
-	  cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-//back face blue color
-
-	  cubeSize,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	  cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-  2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-	cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-		  0.0f,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-		  0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-	  cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	  cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-  2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-	cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-		  0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-		  0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f, 
-
-	  cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-	  cubeSize,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-
-  2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-  2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-
-	cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-		  0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-		  0.0f,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-	cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f, 
-
-//left face white color
-
-		  0.0f,     cubeSize,           0.0f,   1.0f, 1.0f, 1.0f,
-		  0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-
-		  0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-		  0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,     cubeSize,       cubeSize,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-		  0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-
-		  0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-		  0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  
-		  0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,         0.0f,           0.0f,   1.0f, 1.0f, 1.0f,
-
-		  0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-		  0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-		  0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-		  0.0f,         0.0f,       cubeSize,   1.0f, 1.0f, 1.0f,
-		  0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-//top face red colour
-
-		  0.0f,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-		  0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-	cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-  2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-	  cubeSize,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-	  cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-		  0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-		  0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-	cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-  2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-	  cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-	  cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-		  
-		  0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-		  0.0f,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-
-	cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-	cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-
-  2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-	  cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-	  cubeSize,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-  2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-
-//bottom face
-
-		  0.0f,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-		  0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-	cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-  2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-	  cubeSize,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-	  cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-		  0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-		  0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-	cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-  2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-	  cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-	  cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-		  
-		  0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-		  0.0f,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-
-	cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-	cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-
-  2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-	  cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-	  cubeSize,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-  2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,/*}}}*/
-
-  //front face green color 
-/*{{{*/
-              0.0f,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-              0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-        cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-      2*cubeSize/3,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-          cubeSize,      cubeSize,      cubeSize,  0.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-              0.0f,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-              0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-        cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-      2*cubeSize/3,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-              0.0f,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-              0.0f,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-        cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-        cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-      2*cubeSize/3,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,      cubeSize,  0.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-      2*cubeSize/3,          0.0f,      cubeSize,  0.0f, 1.0f, 0.0f,
-
-    //right face yellow color
-
-          cubeSize,      cubeSize,      cubeSize,  1.0f, 1.0f, 0.0f,
-          cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-
-          cubeSize,      cubeSize,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-    
-          cubeSize,      cubeSize,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,      cubeSize,          0.0f,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-          cubeSize,  2*cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-
-          cubeSize,  2*cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-    
-          cubeSize,  2*cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,  2*cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-          cubeSize,    cubeSize/3,      cubeSize,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,      cubeSize,  1.0f, 1.0f, 0.0f,
-
-          cubeSize,    cubeSize/3,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,  2*cubeSize/3,  1.0f, 1.0f, 0.0f,
-    
-          cubeSize,    cubeSize/3,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-          cubeSize,    cubeSize/3,          0.0f,  1.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,          0.0f,  1.0f, 1.0f, 0.0f,
-          cubeSize,          0.0f,    cubeSize/3,  1.0f, 1.0f, 0.0f,
-
-    //back face blue color
-
-          cubeSize,      cubeSize,          0.0f,  0.0f, 1.0f, 1.0f,
-      2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-          cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-      2*cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-        cubeSize/3,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-              0.0f,      cubeSize,          0.0f,  0.0f, 0.0f, 1.0f,
-              0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-          cubeSize,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-          cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-      2*cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-
-        cubeSize/3,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-              0.0f,  2*cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-              0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f, 
-
-          cubeSize,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-          cubeSize,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-
-      2*cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-      2*cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-
-        cubeSize/3,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-              0.0f,    cubeSize/3,          0.0f,  0.0f, 0.0f, 1.0f,
-              0.0f,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f,
-        cubeSize/3,          0.0f,          0.0f,  0.0f, 0.0f, 1.0f, 
-
-    //left face white color
-
-              0.0f,     cubeSize,           0.0f,   1.0f, 1.0f, 1.0f,
-              0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-
-              0.0f,     cubeSize,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-              0.0f,     cubeSize,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,     cubeSize,       cubeSize,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-              0.0f, 2*cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-
-              0.0f, 2*cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-              0.0f, 2*cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f, 2*cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              
-              0.0f,   cubeSize/3,           0.0f,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,         0.0f,           0.0f,   1.0f, 1.0f, 1.0f,
-
-              0.0f,   cubeSize/3,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,         0.0f,     cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-              0.0f,   cubeSize/3,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-              0.0f,   cubeSize/3,       cubeSize,   1.0f, 1.0f, 1.0f,
-              0.0f,         0.0f,       cubeSize,   1.0f, 1.0f, 1.0f,
-              0.0f,         0.0f,   2*cubeSize/3,   1.0f, 1.0f, 1.0f,
-
-    //top face red colour
-
-              0.0f,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-              0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-        cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-      2*cubeSize/3,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-          cubeSize,     cubeSize,            0.0f,   1.0f, 0.0f, 0.0f,
-          cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-              0.0f,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-              0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-        cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-
-      2*cubeSize/3,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-          cubeSize,     cubeSize,      cubeSize/3,   1.0f, 0.0f, 0.0f,
-          cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-              
-              0.0f,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-              0.0f,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-
-        cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-        cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-
-      2*cubeSize/3,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-          cubeSize,     cubeSize,    2*cubeSize/3,   1.0f, 0.0f, 0.0f,
-          cubeSize,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-      2*cubeSize/3,     cubeSize,        cubeSize,   1.0f, 0.0f, 0.0f,
-
-    //bottom face
-
-              0.0f,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-              0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-        cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-      2*cubeSize/3,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-          cubeSize,         0.0f,        cubeSize,   1.0f, 0.0f, 1.0f,
-          cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-              0.0f,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-              0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-        cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-
-      2*cubeSize/3,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-          cubeSize,         0.0f,    2*cubeSize/3,   1.0f, 0.0f, 1.0f,
-          cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-              
-              0.0f,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-              0.0f,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-
-        cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-        cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-
-      2*cubeSize/3,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-          cubeSize,         0.0f,      cubeSize/3,   1.0f, 0.0f, 1.0f,
-          cubeSize,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f,
-      2*cubeSize/3,         0.0f,            0.0f,   1.0f, 0.0f, 1.0f/*}}}*/
+
+	      - cubeSize/2,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        //right face yellow color
+
+          cubeSize/2,   cubeSize/2,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+        //back face blue color
+
+          cubeSize/2,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+      //left face white colour
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        //top face red color
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+
+
+
+        //bottom face
+
+        - cubeSize/2, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f/*}}}*/
+
+//front face green color {{{
+
+	      - cubeSize/2,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        - cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+
+        //right face yellow color
+
+          cubeSize/2,   cubeSize/2,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2,   cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2, - cubeSize/6,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/2,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2, - cubeSize/6,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+          cubeSize/2, - cubeSize/6, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/2,  1.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,  1.0f, 1.0f, 0.0f,
+
+        //back face blue color
+
+          cubeSize/2,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+        - cubeSize/6,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,  0.0f, 0.0f, 1.0f,
+
+      //left face white colour
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2,   cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2,   cubeSize/6,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/6, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/2,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/6, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/6,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/6,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/2,   1.0f, 1.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 1.0f, 1.0f,
+
+        //top face red color
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/2,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+
+        - cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+        - cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+
+          cubeSize/6,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 0.0f,
+          cubeSize/2,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+          cubeSize/6,   cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 0.0f,
+
+
+
+        //bottom face
+
+        - cubeSize/2, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/2, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+
+        - cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+        - cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+
+          cubeSize/6, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/6,   1.0f, 0.0f, 1.0f,
+          cubeSize/2, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f,
+          cubeSize/6, - cubeSize/2, - cubeSize/2,   1.0f, 0.0f, 1.0f/*}}}*/
+
 	};

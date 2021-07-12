@@ -6,22 +6,22 @@ $(SRC) : $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o 
 	g++ -o $(SRC) $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o $(LIB_FLAGS)
 
 set_buffer.o : set_buffer.cpp opengl.h
-	g++ -c set_buffer.cpp $(LIB_FLAGS)
+	g++ -c set_buffer.cpp 
 
 data.o : data.cpp opengl.h
-	g++ -c data.cpp $(LIB_FLAGS)
+	g++ -c data.cpp 
 
 shaders.o : shaders.cpp opengl.h
-	g++ -c shaders.cpp $(LIB_FLAGS)
+	g++ -c shaders.cpp 
 
 window.o : window.cpp opengl.h
-	g++ -c window.cpp $(LIB_FLAGS)
+	g++ -c window.cpp 
 
 options.o : options.cpp opengl.h
-	g++ -c options.cpp $(LIB_FLAGS)
+	g++ -c options.cpp 
 
 movement.o : movement.cpp opengl.h
-	g++ -c movement.cpp $(LIB_FLAGS)
+	g++ -c movement.cpp 
 
 glad.o : glad.c
 	gcc -c glad.c
@@ -29,4 +29,4 @@ glad.o : glad.c
 
 
 clean : 
-	rm $(SRC) set_buffer.o data.o shaders.o window.o options.o movement.o glad.o
+	rm $(SRC) set_buffer.o data.o shaders.o window.o options.o movement.o 

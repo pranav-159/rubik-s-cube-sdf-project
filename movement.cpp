@@ -36,7 +36,7 @@ void movement_t::move(){
  * for other functions we need to just change the movepeices and peiceNumbers vector
  * */
 void movement_t::leftUp(){
-	angleDeg = 90.0f;
+	angleDeg = -90.0f;
 	rotateAbout = glm::vec3 (1.0f,0.0f,0.0f);
 	peiceNumbers = {0,3,6,36,39,42,20,23,26,45,48,51};
 	for(unsigned i=27; i<36; i++) peiceNumbers.push_back(i);

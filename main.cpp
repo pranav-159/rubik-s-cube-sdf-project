@@ -49,15 +49,10 @@ int main(){
 
         
         glm::mat4 projection    = glm::mat4(1.0f);
-		glm::mat4 view  		= glm::mat4(1.0f);
         
-         projection = glm::ortho( -500.0f, 500.0f, -500.0f, 500.0f, -500.0f, 500.0f);
-		 view  = glm::translate(view, glm::vec3(- data::cubeSize/2 ,- data::cubeSize/2 ,- data::cubeSize/2  ));
-		// projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1000.0f, 1000.0f);
+		 projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1000.0f, 1000.0f);
          //retrieve the matrix uniform locations
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
-        
-		projection = projection*view;
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         //It takes the indices that are loaded into the buffer
 		set_buffer::init_buffer();
