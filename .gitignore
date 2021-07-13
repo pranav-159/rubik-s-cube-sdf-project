@@ -5,3 +5,5 @@
 *.out
 #ignore replit
 .replit
+#ignore csv files
+*.csv
