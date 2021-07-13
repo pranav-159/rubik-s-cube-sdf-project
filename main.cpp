@@ -30,8 +30,6 @@ int main(){
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
 
 
-    std::cout<<"Please enter 1 to get a shuffledCube cube and 2 to get patterns of the cube \n";
-    std::cin>>data::choice;
 	data::buildCube();
     glEnable(GL_DEPTH);
 
@@ -50,7 +48,7 @@ int main(){
         
         glm::mat4 projection    = glm::mat4(1.0f);
         
-		 projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1000.0f, 1000.0f);
+		 projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1.0f, 1.0f);
          //retrieve the matrix uniform locations
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));

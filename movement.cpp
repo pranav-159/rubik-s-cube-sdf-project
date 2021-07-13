@@ -14,8 +14,8 @@ movement_t* movement_t::getInstance(){
 
 
 /*
- * This function multiplies the rotate matrix to the elements of the vector(a class memeber) which contains the index number of the piece
- * that we want to rotate 
+ * This function multiplies the rotate matrix to the elements of the vector(a class memeber) which
+ * contains the index number of the piece that we want to rotate 
  * */
 void movement_t::move(){
 	movePeices = glm::rotate(movePeices,glm::radians(angleDeg),rotateAbout);

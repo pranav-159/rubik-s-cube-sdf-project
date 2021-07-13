@@ -14,7 +14,7 @@ struct vectorCord{
 	float xCord, yCord, zCord, rCol, gCol, bCol;
 };
 
-enum class choice_t{shuffled, pattern, noCubes};
+enum class choice_t{shuffled , noCubes};
 
 class data{
 public:

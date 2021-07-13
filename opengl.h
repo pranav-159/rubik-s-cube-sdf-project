@@ -54,6 +54,7 @@ class options_t{
 private:
 	static options_t* instance;
 	options_t()=default;
+	glm::mat4 scale= glm::mat4(1.0f);
 public:
 	static options_t* getOptionsInstance();
 	void rotateRight();
