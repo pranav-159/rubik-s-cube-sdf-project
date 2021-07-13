@@ -55,148 +55,148 @@ void processInput(GLFWwindow *window,Rotator* & rot,bool& KEY)
 
     if(glfwGetKey(window,GLFW_KEY_LEFT_SHIFT)!=GLFW_PRESS)
     {
-        if(glfwGetKey(window,GLFW_KEY_X)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_X)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::CLOCKWISE,Stack::WHOLE);
             KEY=true;
         }
-        if(glfwGetKey(window,GLFW_KEY_Y)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_Y)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::CLOCKWISE,Stack::WHOLE);
             KEY=true;
         }
-        if(glfwGetKey(window,GLFW_KEY_Z)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_Z)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::CLOCKWISE,Stack::WHOLE);
             KEY=true;
         }
-        if(glfwGetKey(window,GLFW_KEY_L)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_L)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::CLOCKWISE,Stack::THIRD);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_C)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_C)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::CLOCKWISE,Stack::SECOND);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_R)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_R)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::CLOCKWISE,Stack::FIRST);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_B)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_B)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::CLOCKWISE,Stack::THIRD);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_H)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_H)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::CLOCKWISE,Stack::SECOND);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_F)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_F)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::CLOCKWISE,Stack::FIRST);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_U)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_U)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::CLOCKWISE,Stack::FIRST);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_M)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_M)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::CLOCKWISE,Stack::SECOND);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_D)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_D)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::CLOCKWISE,Stack::THIRD);
             KEY=true;
         }      
     }
-    if(glfwGetKey(window,GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS)
+    if(glfwGetKey(window,GLFW_KEY_LEFT_SHIFT)==GLFW_PRESS && KEY ==false)
     {
-        if(glfwGetKey(window,GLFW_KEY_X)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_X)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::ANTI_CLOCKWISE,Stack::WHOLE);
             KEY=true;
         }
-        if(glfwGetKey(window,GLFW_KEY_Y)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_Y)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::ANTI_CLOCKWISE,Stack::WHOLE);
             KEY=true;
         }
-        if(glfwGetKey(window,GLFW_KEY_Z)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_Z)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::ANTI_CLOCKWISE,Stack::WHOLE);
             KEY=true;
         }
-        if(glfwGetKey(window,GLFW_KEY_L)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_L)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::ANTI_CLOCKWISE,Stack::THIRD);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_C)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_C)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::ANTI_CLOCKWISE,Stack::SECOND);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_R)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_R)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::RIGHT,Turn::ANTI_CLOCKWISE,Stack::FIRST);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_B)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_B)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::ANTI_CLOCKWISE,Stack::THIRD);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_H)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_H)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::ANTI_CLOCKWISE,Stack::SECOND);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_F)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_F)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::FRONT,Turn::ANTI_CLOCKWISE,Stack::FIRST);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_U)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_U)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::ANTI_CLOCKWISE,Stack::FIRST);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_M)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_M)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::ANTI_CLOCKWISE,Stack::SECOND);
             KEY=true;
         }      
-        if(glfwGetKey(window,GLFW_KEY_D)==GLFW_PRESS)
+        if(glfwGetKey(window,GLFW_KEY_D)==GLFW_PRESS && KEY ==false)
         {
             delete rot;
             rot=new Rotator(Face::UP,Turn::ANTI_CLOCKWISE,Stack::THIRD);

@@ -18,7 +18,7 @@ enum class Stack{FIRST,SECOND,THIRD,WHOLE};
 
 
 class Rotator{
-
+    float TL=2.0f;
     int face,turn,stack;
     int axis;
     float plane1,plane2;

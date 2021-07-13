@@ -12,7 +12,7 @@ struct Color
 
 class VertexInitializer
 {
-	float TL=1.0f;
+	float TL=2.0f;
 
 	float planes[3] = {-TL, 0, TL};
 

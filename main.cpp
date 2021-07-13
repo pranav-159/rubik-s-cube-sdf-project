@@ -9,7 +9,7 @@
 #include "input.h"
 
 extern float TL;
-float TL=1.0f;
+float TL=2.0f;
 
 int main()
 {
@@ -96,19 +96,19 @@ int main()
     // uncomment this call to draw in wireframe polygons.
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    // for(int i=0;i<54;i++)
-    // {
-    //     std::cout<<i+" ";
-    //     for(int j=0;j<3;j++)
-    //     {
-    //         for(int k=0;k<3;k++)
-    //         {
-    //         std::cout<<vertexData[9*i+3*j+k]<<" ";
-    //         }
-    //         std::cout<<"  ";
-    //     }
-    //     std::cout<<std::endl;
-    // }
+    for(int i=0;i<54;i++)
+    {
+        std::cout<<i<<" ";
+        for(int j=0;j<3;j++)
+        {
+            for(int k=0;k<3;k++)
+            {
+            std::cout<<(float)vertexData.at(9*i+3*j+k)<<" ";
+            }
+            std::cout<<"  ";
+        }
+        std::cout<<std::endl;
+    }
     // for(int i=0;i<2;i++)
     // {
     //     std::cout<<i<<" ";
@@ -149,7 +149,7 @@ int main()
                 delta=0.0f;
                 if(rot->getStack()!=Stack::WHOLE)
                 {    
-                    feedback=launchDetectingProgram(detectingshaderProgram,vao[0],rot->conditionTransformer()); 
+                    feedback=launchDetectingProgram(detectingshaderProgram,vao[draw_buffer],rot->conditionTransformer()); 
                     coverPoints=rot->coverPoints();
                     glBindVertexArray(0);
                     glBindBuffer(GL_ARRAY_BUFFER,vbo1);

@@ -15,7 +15,9 @@ void main(){
     mat4 modelMatrix=mat4(1.0f);
     if(int(feedback[gl_VertexID])==1)
         modelMatrix=model;
-    pos=(modelMatrix*vec4(aPos,1.0f)).xyz;
-    norm=(modelMatrix*vec4(aNorm,1.0f)).xyz;
+    vec3 pos1=(modelMatrix*vec4(aPos,1.0f)).xyz;
+    vec3 norm1=(modelMatrix*vec4(aNorm,1.0f)).xyz;
+    pos= pos1;
+    norm=vec3(norm1[0],norm1[1],norm1[2]);
     col=aCol;
 }

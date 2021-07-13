@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "iostream"
 #include <cmath>
-
+#include <fstream>
 /**
  * @brief Construct a new Rotator:: Rotator object which simplifies the input data into more mathematical interest
  * 
@@ -66,7 +66,7 @@ glm::mat4 Rotator::rotateMatrixCreator(float angle){
     glm::vec3 normal=rotatingAxis();
     glm::mat4 matrix=glm::mat4(1.0f);
     matrix=glm::rotate(matrix,angle,normal);
-    std::cout<<normal[0]<<" "<<normal[1]<<" "<<normal[2]<<" "<<plane1<< " "<<plane2<< " "<<stack<<std::endl;
+    // std::cout<<normal[0]<<" "<<normal[1]<<" "<<normal[2]<<" "<<plane1<< " "<<plane2<< " "<<stack<<std::endl;
     return matrix;
 }
 /**
@@ -99,7 +99,7 @@ std::array<float,6> Rotator::coverPoints(){
         arr[3+(axis+1)%3]=0.0f;
         arr[3+(axis+2)%3]=0.0f;
     }
-    if(stack!=3)
+    else if(stack!=3)
     {
         float plane=fabs(plane1)>fabs(plane2)?plane2:plane1;
         arr[axis]=plane;
@@ -109,6 +109,11 @@ std::array<float,6> Rotator::coverPoints(){
         arr[3+(axis+1)%3]=0.0f;
         arr[3+(axis+2)%3]=0.0f;
     }
+    std::ofstream myFile;
+    myFile.open("coverPoints.csv");
+    myFile<<stack<<","<<plane1<<","<<plane2<<std::endl;
+    myFile<<arr[0]<<","<<arr[1]<<","<<arr[2]<<std::endl;
+    myFile<<arr[3]<<","<<arr[4]<<","<<arr[5]<<std::endl;
     return arr;
 } 
 /**
