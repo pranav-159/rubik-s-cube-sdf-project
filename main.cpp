@@ -48,7 +48,8 @@ int main(){
         
         glm::mat4 projection    = glm::mat4(1.0f);
         
-		 projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1.0f, 1.0f);
+		 projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
+		// projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1.0f, 1.0f);
          //retrieve the matrix uniform locations
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));

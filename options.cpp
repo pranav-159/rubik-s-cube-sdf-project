@@ -19,8 +19,22 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	}
 	if(modifier_key == GLFW_MOD_ALT){
 		//Add all the functions related to movement options 
-		std::cout<<"leftUp function is called \n";
-		movement_t::getInstance()->leftUp();
+		if(normal_key == 'l'){
+			std::cout<<"leftUp function is called \n";
+			movement_t::getInstance()->leftUp();
+		}
+		else if(normal_key == 'r'){
+			std::cout<<"rightUp function is called \n";
+			movement_t::getInstance()->rightUp();
+		}
+		else if(normal_key == 'u'){
+			std::cout<<"topRight function is called \n";
+			movement_t::getInstance()->topRight();
+		}
+		else if(normal_key == 'b'){
+			std::cout<<"bottomRight function is called \n";
+			movement_t::getInstance()->bottomRight();
+		}
 	}
 }
 
@@ -31,6 +45,5 @@ void options_t::rotateRight(){
 	movement->rotateAbout = glm::vec3 (0.0f,1.0f,0.0f);
 	for(unsigned i=0 ; i<NOPEICES; i++) movement->peiceNumbers.push_back(i);
 	movement->move();
-
 }
 

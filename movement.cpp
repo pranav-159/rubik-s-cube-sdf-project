@@ -21,7 +21,8 @@ void movement_t::move(){
 	movePeices = glm::rotate(movePeices,glm::radians(angleDeg),rotateAbout);
 	for(unsigned j : peiceNumbers){
 		for(unsigned i=0; i<4; i++){
-			glm::vec4 tempVector(data::splitCube[data::choice-1][j][i].xCord,data::splitCube[data::choice-1][j][i].yCord,data::splitCube[data::choice-1][j][i].zCord,1.0f);
+			glm::vec4 tempVector(data::splitCube[data::choice-1][j][i].xCord,data::splitCube[data::choice-1][j][i].yCord,
+					data::splitCube[data::choice-1][j][i].zCord,1.0f);
 			tempVector = tempVector * movePeices;
 			data::splitCube[data::choice -1][j][i].xCord = tempVector.x;
 			data::splitCube[data::choice -1][j][i].yCord = tempVector.y;
@@ -40,5 +41,29 @@ void movement_t::leftUp(){
 	rotateAbout = glm::vec3 (1.0f,0.0f,0.0f);
 	peiceNumbers = {0,3,6,36,39,42,20,23,26,45,48,51};
 	for(unsigned i=27; i<36; i++) peiceNumbers.push_back(i);
+	move();
+}
+
+void movement_t::rightUp(){
+	angleDeg = 90.0f;
+	rotateAbout = glm::vec3(1.0f,0.0f,0.0f);
+	peiceNumbers = {2,5,8,38,41,44,47,50,53,18,21,24};
+	for(unsigned i=9;i<18;i++) peiceNumbers.push_back(i);
+	move();
+}
+
+void movement_t::topRight(){
+	angleDeg = 90.0f;
+	rotateAbout = glm::vec3(0.0f,1.0f,0.0f);
+	peiceNumbers = {0,1,2,9,10,11,18,19,20,27,28,29};
+	for(unsigned i=36;i<45;i++) peiceNumbers.push_back(i);
+	move();
+}
+
+void movement_t::bottomRight(){
+	angleDeg = 90.0f;
+	rotateAbout = glm::vec3(0.0f,1.0f,0.0f);
+	peiceNumbers = {6,7,8,15,16,17,24,25,26,33,34,35};
+	for(unsigned i=45;i<54;i++) peiceNumbers.push_back(i);
 	move();
 }

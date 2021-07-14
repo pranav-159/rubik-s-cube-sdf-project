@@ -78,8 +78,10 @@ public:
 	//need to add the actual movement matrices here
 	static movement_t* getInstance();
 	void move();
-	void oppositeDirection();
 	void leftUp();
+	void rightUp();
+	void topRight();
+	void bottomRight();
 	void undo_option();
 };
 
