@@ -117,7 +117,7 @@ void VertexInitializer::randomPopulator(std::array<float, 54 * 9> &vertexData)
 	// 	myFile<<std::endl;
 
 
-	int n=std::rand()%30;
+	int n=15+std::rand()%20;
 	while(n--)
 	{
 		// myFile<<n<<std::endl;

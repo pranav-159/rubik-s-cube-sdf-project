@@ -5,13 +5,14 @@
 extern float TL;
 
 class Camera{
-    glm::vec3 eye=glm::vec3(4.0f,4.0f,4.0f);
-    glm::vec3 target=glm::vec3(0.0f,0.0f,0.0f);
-    glm::vec3 up=glm::vec3(0.0f,1.0f,0.0f);
+
+    glm::vec3 _eye[8];
+    glm::vec3 _target=glm::vec3(0.0f,0.0f,0.0f);
+    glm::vec3 _up=glm::vec3(0.0f,1.0f,0.0f);
     public:
-    glm::mat4 viewMatrixCreator(int TL){
-        return glm::lookAt(eye,target,up);
-    }
+    Camera(float len);
+    glm::mat4 createViewMatrix(unsigned index=3);
+  
 }; 
 
 #endif

@@ -2,7 +2,9 @@
 #include <GLFW/glfw3.h>
 #include "window.h"
 #include <iostream>
+#include <fstream>
 #include "rotator.h"
+#include <bitset>
 extern float TL;
 
 GLFWwindow* init_window();
@@ -48,11 +50,13 @@ GLFWwindow* init_window(){
 //call back functions
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-void processInput(GLFWwindow *window,Rotator* & rot,bool& KEY)
+void processInput(GLFWwindow *window,Rotator* & rot,unsigned & viewIndex,bool& KEY,bool& CAM_KEY)
 {
+    //general closing
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
+    //rubiks stack movement
     if(glfwGetKey(window,GLFW_KEY_LEFT_SHIFT)!=GLFW_PRESS)
     {
         if(glfwGetKey(window,GLFW_KEY_X)==GLFW_PRESS && KEY ==false)
@@ -202,6 +206,57 @@ void processInput(GLFWwindow *window,Rotator* & rot,bool& KEY)
             rot=new Rotator(Face::UP,Turn::ANTI_CLOCKWISE,Stack::THIRD);
             KEY=true;
         }      
+    }
+    //camera
+    static std::bitset<3> globe("011");
+    if(CAM_KEY==false)
+    {
+        if(glfwGetKey(window,GLFW_KEY_UP)==GLFW_PRESS)
+        {   
+            if(globe[1]==false)
+                globe.flip(1); 
+            else
+            {
+                globe.flip(0);
+                globe.flip(2);
+            }  
+            viewIndex=(unsigned)globe.to_ulong();   
+            CAM_KEY=true;      
+        }
+        if(glfwGetKey(window,GLFW_KEY_DOWN)==GLFW_PRESS)
+        {   
+            if(globe[1]==true)
+                globe.flip(1); 
+            else
+            {
+                globe.flip(0);
+                globe.flip(2);
+            }  
+            viewIndex=(unsigned)globe.to_ulong();     
+            CAM_KEY=true;     
+        }
+        if(glfwGetKey(window,GLFW_KEY_RIGHT)==GLFW_PRESS)
+        { 
+            int num=globe[0]+globe[2];  
+            if(num%2==0)
+                globe.flip(0); 
+            else
+                globe.flip(2);
+            viewIndex=(unsigned)globe.to_ulong();
+            CAM_KEY=true;          
+        }
+        if(glfwGetKey(window,GLFW_KEY_LEFT)==GLFW_PRESS)
+        { 
+            std::ofstream myFile;
+            int num=globe[0]+globe[2];  
+            if(num%2==0)
+                globe.flip(2); 
+            else
+                globe.flip(0);
+            viewIndex=(unsigned)globe.to_ulong();    
+            CAM_KEY=true;       
+        }
+        
     }
 }
 
