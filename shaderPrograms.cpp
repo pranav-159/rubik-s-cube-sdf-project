@@ -145,15 +145,15 @@ std::array<float, 54> launchDetectingProgram(unsigned int detectingShaderProgram
 
     std::array<float, 54> tfData;
     glGetBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER, 0, sizeof(tfData), (void *)&tfData[0]);
-    std::ofstream myFile;
-    myFile.open("detecting.csv");
-    static int counter=0;
-    std::cout<<counter++;
-    for(int i=0;i<54;i++)
-    {
-        myFile<<i<<","<<tfData[i]<<std::endl;
-    }
-    myFile<<std::count(tfData.begin(),tfData.end(),1);
+    // std::ofstream myFile;
+    // myFile.open("detecting.csv");
+    // static int counter=0;
+    // std::cout<<counter++;
+    // for(int i=0;i<54;i++)
+    // {
+    //     myFile<<i<<","<<tfData[i]<<std::endl;
+    // }
+    // myFile<<std::count(tfData.begin(),tfData.end(),1);
     glDeleteBuffers(1, &TBO);
     return tfData;
 }
@@ -167,7 +167,7 @@ std::array<float, 54> launchDetectingProgram(unsigned int detectingShaderProgram
  * @param feedback array containing 0's and 1's representing which tiles should be rotated
  * @return unsigned int handle of vertex buffer containing the transformed coordinates
  */
-unsigned int launchTransformingProgram(unsigned int transformingProgram, unsigned int vao, unsigned int tbo, const glm::mat4& model,const std::array<float, 54>& feedback)
+std::array<float,54*9> launchTransformingProgram(unsigned int transformingProgram, unsigned int vao, unsigned int tbo, const glm::mat4& model,const std::array<float, 54>& feedback)
 {
     glUseProgram(transformingProgram);
     setUniform(transformingProgram, "model", model);
@@ -186,23 +186,23 @@ unsigned int launchTransformingProgram(unsigned int transformingProgram, unsigne
     //     std::cout<<feed[i]<<" ";
     // }
     // std::cout<<std::endl;
-    std::ofstream myFile;
-    myFile.open("transformData.csv");
-    for(int i=0;i<54;i++)
-    {
-        myFile<<i<<",";
-        for(int j=0;j<3;j++)
-        {
-            for(int k=0;k<3;k++)
-            {
-                myFile<<feed[9*i+3*j+k]<<",";
-            }
-            myFile<<",";
-        }
-        myFile<<std::endl;
-    }
-    myFile.close();
-    return tbo;
+    // std::ofstream myFile;
+    // myFile.open("transformData.csv");
+    // for(int i=0;i<54;i++)
+    // {
+    //     myFile<<i<<",";
+    //     for(int j=0;j<3;j++)
+    //     {
+    //         for(int k=0;k<3;k++)
+    //         {
+    //             myFile<<feed[9*i+3*j+k]<<",";
+    //         }
+    //         myFile<<",";
+    //     }
+    //     myFile<<std::endl;
+    // }
+    // myFile.close();
+    return feed;
 }
 /**
  * @brief launches and draws the tiles of the cube

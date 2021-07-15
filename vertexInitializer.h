@@ -2,6 +2,8 @@
 #define _VERTEXINITIALIZER_
 
 #include <array>
+#include "rotator.h"
+#include <glm/glm.hpp>
 
 struct Color
 {
@@ -27,7 +29,9 @@ class VertexInitializer
 
 public:
 	void vertexPopulator(std::array<float, 54 * 9> &vertexData);
+	void randomPopulator(std::array<float,54*9> &vertexData);
 	float getTL();
 	void setTL(float tileLength);
+	
 };
 #endif

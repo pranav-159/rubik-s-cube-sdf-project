@@ -1,7 +1,14 @@
 #include <iostream>
 #include "vertexInitializer.h"
 #include <array>
-
+#include "shaderPrograms.h"
+#include <glad/glad.h>
+#include "rotator.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/constants.hpp>
+#include <fstream>
+#include <ctime>
+#include <cstdlib>
 /**
  * @brief populates the initial vertices into vertexData
  * 
@@ -56,4 +63,126 @@ float VertexInitializer::getTL(){
  */
 void VertexInitializer::setTL(float tileLength){
 	TL=tileLength;
+}
+/**
+ * @brief populates the rubiks cube with random tiles.
+ * 
+ * @param vertexData the array which contains the tile data.
+ */
+void VertexInitializer::randomPopulator(std::array<float, 54 * 9> &vertexData)
+{
+	vertexPopulator(vertexData);
+	unsigned int transformProgram=createTransformingProgram();  
+	unsigned int detectingProgram=createDetectingProgram();
+
+	std::srand((unsigned)std::time(NULL));
+	int no_of_buffers=2;
+    unsigned int vbo2[no_of_buffers];
+    unsigned int vao2[no_of_buffers];
+    glGenVertexArrays(no_of_buffers, vao2);
+    glGenBuffers(no_of_buffers, vbo2);
+
+	int draw_buffer=0;
+    for(int i=0;i<no_of_buffers;i++)
+    {
+        glBindVertexArray(vao2[i]);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo2[i]);
+        glBufferData(GL_ARRAY_BUFFER,sizeof(vertexData),&vertexData[0], GL_STREAM_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(void*)(3*sizeof(float)));
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(2,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(void*)(6*sizeof(float)));
+        glEnableVertexAttribArray(2);
+    }
+	// std::array<float,54*9> tfData;
+	// glGetBufferSubData(GL_ARRAY_BUFFER,0,54*9*sizeof(float),(void*)&tfData[0]);
+	// std::ofstream myFile;
+	// myFile.open("initTransform.csv");
+	// for(int i=0;i<54;i++)
+	// 	{	
+	// 		myFile<<i<<",";
+	// 		for(int j=0;j<3;j++)
+	// 		{
+	// 			for(int k=0;k<3;k++)
+	// 			{
+	// 				myFile<<vertexData[9*i+3*j+k]<<",";
+	// 			}
+	// 			myFile<<",";
+	// 		}
+	// 		myFile<<std::endl;
+	// 	}
+	// 	myFile<<std::endl;
+
+
+	int n=std::rand()%30;
+	while(n--)
+	{
+		// myFile<<n<<std::endl;
+		int f=std::rand(),t=std::rand(),s=std::rand();
+		Rotator* rot =new Rotator((Face)(f%6),(Turn)(t%2),(Stack)(s%4));
+		// TestCondition test=rot->conditionTransformer();
+		// myFile<<test.axis<<std::endl;
+		// myFile<<test.plane1<<std::endl;
+		// myFile<<test.plane2<<std::endl;
+		std::array<float,54> feedback=launchDetectingProgram(detectingProgram,vao2[draw_buffer],rot->conditionTransformer());
+		// for(int i=0;i<54;i++)
+		// {
+		// 	myFile<<i<<" "<<feedback[i]<<std::endl;
+		// }
+		// myFile<<std::endl;
+		glm::mat4 model=rot->rotateMatrixCreator(glm::half_pi<float>());
+		launchTransformingProgram(transformProgram,vao2[draw_buffer],vbo2[(draw_buffer+1)%no_of_buffers],model,feedback);
+		
+		// for(int i=0;i<4;i++){
+		// 	for(int j=0;j<4;j++)
+		// 		myFile<<model[i][j]<<" ";
+		// 	myFile<<std::endl;
+		// }	
+		// myFile<<std::endl;
+		// glBindVertexArray(vao2[(draw_buffer+1)%no_of_buffers]);
+		// glGetBufferSubData(GL_ARRAY_BUFFER,0,54*9*sizeof(float),(void*)&tfData[0]);
+		// for(int i=0;i<54;i++)
+		// {
+		// 	myFile<<i<<",";
+		// 	for(int j=0;j<3;j++)
+		// 	{
+		// 		for(int k=0;k<3;k++)
+		// 		{
+		// 			myFile<<tfData[9*i+3*j+k]<<",";
+		// 		}
+		// 		myFile<<",";
+		// 	}
+		// 	myFile<<std::endl;
+		// }
+		// myFile<<std::endl;
+		draw_buffer=(draw_buffer+1)%no_of_buffers;
+		delete rot;
+	}
+	// myFile.close();
+	glBindVertexArray(vao2[draw_buffer]);
+	glBindBuffer(GL_ARRAY_BUFFER,vao2[draw_buffer]);
+	glGetBufferSubData(GL_ARRAY_BUFFER,0,54*9*sizeof(float),(void*)&vertexData[0]);
+	// for(int i=0;i<54;i++)
+	// 	{
+	// 		myFile<<i<<",";
+	// 		for(int j=0;j<3;j++)
+	// 		{
+	// 			for(int k=0;k<3;k++)
+	// 			{
+	// 				myFile<<vertexData[9*i+3*j+k]<<",";
+	// 			}
+	// 			myFile<<",";
+	// 		}
+	// 		myFile<<std::endl;
+	// 	}
+	// 	myFile<<std::endl;
+	// 	myFile.close();
+	glDeleteBuffers(2,vbo2);
+	glDeleteVertexArrays(2,vao2);
+	glDeleteProgram(transformProgram);
+	glDeleteProgram(detectingProgram);
+
 }

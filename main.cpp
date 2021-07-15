@@ -15,14 +15,16 @@ int main()
 {
     GLFWwindow* window = init_window();//creating a window
     if(window == NULL) std::cout<<"Error in creating the window \n";
-    // glShadeModel(GL_SMOOTH);   // Enable smooth shading
-    // glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 
-    // build and compile our shader program
     unsigned int drawshaderProgram=createDrawProgram();
     unsigned int detectingshaderProgram=createDetectingProgram();
     unsigned int transformingshaderProgram=createTransformingProgram();
     unsigned int coverDrawProgram=createCoverDrawProgram();
+    // glShadeModel(GL_SMOOTH);   // Enable smooth shading
+    // glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+
+    // build and compile our shader program
+ 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
 
@@ -35,7 +37,7 @@ int main()
     
     vertexInit.setTL(TL);
     
-    vertexInit.vertexPopulator(vertexData);
+    vertexInit.randomPopulator(vertexData);
     int no_of_buffers=2;
     unsigned int vbo[no_of_buffers];
     unsigned int vao[no_of_buffers];
