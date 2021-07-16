@@ -3,7 +3,7 @@
 //choice_t data::choice;
 unsigned data::choice=1;
 float data::filledCube[NODATAPOINTS];
-float data::cubeSize = 2.05f;
+float data::cubeSize = 1.50f;
 
 /*
  * we need a single array to render the cube so we copy all the splits into an array and send that into buffer

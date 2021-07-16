@@ -1,6 +1,6 @@
 LIB_FLAGS = -Wall -lglfw -lX11 -lXrandr -lpthread -ldl 
 SRC = main
-.PHONY : clean
+.PHONY : clean 
 
 $(SRC) : $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o  opengl.h 
 	g++ -o $(SRC) $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o $(LIB_FLAGS)
@@ -25,7 +25,6 @@ movement.o : movement.cpp opengl.h
 
 glad.o : glad.c
 	gcc -c glad.c
-
 
 
 clean : 

@@ -31,7 +31,6 @@ int main(){
 
 
 	data::buildCube();
-    glEnable(GL_DEPTH);
 
 
 
@@ -40,6 +39,8 @@ int main(){
         processInput(window);
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    	glEnable(GL_DEPTH);
+		glDepthFunc(GL_LESS);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shader_program);
@@ -48,9 +49,8 @@ int main(){
         
         glm::mat4 projection    = glm::mat4(1.0f);
         
-		 projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
-		// projection = glm::perspective(glm::radians(30.0f), (float)800 / (float)600, -1.0f, 1.0f);
-         //retrieve the matrix uniform locations
+		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
+//		projection = glm::perspective(glm::radians(60.0f), (float)800 / (float)600, 0.0f, 100.0f);
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         //It takes the indices that are loaded into the buffer

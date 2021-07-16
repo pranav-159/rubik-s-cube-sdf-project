@@ -5,12 +5,12 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <stack>
+#include <functional>
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "data.h"
-#define PI 3.14159265359
 
 
 
@@ -68,7 +68,7 @@ public:
 class movement_t{
 private:
 	static movement_t* Instance;
-	static std::stack<unsigned>history;
+	static std::stack<std::function<void()>>history;
 	movement_t()=default;
 	glm::mat4 movePeices = glm::mat4(1.0f); //rotation matrix
 public:

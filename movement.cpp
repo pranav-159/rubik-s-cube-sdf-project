@@ -4,7 +4,7 @@
  * This file  Should contain all the matrix that are used for transformation or movement of cube and we use a stack to maintain the history of movments
  * **/
 
-std::stack<unsigned> movement_t::history;
+std::stack<std::function<void()>> movement_t::history;
 movement_t* movement_t::Instance;
 
 movement_t* movement_t::getInstance(){
