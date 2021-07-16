@@ -67,3 +67,15 @@ void movement_t::bottomRight(){
 	for(unsigned i=45;i<54;i++) peiceNumbers.push_back(i);
 	move();
 }
+
+void movement_t::shuffle(){
+	std::srand(time(0));
+	for(unsigned i=0;i<20;i++){
+	switch( rand() % NOMOVEMENTS){
+		case 0 : leftUp();  break;
+		case 1 : rightUp(); break;
+		case 3 : topRight(); break;
+		case 4 : bottomRight(); break;
+	}
+	}
+}

@@ -11,6 +11,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "data.h"
+#include <time.h>
+#define NOMOVEMENTS 4 //This will be changed if new movements are added
 
 
 
@@ -83,6 +85,7 @@ public:
 	void topRight();
 	void bottomRight();
 	void undo_option();
+	void shuffle();
 };
 
 #endif

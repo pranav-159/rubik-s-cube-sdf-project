@@ -11,6 +11,7 @@ options_t* options_t::getOptionsInstance(){
 }
 
 void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
+	movement_t* movementInstance = movement_t::getInstance();
 	options_t* options = options_t::getOptionsInstance();
 	if(modifier_key == GLFW_MOD_SHIFT){
 		//Add all the functions related to extra options like rotate right , undo etc..
@@ -21,19 +22,23 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 		//Add all the functions related to movement options 
 		if(normal_key == 'l'){
 			std::cout<<"leftUp function is called \n";
-			movement_t::getInstance()->leftUp();
+			movementInstance->leftUp();
 		}
 		else if(normal_key == 'r'){
 			std::cout<<"rightUp function is called \n";
-			movement_t::getInstance()->rightUp();
+			movementInstance->rightUp();
 		}
 		else if(normal_key == 'u'){
 			std::cout<<"topRight function is called \n";
-			movement_t::getInstance()->topRight();
+			movementInstance->topRight();
 		}
 		else if(normal_key == 'b'){
 			std::cout<<"bottomRight function is called \n";
-			movement_t::getInstance()->bottomRight();
+			movementInstance->bottomRight();
+		}
+		else if(normal_key == 's'){
+			std::cout<<"shuffle function is called\n";
+			movementInstance->shuffle();
 		}
 	}
 }
