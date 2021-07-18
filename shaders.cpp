@@ -17,9 +17,10 @@
     "layout (location = 1) in vec3 aColor;\n"
     "out vec3 ourColor;\n"
     "uniform mat4 projection;\n"
+	"uniform mat4 scale;\n"
     "void main()\n"
     "{\n"
-    "   gl_Position =projection* vec4(aPos, 1.0f);\n"
+    "   gl_Position =projection* scale *vec4(aPos, 1.0f);\n"
     "   ourColor = aColor;\n"
     "}\0";
 

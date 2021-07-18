@@ -8,7 +8,8 @@ int main(){
     if(window == NULL) std::cout<<"Error in creating the window \n";
 
     //callback functions
-   glfwSetCharModsCallback(window,key_callback);
+    glfwSetCharModsCallback(window,key_callback);
+    glfwSetScrollCallback(window,scroll_callback);
 
 
 
@@ -38,7 +39,7 @@ int main(){
     {
         processInput(window);
 
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     	glEnable(GL_DEPTH);
 		glDepthFunc(GL_LESS);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -48,9 +49,12 @@ int main(){
 
         
         glm::mat4 projection    = glm::mat4(1.0f);
+		glm::mat4 view			= glm::mat4(1.0f);
         
+		view = glm::lookAt(glm::vec3(0.0f,0.0f,-2.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
-//		projection = glm::perspective(glm::radians(60.0f), (float)800 / (float)600, 0.0f, 100.0f);
+//		projection = glm::perspective(60.0f, (float)800 / (float)600, 0.01f, 100.0f);
+		projection = projection * view;
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         //It takes the indices that are loaded into the buffer

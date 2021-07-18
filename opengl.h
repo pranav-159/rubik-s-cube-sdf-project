@@ -21,6 +21,7 @@ GLFWwindow* init_window();
 
 //CallBackfunctions
 void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key);//Defined in options.cpp file
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window); //Defined in window.cpp file
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);//Defined in window.cpp file
 

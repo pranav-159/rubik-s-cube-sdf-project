@@ -68,6 +68,7 @@ void movement_t::bottomRight(){
 	move();
 }
 
+/*This function will call some rotate functions 20 times randomly each time , a program runs*/
 void movement_t::shuffle(){
 	std::srand(time(0));
 	for(unsigned i=0;i<20;i++){
