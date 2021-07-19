@@ -53,7 +53,7 @@ int main(){
         
 		view = glm::lookAt(glm::vec3(0.0f,0.0f,-2.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
-//		projection = glm::perspective(60.0f, (float)800 / (float)600, 0.01f, 100.0f);
+//		projection = glm::perspective(40.0f, (float)800 / (float)600, 0.01f, 1000.0f);
 		projection = projection * view;
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));

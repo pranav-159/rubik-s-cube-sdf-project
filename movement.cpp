@@ -1,7 +1,8 @@
 #include"opengl.h"
 
 /**
- * This file  Should contain all the matrix that are used for transformation or movement of cube and we use a stack to maintain the history of movments
+ * This file  Should contain all the matrix that are used for transformation or movement of cube and we use a stack to
+ * maintain the history of movments
  * **/
 
 std::stack<std::function<void()>> movement_t::history;
@@ -32,10 +33,16 @@ void movement_t::move(){
 	data::buildCube();
 }
 
+
 /*
- * Here we need to rotate the left face and 12 pieces about the x axis
+ * Check these functions carefully later 
+ * */
+
+/*
+ * Here for leftUp function we need to rotate the left face and 12 pieces about the x axis
  * for other functions we need to just change the movepeices and peiceNumbers vector
  * */
+
 void movement_t::leftUp(){
 	angleDeg = -90.0f;
 	rotateAbout = glm::vec3 (1.0f,0.0f,0.0f);

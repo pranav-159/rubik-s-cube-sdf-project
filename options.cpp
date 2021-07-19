@@ -53,9 +53,11 @@ void options_t::rotateRight(){
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
+	static float scaleFactor=1;
 	glm::mat4 zoom = glm::mat4(1.0f);
-	if(yoffset>0) zoom = glm::scale(zoom,glm::vec3(1.25f,1.25f,1.25f));
-	else zoom = glm::scale(zoom,glm::vec3(0.75f,0.75f,0.75f));
+	if(yoffset>0) scaleFactor = scaleFactor*1.25; 
+	else scaleFactor = scaleFactor*0.75;
+	zoom = glm::scale(zoom,glm::vec3(scaleFactor,scaleFactor,scaleFactor));
 	unsigned scaleLoc = glGetUniformLocation(shader_t::get_shader_program_id(),"scale");
     glUniformMatrix4fv(scaleLoc, 1, GL_FALSE, glm::value_ptr(zoom));
 }
