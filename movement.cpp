@@ -24,7 +24,7 @@ void movement_t::move(){
 		for(unsigned i=0; i<4; i++){
 			glm::vec4 tempVector(data::splitCube[data::choice-1][j][i].xCord,data::splitCube[data::choice-1][j][i].yCord,
 					data::splitCube[data::choice-1][j][i].zCord,1.0f);
-			tempVector = tempVector * movePeices;
+			tempVector = movePeices* tempVector ;
 			data::splitCube[data::choice -1][j][i].xCord = tempVector.x;
 			data::splitCube[data::choice -1][j][i].yCord = tempVector.y;
 			data::splitCube[data::choice -1][j][i].zCord = tempVector.z;
