@@ -23,8 +23,6 @@ options.o : options.cpp opengl.h
 movement.o : movement.cpp opengl.h
 	g++ -c movement.cpp 
 
-glad.o : glad.c
-	gcc -c glad.c
 
 
 clean : 

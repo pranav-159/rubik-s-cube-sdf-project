@@ -21,20 +21,28 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	if(modifier_key == GLFW_MOD_ALT){
 		//Add all the functions related to movement options 
 		if(normal_key == 'l'){
-			std::cout<<"leftUp function is called \n";
-			movementInstance->leftUp();
+			std::cout<<"leftDown function is called \n";
+			movementInstance->leftDown();
 		}
 		else if(normal_key == 'r'){
-			std::cout<<"rightUp function is called \n";
-			movementInstance->rightUp();
+			std::cout<<"rightDown function is called \n";
+			movementInstance->rightDown();
 		}
 		else if(normal_key == 'u'){
-			std::cout<<"topRight function is called \n";
-			movementInstance->topRight();
+			std::cout<<"topLeft function is called \n";
+			movementInstance->topLeft();
 		}
 		else if(normal_key == 'b'){
-			std::cout<<"bottomRight function is called \n";
-			movementInstance->bottomRight();
+			std::cout<<"bottomLeft function is called \n";
+			movementInstance->bottomLeft();
+		}
+		else if(normal_key == 'v'){
+			std::cout<<"verticalMiddleDown function is called\n";
+			movementInstance->verticalMiddleDown();
+		}
+		else if(normal_key == 'h'){
+			std::cout<<"horizontalMiddleLeft function is called\n";
+			movementInstance->horizontalMiddleLeft();
 		}
 		else if(normal_key == 's'){
 			std::cout<<"shuffle function is called\n";

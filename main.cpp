@@ -50,11 +50,13 @@ int main(){
         
         glm::mat4 projection    = glm::mat4(1.0f);
 		glm::mat4 view			= glm::mat4(1.0f);
+		glm::mat4 rotate		= glm::mat4(1.0f);
+		rotate = glm::rotate(rotate,glm::radians((float)glfwGetTime()*2), glm::vec3(1.0f,0.0f,0.0f));
         
 		view = glm::lookAt(glm::vec3(0.0f,0.0f,2.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
 //		projection = glm::perspective(30.0f, (float)800 / (float)600, 0.01f, 100.0f);
-		projection = projection * view ;
+		projection = projection * view * rotate;
         unsigned int projLoc  = glGetUniformLocation(shader_program,"projection");
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
         //It takes the indices that are loaded into the buffer
