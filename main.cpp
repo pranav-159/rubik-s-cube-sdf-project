@@ -40,7 +40,7 @@ int main()
 
     vertexInit.setTL(TL);
 
-    vertexInit.vertexPopulator(vertexData);
+    vertexInit.randomPopulator(vertexData);
     int no_of_buffers = 2;
     unsigned int vbo[no_of_buffers];
     unsigned int vao[no_of_buffers];
@@ -115,9 +115,9 @@ int main()
     //         std::cout<<coverPoints[3*i+j];
     //     std::cout<<std::endl;
     // }
-    // projection=glm::perspective(90.0f,800.0f/800.0f,3.0f,30.0f);
-    projection = glm::ortho(-5.0f, 5.0f, -5.0f, 5.0f, 1.0f, 100.0f);
-    Camera cam(2.5 * TL);
+    projection=glm::perspective(120.0f,800.0f/800.0f,0.1f,30.0f);
+    // projection = glm::ortho(-5.0f, 5.0f, -5.0f, 5.0f, 1.0f, 100.0f);
+    Camera cam(5 * TL);
     view = cam.createViewMatrix();
     unsigned viewIndex = 3;
     //buffer rotation

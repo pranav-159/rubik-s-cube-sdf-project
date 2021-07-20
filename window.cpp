@@ -208,55 +208,58 @@ void processInput(GLFWwindow *window,Rotator* & rot,unsigned & viewIndex,bool& K
         }      
     }
     //camera
-    static std::bitset<3> globe("011");
-    if(CAM_KEY==false)
+        // static std::bitset<3> globe("011");
+    // if(CAM_KEY==false)
+    // {
+    //     if(glfwGetKey(window,GLFW_KEY_UP)==GLFW_PRESS)
+    //     {   
+    //         if(globe[1]==false)
+    //             globe.flip(1); 
+    //         else
+    //         {
+    //             globe.flip(0);
+    //             globe.flip(2);
+    //         }  
+    //         viewIndex=(unsigned)globe.to_ulong();   
+    //         CAM_KEY=true;      
+    //     }
+    //     if(glfwGetKey(window,GLFW_KEY_DOWN)==GLFW_PRESS)
+    //     {   
+    //         if(globe[1]==true)
+    //             globe.flip(1); 
+    //         else
+    //         {
+    //             globe.flip(0);
+    //             globe.flip(2);
+    //         }  
+    //         viewIndex=(unsigned)globe.to_ulong();     
+    //         CAM_KEY=true;     
+    //     }
+    //     if(glfwGetKey(window,GLFW_KEY_RIGHT)==GLFW_PRESS)
+    //     { 
+    //         int num=globe[0]+globe[2];  
+    //         if(num%2==0)
+    //             globe.flip(0); 
+    //         else
+    //             globe.flip(2);
+    //         viewIndex=(unsigned)globe.to_ulong();
+    //         CAM_KEY=true;          
+    //     }
+    //     if(glfwGetKey(window,GLFW_KEY_LEFT)==GLFW_PRESS)
+    //     { 
+    //         std::ofstream myFile;
+    //         int num=globe[0]+globe[2];  
+    //         if(num%2==0)
+    //             globe.flip(2); 
+    //         else
+    //             globe.flip(0);
+    //         viewIndex=(unsigned)globe.to_ulong();    
+    //         CAM_KEY=true;       
+    //     }
+    if(glfwGetKey(window,GLFW_KEY_LEFT_ALT)==GLFW_PRESS&& CAM_KEY==false)
     {
-        if(glfwGetKey(window,GLFW_KEY_UP)==GLFW_PRESS)
-        {   
-            if(globe[1]==false)
-                globe.flip(1); 
-            else
-            {
-                globe.flip(0);
-                globe.flip(2);
-            }  
-            viewIndex=(unsigned)globe.to_ulong();   
-            CAM_KEY=true;      
-        }
-        if(glfwGetKey(window,GLFW_KEY_DOWN)==GLFW_PRESS)
-        {   
-            if(globe[1]==true)
-                globe.flip(1); 
-            else
-            {
-                globe.flip(0);
-                globe.flip(2);
-            }  
-            viewIndex=(unsigned)globe.to_ulong();     
-            CAM_KEY=true;     
-        }
-        if(glfwGetKey(window,GLFW_KEY_RIGHT)==GLFW_PRESS)
-        { 
-            int num=globe[0]+globe[2];  
-            if(num%2==0)
-                globe.flip(0); 
-            else
-                globe.flip(2);
-            viewIndex=(unsigned)globe.to_ulong();
-            CAM_KEY=true;          
-        }
-        if(glfwGetKey(window,GLFW_KEY_LEFT)==GLFW_PRESS)
-        { 
-            std::ofstream myFile;
-            int num=globe[0]+globe[2];  
-            if(num%2==0)
-                globe.flip(2); 
-            else
-                globe.flip(0);
-            viewIndex=(unsigned)globe.to_ulong();    
-            CAM_KEY=true;       
-        }
-        
+        viewIndex=(viewIndex==3)?4:3;
+        CAM_KEY=true;
     }
 }
 
