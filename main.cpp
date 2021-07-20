@@ -115,10 +115,10 @@ int main()
     //         std::cout<<coverPoints[3*i+j];
     //     std::cout<<std::endl;
     // }
-    // projection=glm::perspective(90.0f,800.0f/800.0f,3.0f,30.0f);
-    projection = glm::ortho(-5.0f, 5.0f, -5.0f, 5.0f, 1.0f, 100.0f);
-    Camera cam(2.5 * TL);
-    view = cam.createViewMatrix();
+    projection=glm::perspective(120.0f,800.0f/800.0f,1.0f,50*TL);
+    // projection = glm::ortho(-5.0f, 5.0f, -5.0f, 5.0f, 1.0f, 100.0f);
+    Camera cam(8 * TL);
+    view = cam.createViewMatrix(3,false);
     unsigned viewIndex = 3;
     //buffer rotation
     int draw_buffer = 0;
@@ -135,7 +135,31 @@ int main()
         // input
         // -----
         processInput(window, rot, viewIndex, KEY,CAM_KEY);
-        view = cam.createViewMatrix(viewIndex);
+        view = cam.createViewMatrix(viewIndex,false);
+
+
+        if(CAM_KEY)
+        {
+            now=glfwGetTime();
+            delta=now-previous;
+
+            if(setter)
+            {
+                delta=0.0f;
+            }
+            previous=now;
+            time+=delta;
+            if(time<=process_time)
+            {
+                view=glm::rotate(view,cam.get)
+            }
+            else
+            {
+                 
+            }
+            
+        }
+
 
         //render
         //------
@@ -176,9 +200,7 @@ int main()
             }
             else
             {
-
                 model = rot->rotateMatrixCreator(glm::half_pi<float>());
-
                 launchTransformingProgram(transformingshaderProgram, vao[draw_buffer], vbo[(draw_buffer + 1) % no_of_buffers], model, feedback);
                 delta = 0.0f;
                 setter = 1;
