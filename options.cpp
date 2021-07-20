@@ -52,6 +52,7 @@ void options_t::rotateRight(){
 	movement->move();
 }
 
+
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 	static float scaleFactor=1;
 	glm::mat4 zoom = glm::mat4(1.0f);
