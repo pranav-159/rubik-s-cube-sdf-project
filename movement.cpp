@@ -18,8 +18,11 @@ movement_t* movement_t::getInstance(){
  * This function multiplies the rotate matrix to the elements of the vector(a class memeber) which
  * contains the index number of the piece that we want to rotate 
  * */
+
 void movement_t::move(){
 	movePeices = glm::rotate(movePeices,glm::radians(angleDeg),rotateAbout);
+	//Reason for bug:
+	//Here we need to just swap the colours of the pieces rather than the position coordinates of peices
 	for(unsigned j : peiceNumbers){
 		for(unsigned i=0; i<4; i++){
 			glm::vec4 tempVector(data::splitCube[data::choice-1][j][i].xCord,data::splitCube[data::choice-1][j][i].yCord,
@@ -32,11 +35,6 @@ void movement_t::move(){
 }
 	data::buildCube();
 }
-
-
-/*
- * Check these functions carefully later 
- * */
 
 /*
  * Here for leftUp function we need to rotate the left face and 12 pieces about the x axis

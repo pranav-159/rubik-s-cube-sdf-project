@@ -70,8 +70,8 @@ struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES]
 
           cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
           cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
-          cubeSize/2, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
-          cubeSize/6, - cubeSize/6,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/2, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
+          cubeSize/6, - cubeSize/2,   cubeSize/2,  0.0f, 1.0f, 0.0f,
 
         //right face yellow color
 
