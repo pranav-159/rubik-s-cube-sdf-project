@@ -3,6 +3,7 @@
 
 #define NOPEICES 6*9
 #define NODATAPOINTS 6*9*4*6
+#define GAP 0.01f
 
 /*
  * Changes to be made :

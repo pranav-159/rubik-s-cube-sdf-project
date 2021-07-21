@@ -1,10 +1,5 @@
 #include"opengl.h"
 
-/**
- * This file  Should contain all the matrix that are used for transformation or movement of cube and we use a stack to
- * maintain the history of movments
- * **/
-
 std::stack<std::function<void()>> movement_t::history;
 movement_t* movement_t::Instance;
 
@@ -14,27 +9,8 @@ movement_t* movement_t::getInstance(){
 }
 
 
-/*
- * This function multiplies the rotate matrix to the elements of the vector(a class memeber) which
- * contains the index number of the piece that we want to rotate 
- * */
 
 void movement_t::move(){
-	movePeices = glm::rotate(movePeices,glm::radians(angleDeg),rotateAbout);
-	//Reason for bug:
-	//Here we need to just swap the colours of the pieces rather than the position coordinates of peices
-#if 0
-	for(unsigned j : peiceNumbers){
-		for(unsigned i=0; i<4; i++){
-			glm::vec4 tempVector(data::splitCube[data::choice-1][j][i].xCord,data::splitCube[data::choice-1][j][i].yCord,
-					data::splitCube[data::choice-1][j][i].zCord,1.0f);
-			tempVector = movePeices* tempVector ;
-			data::splitCube[data::choice -1][j][i].xCord = tempVector.x;
-			data::splitCube[data::choice -1][j][i].yCord = tempVector.y;
-			data::splitCube[data::choice -1][j][i].zCord = tempVector.z;
-	}
-}
-#endif
 	for(unsigned i=0;i<9;i++){
 		swapColors(peiceNumbers.at(i),peiceNumbers.at(i+3));
 		printf("\n");
@@ -42,10 +18,15 @@ void movement_t::move(){
 	data::buildCube();
 }
 
-/*
- * Here for leftDown function we need to rotate the left face and 12 pieces about the x axis
- * for other functions we need to just change the movepeices and peiceNumbers vector
- * */
+void movement_t::moveSide(){
+	printf("Has sides to rotate");
+	for(unsigned i=0;i<6;i++){
+		swapColors(peiceNumbersSide.at(i),peiceNumbersSide.at(i+2));
+		printf("\n");
+	}
+	data::buildCube();
+}
+
 void movement_t::swapColors(const unsigned x, const unsigned y){
 	for(unsigned j=0;j<4;j++){
 		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].rCol,tempMoveObj.splitCube[data::choice-1][y][j].rCol);
@@ -53,38 +34,33 @@ void movement_t::swapColors(const unsigned x, const unsigned y){
 		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].bCol,tempMoveObj.splitCube[data::choice-1][y][j].bCol);
 	}
 	std::cout<<"Swapped "<<x<<" and "<<y<<" ; ";
-	std::cout<<"Now color of " << x <<"th peice is " <<tempMoveObj.splitCube[data::choice-1][x][0].rCol<<" : "<<tempMoveObj.splitCube[data::choice-1][x][0].gCol<<" : "<<tempMoveObj.splitCube[data::choice-1][x][0].bCol<<std::endl;
 }
 
+/*Check peiceNumbersSide and moveSide() properly*/
 void movement_t::leftDown(){
-	angleDeg = -90.0f;
-	rotateAbout = glm::vec3 (1.0f,0.0f,0.0f);
 	peiceNumbers = {0,3,6,36,39,42,26,23,20,45,48,51};
-	for(unsigned i=27; i<36; i++) peiceNumbers.push_back(i);
+	peiceNumbersSide = {29,32,27,28,33,30,35,34};
 	move();
+	moveSide();
 }
 
 void movement_t::rightDown(){
-	angleDeg = 90.0f;
-	rotateAbout = glm::vec3(1.0f,0.0f,0.0f);
 	peiceNumbers = {2,5,8,38,41,44,24,21,18,47,50,53};
-	for(unsigned i=9;i<18;i++) peiceNumbers.push_back(i);
+	peiceNumbersSide = {9,10,11,14,17,16,15,12};
 	move();
+	moveSide();
 }
 
 void movement_t::topLeft(){
-	angleDeg = 90.0f;
-	rotateAbout = glm::vec3(0.0f,1.0f,0.0f);
 	peiceNumbers = {0,1,2,27,28,29,18,19,20,9,10,11};
-	for(unsigned i=36;i<45;i++) peiceNumbers.push_back(i);
+	peiceNumbersSide = {36,37,38,41,44,43,42,39};
 	move();
+	moveSide();
 }
 
 void movement_t::bottomLeft(){
-	angleDeg = 90.0f;
-	rotateAbout = glm::vec3(0.0f,1.0f,0.0f);
 	peiceNumbers = {6,7,8,15,16,17,24,25,26,33,34,35};
-	for(unsigned i=45;i<54;i++) peiceNumbers.push_back(i);
+	peiceNumbersSide = {45,46,47,50,53,52,51,48};
 	move();
 }
 
@@ -99,7 +75,21 @@ void movement_t::horizontalMiddleLeft(){
 	move();
 }
 
-/*This function will call some rotate functions 20 times randomly each time , a program runs*/
+void movement_t::frontClockwise(){
+	peiceNumbers = {29,32,35,45,46,47,15,12,9,44,43,42};
+	peiceNumbersSide = {0,1,6,3,8,7,2,5};
+	move();
+	moveSide();
+}
+
+void movement_t::backClockwise(){
+	peiceNumbers = {38,37,36,27,30,33,51,52,53,17,14,11};
+	peiceNumbersSide = {18,19,20,23,26,25,24,21};
+	move();
+	moveSide();
+}
+
+/*This function will call some rotate functions 20 times randomly each time  */
 void movement_t::shuffle(){
 	std::srand(time(0));
 	for(unsigned i=0;i<20;i++){
@@ -109,7 +99,9 @@ void movement_t::shuffle(){
 		case 3 : topLeft(); break;
 		case 4 : bottomLeft(); break;
 		case 5 : verticalMiddleDown(); break;
-		case 6 : horizontalMiddleLeft();
+		case 6 : horizontalMiddleLeft();break;
+		case 7 : frontClockwise();break;
+		case 8 : backClockwise();
 	}
 	}
 }

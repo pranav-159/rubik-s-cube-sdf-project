@@ -12,7 +12,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "data.h"
 #include <time.h>
-#define NOMOVEMENTS 6 //This will be changed if new movements are added
+#define NOMOVEMENTS 8 //This will be changed if new movements are added
 
 
 
@@ -74,21 +74,21 @@ private:
 	data tempMoveObj;
 	static std::stack<std::function<void()>>history;
 	movement_t()=default;
-	glm::mat4 movePeices = glm::mat4(1.0f); //rotation matrix
 public:
 	std::vector<unsigned>peiceNumbers;
-	float angleDeg;
-	glm::vec3 rotateAbout;
-	//need to add the actual movement matrices here
+	std::vector<unsigned>peiceNumbersSide;
 	static movement_t* getInstance();
 	void swapColors(const unsigned x, const unsigned y);
 	void move();
+	void moveSide();
 	void leftDown();
 	void rightDown();
 	void topLeft();
 	void bottomLeft();
 	void verticalMiddleDown();
 	void horizontalMiddleLeft();
+	void frontClockwise();
+	void backClockwise();
 	void undo_option();
 	void shuffle();
 };

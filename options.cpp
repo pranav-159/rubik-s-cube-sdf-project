@@ -15,7 +15,7 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	options_t* options = options_t::getOptionsInstance();
 	if(modifier_key == GLFW_MOD_SHIFT){
 		//Add all the functions related to extra options like rotate right , undo etc..
-		options->rotateRight();
+	//	options->rotateRight();
 		std::cout<<"Rotate right is called \n";
 	}
 	if(modifier_key == GLFW_MOD_ALT){
@@ -52,6 +52,7 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 }
 
 
+/*
 void options_t::rotateRight(){
 	movement_t* movement = movement_t::getInstance();
 	movement->angleDeg = 90.0f;
@@ -59,6 +60,7 @@ void options_t::rotateRight(){
 	for(unsigned i=0 ; i<NOPEICES; i++) movement->peiceNumbers.push_back(i);
 	movement->move();
 }
+*/
 
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
