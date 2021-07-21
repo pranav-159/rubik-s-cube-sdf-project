@@ -51,7 +51,7 @@ int main(){
         glm::mat4 projection    = glm::mat4(1.0f);
 		glm::mat4 view			= glm::mat4(1.0f);
 		glm::mat4 rotate		= glm::mat4(1.0f);
-		rotate = glm::rotate(rotate,glm::radians((float)glfwGetTime()*2), glm::vec3(0.0f,1.0f,0.0f));
+		rotate = glm::rotate(rotate,glm::radians((float)glfwGetTime()*2), glm::vec3(1.0f,0.0f,0.0f));
         
 		view = glm::lookAt(glm::vec3(0.0f,0.0f,2.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
 		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);

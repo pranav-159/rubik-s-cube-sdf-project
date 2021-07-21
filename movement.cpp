@@ -13,16 +13,13 @@ movement_t* movement_t::getInstance(){
 void movement_t::move(){
 	for(unsigned i=0;i<9;i++){
 		swapColors(peiceNumbers.at(i),peiceNumbers.at(i+3));
-		printf("\n");
 	}
 	data::buildCube();
 }
 
 void movement_t::moveSide(){
-	printf("Has sides to rotate");
 	for(unsigned i=0;i<6;i++){
 		swapColors(peiceNumbersSide.at(i),peiceNumbersSide.at(i+2));
-		printf("\n");
 	}
 	data::buildCube();
 }
@@ -33,7 +30,6 @@ void movement_t::swapColors(const unsigned x, const unsigned y){
 		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].gCol,tempMoveObj.splitCube[data::choice-1][y][j].gCol);
 		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].bCol,tempMoveObj.splitCube[data::choice-1][y][j].bCol);
 	}
-	std::cout<<"Swapped "<<x<<" and "<<y<<" ; ";
 }
 
 /*Check peiceNumbersSide and moveSide() properly*/
@@ -59,9 +55,11 @@ void movement_t::topLeft(){
 }
 
 void movement_t::bottomLeft(){
-	peiceNumbers = {6,7,8,15,16,17,24,25,26,33,34,35};
-	peiceNumbersSide = {45,46,47,50,53,52,51,48};
+//	peiceNumbers = {6,7,8,15,16,17,24,25,26,33,34,35};
+	peiceNumbers = {6,7,8,33,34,35,24,25,26,15,16,17};
+	peiceNumbersSide = {47,46,45,48,51,52,53,50};
 	move();
+	moveSide();
 }
 
 

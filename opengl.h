@@ -52,18 +52,6 @@ class set_buffer{
 };
 
 
-//This class takes care of additional options 
-class options_t{
-private:
-	static options_t* instance;
-	options_t()=default;
-	glm::mat4 scale= glm::mat4(1.0f);
-public:
-	static options_t* getOptionsInstance();
-	void rotateRight();
-
-};
-
 
 
 //we should have only one history maintainer and one set ofmovement matrix
@@ -91,6 +79,20 @@ public:
 	void backClockwise();
 	void undo_option();
 	void shuffle();
+};
+
+//This class takes care of additional options 
+class options_t{
+private:
+	static options_t* instance;
+	options_t()=default;
+	glm::mat4 scale= glm::mat4(1.0f);
+	movement_t* moveInstance = movement_t::getInstance();
+public:
+	static options_t* getOptionsInstance();
+	void rotateLeft();
+	void rotateDown();
+
 };
 
 #endif

@@ -14,9 +14,15 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	movement_t* movementInstance = movement_t::getInstance();
 	options_t* options = options_t::getOptionsInstance();
 	if(modifier_key == GLFW_MOD_SHIFT){
-		//Add all the functions related to extra options like rotate right , undo etc..
-	//	options->rotateRight();
-		std::cout<<"Rotate right is called \n";
+		//Add all the functions related to extra options like rotate left , undo etc..
+		if(normal_key == 'L'){
+			options->rotateLeft();
+			std::cout<<"Rotate right is called \n";
+		}
+		if(normal_key == 'D'){
+			options->rotateDown();
+			std::cout<<"Rotate down is called \n";
+		}
 	}
 	if(modifier_key == GLFW_MOD_ALT){
 		//Add all the functions related to movement options 
@@ -32,7 +38,7 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 			std::cout<<"topLeft function is called \n";
 			movementInstance->topLeft();
 		}
-		else if(normal_key == 'b'){
+		else if(normal_key == 'd'){
 			std::cout<<"bottomLeft function is called \n";
 			movementInstance->bottomLeft();
 		}
@@ -48,21 +54,28 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 			std::cout<<"shuffle function is called\n";
 			movementInstance->shuffle();
 		}
+		else if(normal_key == 'f'){
+			std::cout<<"frontClockwise is called \n";
+			movementInstance->frontClockwise();
+		}
+		else if(normal_key == 'b'){
+			std::cout<<"backClockwise is called \n";
+			movementInstance->backClockwise();
+		}
 	}
 }
 
-
-/*
-void options_t::rotateRight(){
-	movement_t* movement = movement_t::getInstance();
-	movement->angleDeg = 90.0f;
-	movement->rotateAbout = glm::vec3 (0.0f,1.0f,0.0f);
-	for(unsigned i=0 ; i<NOPEICES; i++) movement->peiceNumbers.push_back(i);
-	movement->move();
+void options_t::rotateLeft(){
+	moveInstance->topLeft();
+	moveInstance->horizontalMiddleLeft();
+	moveInstance->bottomLeft();
 }
-*/
 
-
+void options_t::rotateDown(){
+	moveInstance->leftDown();
+	moveInstance->verticalMiddleDown();
+	moveInstance->rightDown();
+}
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 	static float scaleFactor=1;
 	glm::mat4 zoom = glm::mat4(1.0f);
