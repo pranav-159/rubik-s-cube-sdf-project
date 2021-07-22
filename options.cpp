@@ -1,3 +1,8 @@
+/*TODO
+ * 1. Add undo option,
+ * 2. Add the opposite directoins to the rotations
+ * 3. Add an option to move between 3d(perspective) and 2d(orthographic) modes.
+ * */
 #include"opengl.h"
 
 /**
@@ -76,6 +81,8 @@ void options_t::rotateDown(){
 	moveInstance->verticalMiddleDown();
 	moveInstance->rightDown();
 }
+
+//For zooming in and out
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 	static float scaleFactor=1;
 	glm::mat4 zoom = glm::mat4(1.0f);
@@ -86,3 +93,33 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
     glUniformMatrix4fv(scaleLoc, 1, GL_FALSE, glm::value_ptr(zoom));
 }
 
+//For getting different views of the cube by moving the mouse
+void mouse_callback(GLFWwindow* window,int button, int action, int mods){
+	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+		options_t::getOptionsInstance()->differentAngle();
+	}
+}
+
+/*This function will be called when there is a mouse click on the -ve end position of the cube*/
+void options_t::differentAngle(){
+		if(cameraStatus == 0){
+			cameraPos = glm::vec3(-2.0f,0.0f,2.0f);
+			cameraStatus = 1;
+		}
+		else if(cameraStatus == 1){
+			cameraPos = glm::vec3(-2.0f,0.0f,-2.0f);
+			cameraStatus = 2;
+		}
+		else if(cameraStatus == 2){
+			cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
+			cameraStatus = 3;
+		}
+		else if(cameraStatus == 3){
+			cameraPos = glm::vec3(2.0f,0.0f,2.0f);
+			cameraStatus = 4;
+		}
+		else if(cameraStatus == 4){
+			cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+			cameraStatus = 0;
+		}
+}

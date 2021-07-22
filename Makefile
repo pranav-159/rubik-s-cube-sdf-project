@@ -26,4 +26,4 @@ movement.o : movement.cpp opengl.h
 
 
 clean : 
-	rm $(SRC) set_buffer.o data.o shaders.o window.o options.o movement.o 
+	rm  set_buffer.o data.o shaders.o window.o options.o movement.o 

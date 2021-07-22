@@ -1,3 +1,7 @@
+/*TODO:
+ * 1. Add the opposite movements for every written movement.
+ * 2. Add undo option i.e., use the stack (history).
+ * */
 #include"opengl.h"
 
 std::stack<std::function<void()>> movement_t::history;

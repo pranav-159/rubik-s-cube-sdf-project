@@ -5,16 +5,12 @@
 #define NODATAPOINTS 6*9*4*6
 #define GAP 0.01f
 
-/*
- * Changes to be made :
- * 1. Move the whole data into an external text, yml or json file to retain the state at which the user stopped
- * 2. Need to impliment the enum class properly 
- * */
 
 struct vectorCord{
 	float xCord, yCord, zCord, rCol, gCol, bCol;
 };
 
+//It would be useful if you want to add some cube puzzles
 enum class choice_t{shuffled , noCubes};
 
 class data{

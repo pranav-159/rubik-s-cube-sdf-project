@@ -24,6 +24,7 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key);//D
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window); //Defined in window.cpp file
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);//Defined in window.cpp file
+void mouse_callback(GLFWwindow *window, int button, int action, int mods);
 
 //a singleton class because we should have only one shader
 //This class creates the shaders and atlast what we want is the id of shader program created
@@ -89,9 +90,14 @@ private:
 	glm::mat4 scale= glm::mat4(1.0f);
 	movement_t* moveInstance = movement_t::getInstance();
 public:
+	glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f,0.0f,0.0f);
+	glm::vec3 camerUp = glm::vec3(0.0f,1.0f,0.0f);
+	unsigned cameraStatus=0;
 	static options_t* getOptionsInstance();
 	void rotateLeft();
 	void rotateDown();
+	void differentAngle(); //This function will change the values of cameraPos and camerUp 
 
 };
 

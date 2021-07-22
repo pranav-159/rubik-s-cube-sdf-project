@@ -12,3 +12,5 @@
 	- ALT-h horizontal right.
 	- ALT-f front clockwise.
 	- ALT-b back clockwise.
+	- SHIFT-l rotate the whole cube towards left
+	- SHIFT-d rotate the whole cube towards down
