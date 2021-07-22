@@ -4,7 +4,7 @@ SRC = main
 .PHONY : clean
 
 $(SRC) : $(SRC).cpp shader.o shaderPrograms.o vertexInitializer.o rotator.o window.o camera.o
-	g++ -o $(SRC) $(SRC).cpp shader.o shaderPrograms.o vertexInitializer.o rotator.o window.o camera.o $(LFLAGS)
+	g++ -o $(SRC) $(SRC).cpp shader.o shaderPrograms.o vertexInitializer.o rotator.o window.o camera.o stb_image.o $(LFLAGS)
 
 shader.o : shader.cpp
 	g++ -c shader.cpp

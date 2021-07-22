@@ -97,89 +97,29 @@ void VertexInitializer::randomPopulator(std::array<float, 54 * 9> &vertexData)
         glVertexAttribPointer(2,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(void*)(6*sizeof(float)));
         glEnableVertexAttribArray(2);
     }
-	// std::array<float,54*9> tfData;
-	// glGetBufferSubData(GL_ARRAY_BUFFER,0,54*9*sizeof(float),(void*)&tfData[0]);
-	// std::ofstream myFile;
-	// myFile.open("initTransform.csv");
-	// for(int i=0;i<54;i++)
-	// 	{	
-	// 		myFile<<i<<",";
-	// 		for(int j=0;j<3;j++)
-	// 		{
-	// 			for(int k=0;k<3;k++)
-	// 			{
-	// 				myFile<<vertexData[9*i+3*j+k]<<",";
-	// 			}
-	// 			myFile<<",";
-	// 		}
-	// 		myFile<<std::endl;
-	// 	}
-	// 	myFile<<std::endl;
-
+	
 
 	int n=15+std::rand()%20;
 	while(n--)
 	{
-		// myFile<<n<<std::endl;
+		
 		int f=std::rand(),t=std::rand(),s=std::rand();
 		Rotator* rot =new Rotator((Face)(f%6),(Turn)(t%2),(Stack)(s%4));
-		// TestCondition test=rot->conditionTransformer();
-		// myFile<<test.axis<<std::endl;
-		// myFile<<test.plane1<<std::endl;
-		// myFile<<test.plane2<<std::endl;
+		
 		std::array<float,54> feedback=launchDetectingProgram(detectingProgram,vao2[draw_buffer],rot->conditionTransformer());
-		// for(int i=0;i<54;i++)
-		// {
-		// 	myFile<<i<<" "<<feedback[i]<<std::endl;
-		// }
-		// myFile<<std::endl;
+		
 		glm::mat4 model=rot->rotateMatrixCreator(glm::half_pi<float>());
 		launchTransformingProgram(transformProgram,vao2[draw_buffer],vbo2[(draw_buffer+1)%no_of_buffers],model,feedback);
 		
-		// for(int i=0;i<4;i++){
-		// 	for(int j=0;j<4;j++)
-		// 		myFile<<model[i][j]<<" ";
-		// 	myFile<<std::endl;
-		// }	
-		// myFile<<std::endl;
-		// glBindVertexArray(vao2[(draw_buffer+1)%no_of_buffers]);
-		// glGetBufferSubData(GL_ARRAY_BUFFER,0,54*9*sizeof(float),(void*)&tfData[0]);
-		// for(int i=0;i<54;i++)
-		// {
-		// 	myFile<<i<<",";
-		// 	for(int j=0;j<3;j++)
-		// 	{
-		// 		for(int k=0;k<3;k++)
-		// 		{
-		// 			myFile<<tfData[9*i+3*j+k]<<",";
-		// 		}
-		// 		myFile<<",";
-		// 	}
-		// 	myFile<<std::endl;
-		// }
-		// myFile<<std::endl;
+		
 		draw_buffer=(draw_buffer+1)%no_of_buffers;
 		delete rot;
 	}
-	// myFile.close();
+	
 	glBindVertexArray(vao2[draw_buffer]);
 	glBindBuffer(GL_ARRAY_BUFFER,vao2[draw_buffer]);
 	glGetBufferSubData(GL_ARRAY_BUFFER,0,54*9*sizeof(float),(void*)&vertexData[0]);
-	// for(int i=0;i<54;i++)
-	// 	{
-	// 		myFile<<i<<",";
-	// 		for(int j=0;j<3;j++)
-	// 		{
-	// 			for(int k=0;k<3;k++)
-	// 			{
-	// 				myFile<<vertexData[9*i+3*j+k]<<",";
-	// 			}
-	// 			myFile<<",";
-	// 		}
-	// 		myFile<<std::endl;
-	// 	}
-	// 	myFile<<std::endl;
-	// 	myFile.close();
+	
 	glDeleteBuffers(2,vbo2);
 	glDeleteVertexArrays(2,vao2);
 	glDeleteProgram(transformProgram);

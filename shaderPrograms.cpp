@@ -14,11 +14,10 @@
  */
 unsigned int createDrawProgram()
 {
-
     unsigned int drawShaderProgram = glCreateProgram();
-    unsigned int vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "vertexShader");
-    unsigned int geometryShader = createAndCompileShaderFromFile(GL_GEOMETRY_SHADER, "geometryShader");
-    unsigned int fragmentShader = createAndCompileShaderFromFile(GL_FRAGMENT_SHADER, "fragmentShader");
+    unsigned int vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "drawShaders/vertexShader");
+    unsigned int geometryShader = createAndCompileShaderFromFile(GL_GEOMETRY_SHADER, "drawShaders/geometryShader");
+    unsigned int fragmentShader = createAndCompileShaderFromFile(GL_FRAGMENT_SHADER, "drawShaders/fragmentShader");
     glAttachShader(drawShaderProgram, vertexShader);
     glAttachShader(drawShaderProgram, geometryShader);
     glAttachShader(drawShaderProgram, fragmentShader);
@@ -30,6 +29,20 @@ unsigned int createDrawProgram()
 
     return drawShaderProgram;
 }
+unsigned createInstructionDrawProgram(){
+    unsigned InstructionProgram = glCreateProgram();
+    unsigned int vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "textureShaders/textureVertexShader");
+    unsigned int fragmentShader = createAndCompileShaderFromFile(GL_FRAGMENT_SHADER, "textureShaders/textureFragmentShader");
+    glAttachShader(InstructionProgram, vertexShader);
+    glAttachShader(InstructionProgram, fragmentShader);
+    glLinkProgram(InstructionProgram);
+    checkProgramLinkStatus(InstructionProgram);
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    return InstructionProgram;
+
+}
 /**
  * @brief Create a Cover Draw Program object
  * 
@@ -38,9 +51,9 @@ unsigned int createDrawProgram()
 unsigned int createCoverDrawProgram()
 {
     unsigned int coverDrawProgram =glCreateProgram();
-    unsigned int coververtexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER,"coverVertexShader");
-    unsigned int covergeometryShader = createAndCompileShaderFromFile(GL_GEOMETRY_SHADER,"coverGeometryShader");
-    unsigned int coverfragmentShader =createAndCompileShaderFromFile(GL_FRAGMENT_SHADER,"coverFragmentShader");
+    unsigned int coververtexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER,"coverShaders/coverVertexShader");
+    unsigned int covergeometryShader = createAndCompileShaderFromFile(GL_GEOMETRY_SHADER,"coverShaders/coverGeometryShader");
+    unsigned int coverfragmentShader =createAndCompileShaderFromFile(GL_FRAGMENT_SHADER,"coverShaders/coverFragmentShader");
     glAttachShader(coverDrawProgram,coververtexShader);
     glAttachShader(coverDrawProgram,covergeometryShader);
     glAttachShader(coverDrawProgram,coverfragmentShader);
@@ -87,7 +100,7 @@ bool checkProgramLinkStatus(unsigned int handle)
 unsigned int createDetectingProgram()
 {
     unsigned program = glCreateProgram();
-    unsigned vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "RotatingTileDetectingShader");
+    unsigned vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "detectingShaders/RotatingTileDetectingShader");
     glAttachShader(program, vertexShader);
     const char *feedBackVaryings[] = {"result"};
     glTransformFeedbackVaryings(program, 1, feedBackVaryings, GL_INTERLEAVED_ATTRIBS);
@@ -103,7 +116,7 @@ unsigned int createDetectingProgram()
 unsigned int createTransformingProgram()
 {
     unsigned int program = glCreateProgram();
-    unsigned int vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "vertexTransformingShader");
+    unsigned int vertexShader = createAndCompileShaderFromFile(GL_VERTEX_SHADER, "transformShaders/vertexTransformingShader");
     glAttachShader(program, vertexShader);
     const char *feedbackVaryings[] = {"pos", "norm", "col"};
     glTransformFeedbackVaryings(program, 3, feedbackVaryings, GL_INTERLEAVED_ATTRIBS);
@@ -145,15 +158,7 @@ std::array<float, 54> launchDetectingProgram(unsigned int detectingShaderProgram
 
     std::array<float, 54> tfData;
     glGetBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER, 0, sizeof(tfData), (void *)&tfData[0]);
-    // std::ofstream myFile;
-    // myFile.open("detecting.csv");
-    // static int counter=0;
-    // std::cout<<counter++;
-    // for(int i=0;i<54;i++)
-    // {
-    //     myFile<<i<<","<<tfData[i]<<std::endl;
-    // }
-    // myFile<<std::count(tfData.begin(),tfData.end(),1);
+    
     glDeleteBuffers(1, &TBO);
     return tfData;
 }
@@ -181,27 +186,7 @@ std::array<float,54*9> launchTransformingProgram(unsigned int transformingProgra
     glDisable(GL_RASTERIZER_DISCARD);
     std::array<float,54*9> feed;
     glGetBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER,0,54*9*sizeof(float),(void*)&(feed[0]));
-    // for(int i=0;i<9;i++)
-    // {
-    //     std::cout<<feed[i]<<" ";
-    // }
-    // std::cout<<std::endl;
-    // std::ofstream myFile;
-    // myFile.open("transformData.csv");
-    // for(int i=0;i<54;i++)
-    // {
-    //     myFile<<i<<",";
-    //     for(int j=0;j<3;j++)
-    //     {
-    //         for(int k=0;k<3;k++)
-    //         {
-    //             myFile<<feed[9*i+3*j+k]<<",";
-    //         }
-    //         myFile<<",";
-    //     }
-    //     myFile<<std::endl;
-    // }
-    // myFile.close();
+    
     return feed;
 }
 /**
