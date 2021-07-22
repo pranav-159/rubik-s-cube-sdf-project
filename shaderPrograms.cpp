@@ -208,11 +208,7 @@ void launchDrawProgram(unsigned int drawProgram,unsigned int vao,const glm::mat4
     setUniform(drawProgram,"projection",projection);
     setUniform(drawProgram,"feedback",feedback);
     glBindVertexArray(vao);
-    // glDrawArrays(GL_POINTS,12,2);
-    // glDrawArrays(GL_POINTS,37,1);
-    // glDrawArrays(GL_POINTS,40,1);
-    // glDrawArrays(GL_POINTS,43,1);
-    // glDrawArrays(GL_POINTS,27,9);
+
     glDrawArrays(GL_POINTS,0,54);
 }
 /**

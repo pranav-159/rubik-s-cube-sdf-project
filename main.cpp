@@ -121,7 +121,7 @@ int main()
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
-    std::cout<<width<<" "<<height<<" "<<nrChannels<<std::endl;
+ 
 
     rot = new Rotator(Face::DOWN, Turn::CLOCKWISE, Stack::FIRST);
     

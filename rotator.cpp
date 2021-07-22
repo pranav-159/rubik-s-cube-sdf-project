@@ -109,11 +109,7 @@ std::array<float,6> Rotator::coverPoints(){
         arr[3+(axis+1)%3]=0.0f;
         arr[3+(axis+2)%3]=0.0f;
     }
-    std::ofstream myFile;
-    myFile.open("coverPoints.csv");
-    myFile<<stack<<","<<plane1<<","<<plane2<<std::endl;
-    myFile<<arr[0]<<","<<arr[1]<<","<<arr[2]<<std::endl;
-    myFile<<arr[3]<<","<<arr[4]<<","<<arr[5]<<std::endl;
+   
     return arr;
 } 
 /**
