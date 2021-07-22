@@ -155,7 +155,8 @@ int main()
     float time = 0.0f;
     float now, delta = 0.0f, previous = glfwGetTime();
     int setter = 1;
-    float process_time = 0.5f;
+    int setter1=1;
+    float process_time = 0.4f;
     while (!glfwWindowShouldClose(window))
     {
 
@@ -164,8 +165,12 @@ int main()
         processInput(window, rot, viewIndex, KEY,CAM_KEY,GAME_KEY);
 
         if(GAME_KEY){   
-            glEnable(GL_DEPTH);
-            glEnable(GL_DEPTH_TEST);
+            if(setter1--)
+            {
+                glEnable(GL_DEPTH);
+                glEnable(GL_DEPTH_TEST);
+                glfwSetWindowSize(window,600, 600);
+            }    
             view = cam.createViewMatrix(viewIndex);
 
             //render
