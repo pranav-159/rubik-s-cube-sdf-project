@@ -9,6 +9,7 @@
 #include "camera.h"
 #include <thread>
 #include <chrono>
+#include <stb_image.h>
 
 extern float TL;
 float TL = 2.0f;
@@ -60,22 +61,23 @@ int main()
 
     glBindVertexArray(0);
 
+   
     float vertices[] = {
-        0.5f, 0.5f, 1.0f,   // top right
-        0.5f, -0.5f, 1.0f,  // bottom right
-        -0.5f, -0.5f, 1.0f, // bottom left
-        -0.5f, 0.5f, 1.0f   // top left
+        // positions          // colors           // texture coords
+         1.0f,1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, // top right
+         1.0f,-1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   0.0f, 1.0f, // bottom right
+        -1.0f,-1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // bottom left
+        -1.0f,1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   1.0f, 0.0f  // top left 
     };
-    unsigned int indices[] = {
-        // note that we start from 0!
-        0, 1, 3, // first Triangle
-        1, 2, 3  // second Triangle
+    unsigned int indices[] = {  
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
     };
     unsigned int vbo2, vao2, ebo2;
     glGenVertexArrays(1, &vao2);
     glGenBuffers(1, &vbo2);
     glGenBuffers(1, &ebo2);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+
     glBindVertexArray(vao2);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo2);
@@ -84,9 +86,42 @@ int main()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo2);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
+        // load and create a texture 
+    // -------------------------
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
+    unsigned char *data = stbi_load("textures/projectInstructions.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+    std::cout<<width<<" "<<height<<" "<<nrChannels<<std::endl;
 
     rot = new Rotator(Face::DOWN, Turn::CLOCKWISE, Stack::FIRST);
     
@@ -104,8 +139,7 @@ int main()
     
     glBindVertexArray(0);
 
-    // glEnable(GL_DEPTH);
-    glEnable(GL_DEPTH_TEST);
+    
     
     projection=glm::perspective(120.0f,800.0f/800.0f,0.1f,30.0f);
     // projection = glm::ortho(-5.0f, 5.0f, -5.0f, 5.0f, 1.0f, 100.0f);
@@ -130,6 +164,8 @@ int main()
         processInput(window, rot, viewIndex, KEY,CAM_KEY,GAME_KEY);
 
         if(GAME_KEY){   
+            glEnable(GL_DEPTH);
+            glEnable(GL_DEPTH_TEST);
             view = cam.createViewMatrix(viewIndex);
 
             //render
@@ -193,9 +229,7 @@ int main()
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
                 CAM_KEY=false;
-
-            }
-            
+            }   
         }
         else
         {
@@ -204,10 +238,13 @@ int main()
             glClear(GL_COLOR_BUFFER_BIT);
 
             // draw our first triangle
+            glBindTexture(GL_TEXTURE_2D,texture);
             glUseProgram(instructionProgram);
+            glm::mat4 view2d=glm::lookAt(glm::vec3(0.0f,0.0f,-1.0f),glm::vec3(0.0f,0.0f,0.0f),glm::vec3(0.0f,1.0f,0.0f));
+            setUniform(instructionProgram,"view",view2d);
             glBindVertexArray(vao2); // seeing as we only have a single vao2 there's no need to bind it every time, but we'll do so to keep things a bit more organized
-            glDrawArrays(GL_TRIANGLES, 0, 3);
-            // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+            // glDrawArrays(GL_TRIANGLES, 0, 3);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
             // glBindVertexArray(0); // no need to unbind it every time 
     
             // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
