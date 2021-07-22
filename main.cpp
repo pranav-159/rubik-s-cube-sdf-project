@@ -252,8 +252,7 @@ int main()
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
             // glBindVertexArray(0); // no need to unbind it every time 
     
-            // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-            // -------------------------------------------------------------------------------
+    
             glfwSwapBuffers(window); 
         }
         
