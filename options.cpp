@@ -22,49 +22,38 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 		//Add all the functions related to extra options like rotate left , undo etc..
 		if(normal_key == 'L'){
 			options->rotateLeft();
-			std::cout<<"Rotate right is called \n";
 		}
 		if(normal_key == 'D'){
 			options->rotateDown();
-			std::cout<<"Rotate down is called \n";
 		}
 	}
 	if(modifier_key == GLFW_MOD_ALT){
 		//Add all the functions related to movement options 
 		if(normal_key == 'l'){
-			std::cout<<"leftDown function is called \n";
 			movementInstance->leftDown();
 		}
 		else if(normal_key == 'r'){
-			std::cout<<"rightDown function is called \n";
 			movementInstance->rightDown();
 		}
 		else if(normal_key == 'u'){
-			std::cout<<"topLeft function is called \n";
 			movementInstance->topLeft();
 		}
 		else if(normal_key == 'd'){
-			std::cout<<"bottomLeft function is called \n";
 			movementInstance->bottomLeft();
 		}
 		else if(normal_key == 'v'){
-			std::cout<<"verticalMiddleDown function is called\n";
 			movementInstance->verticalMiddleDown();
 		}
 		else if(normal_key == 'h'){
-			std::cout<<"horizontalMiddleLeft function is called\n";
 			movementInstance->horizontalMiddleLeft();
 		}
 		else if(normal_key == 's'){
-			std::cout<<"shuffle function is called\n";
 			movementInstance->shuffle();
 		}
 		else if(normal_key == 'f'){
-			std::cout<<"frontClockwise is called \n";
 			movementInstance->frontClockwise();
 		}
 		else if(normal_key == 'b'){
-			std::cout<<"backClockwise is called \n";
 			movementInstance->backClockwise();
 		}
 	}
