@@ -14,6 +14,7 @@ struct Color
 
 class VertexInitializer
 {
+
 	float TL=2.0f;
 
 	float planes[3] = {-TL, 0, TL};
@@ -26,8 +27,16 @@ class VertexInitializer
 	Color yellow{1, 1, 0};
 
 	Color colorList[6] = {green, blue, white, yellow, red, orange};
+ 	VertexInitializer(){};
 
 public:
+	static VertexInitializer& getInstance()
+	{
+		static VertexInitializer instance;
+		return instance;
+	}
+	VertexInitializer(VertexInitializer const&) = delete;
+	void operator=(VertexInitializer const&)	=delete;				
 	void vertexPopulator(std::array<float, 54 * 9> &vertexData);
 	void randomPopulator(std::array<float,54*9> &vertexData);
 	float getTL();

@@ -32,7 +32,7 @@ int main()
     std::array<float, 54 * 9> vertexData;
     glm::mat4 projection, view, model = glm::mat4(1.0f);
     Rotator *rot;
-    VertexInitializer vertexInit;
+    VertexInitializer& vertexInit=VertexInitializer::getInstance();
 
     vertexInit.setTL(TL);
 
