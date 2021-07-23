@@ -12,6 +12,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "data.h"
 #include <time.h>
+#include <algorithm>
 #define NOMOVEMENTS 8 //This will be changed if new movements are added
 
 
@@ -61,13 +62,16 @@ class movement_t{
 private:
 	static movement_t* Instance;
 	data tempMoveObj;
-	static std::stack<std::function<void()>>history;
+	std::stack<std::pair<unsigned,bool>> history;
 	movement_t()=default;
+	bool undoStatus = 0;
 public:
+	bool direction=0 ;// 0 if it is in the standard direction and 1 if it is in opposite direction
 	std::vector<unsigned>peiceNumbers;
 	std::vector<unsigned>peiceNumbersSide;
 	static movement_t* getInstance();
 	void swapColors(const unsigned x, const unsigned y);
+	void reverseDirection();
 	void move();
 	void moveSide();
 	void leftDown();
@@ -92,12 +96,14 @@ private:
 public:
 	glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,2.0f);
 	glm::vec3 cameraTarget = glm::vec3(0.0f,0.0f,0.0f);
-	glm::vec3 camerUp = glm::vec3(0.0f,1.0f,0.0f);
-	unsigned cameraStatus=0;
+	glm::vec3 cameraUp = glm::vec3(0.0f,1.0f,0.0f);
+	unsigned cameraStatusY=0;
+	unsigned cameraStatusX=0;
 	static options_t* getOptionsInstance();
 	void rotateLeft();
 	void rotateDown();
-	void differentAngle(); //This function will change the values of cameraPos and camerUp 
+	void differentAngleY(); //This function will change the values of cameraPos and camerUp 
+	void differentAngleX();
 
 };
 

@@ -26,20 +26,43 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 		if(normal_key == 'D'){
 			options->rotateDown();
 		}
+		if(normal_key == 'U'){
+			movementInstance->undo_option();
+		}
 	}
 	if(modifier_key == GLFW_MOD_ALT){
 		//Add all the functions related to movement options 
 		if(normal_key == 'l'){
 			movementInstance->leftDown();
 		}
+		else if(normal_key == 'L'){
+			movementInstance->direction = 1;
+			movementInstance->leftDown();
+			movementInstance->direction = 0;
+		}
 		else if(normal_key == 'r'){
 			movementInstance->rightDown();
+		}
+		else if(normal_key == 'R'){
+			movementInstance->direction = 1;
+			movementInstance->rightDown();
+			movementInstance->direction = 0;
 		}
 		else if(normal_key == 'u'){
 			movementInstance->topLeft();
 		}
+		else if(normal_key == 'U'){
+			movementInstance->direction = 1;
+			movementInstance->topLeft();
+			movementInstance->direction = 0;
+		}
 		else if(normal_key == 'd'){
 			movementInstance->bottomLeft();
+		}
+		else if(normal_key == 'D'){
+			movementInstance->direction = 1;
+			movementInstance->bottomLeft();
+			movementInstance->direction = 0;
 		}
 		else if(normal_key == 'v'){
 			movementInstance->verticalMiddleDown();
@@ -53,8 +76,18 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 		else if(normal_key == 'f'){
 			movementInstance->frontClockwise();
 		}
+		else if(normal_key == 'F'){
+			movementInstance->direction = 1;
+			movementInstance->frontClockwise();
+			movementInstance->direction = 0;
+		}
 		else if(normal_key == 'b'){
 			movementInstance->backClockwise();
+		}
+		else if(normal_key == 'B'){
+			movementInstance->direction = 1;
+			movementInstance->backClockwise();
+			movementInstance->direction = 0;
 		}
 	}
 }
@@ -85,30 +118,53 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 //For getting different views of the cube by moving the mouse
 void mouse_callback(GLFWwindow* window,int button, int action, int mods){
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-		options_t::getOptionsInstance()->differentAngle();
+		options_t::getOptionsInstance()->differentAngleY();
+	}
+	if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+		options_t::getOptionsInstance()->differentAngleX();
 	}
 }
 
 /*This function will be called when there is a mouse click on the -ve end position of the cube*/
-void options_t::differentAngle(){
-		if(cameraStatus == 0){
-			cameraPos = glm::vec3(-2.0f,0.0f,2.0f);
-			cameraStatus = 1;
-		}
-		else if(cameraStatus == 1){
-			cameraPos = glm::vec3(-2.0f,0.0f,-2.0f);
-			cameraStatus = 2;
-		}
-		else if(cameraStatus == 2){
-			cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
-			cameraStatus = 3;
-		}
-		else if(cameraStatus == 3){
-			cameraPos = glm::vec3(2.0f,0.0f,2.0f);
-			cameraStatus = 4;
-		}
-		else if(cameraStatus == 4){
-			cameraPos = glm::vec3(0.0f,0.0f,2.0f);
-			cameraStatus = 0;
-		}
+void options_t::differentAngleY(){
+	switch(cameraStatusY){
+		case 0: cameraPos = glm::vec3(-2.0f,0.0f,2.0f);
+			    cameraStatusY = 1;
+				break;
+		case 1: cameraPos = glm::vec3(-2.0f,0.0f,-2.0f);
+			    cameraStatusY = 2;
+				break;
+		case 2: cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
+			    cameraStatusY = 3;
+				break;
+		case 3: cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
+			    cameraStatusY = 3;
+				break;
+		case 4: cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+			    cameraStatusY = 0;
+	}
+}
+
+void options_t::differentAngleX(){
+	switch(cameraStatusX){
+		case 0: cameraPos = glm::vec3(0.0f,2.0f,2.0f);
+				cameraUp = glm::vec3(0.0f,0.707f,-0.707f);
+				cameraStatusX = 1;
+				break;
+		case 1: cameraPos = glm::vec3(0.0f,2.0f,-2.0f);
+				cameraUp = glm::vec3(0.0f,0.707f,0.707f);
+				cameraStatusX = 2;
+				break;
+		case 2: cameraPos = glm::vec3(0.0f,-2.0f,-2.0f);
+				cameraUp = glm::vec3(0.0f,0.707,-0.707f);
+				cameraStatusX = 3;
+				break;
+		case 3: cameraPos = glm::vec3(0.0f,-2.0f,2.0f);
+				cameraUp  = glm::vec3(0.0f,0.707f,0.707f);
+				cameraStatusX = 4;
+				break;
+		case 4: cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+				cameraUp = glm::vec3(0.0f,1.0f,0.0f);
+				cameraStatusX = 0;
+	}
 }

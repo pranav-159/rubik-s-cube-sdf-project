@@ -59,7 +59,7 @@ int main(){
 //		rotate = glm::rotate(rotate,glm::radians((float)glfwGetTime()*2), glm::vec3(1.0f,0.0f,0.0f));
         
 		//Need to change this so that the user can get various kinds of views
-		view = glm::lookAt(optionsInstance->cameraPos,optionsInstance->cameraTarget,optionsInstance->camerUp);
+		view = glm::lookAt(optionsInstance->cameraPos,optionsInstance->cameraTarget,optionsInstance->cameraUp);
 //		projection = glm::ortho(-2.0f, 2.0f, -2.0f, 2.0f, -2.0f, 2.0f);
 		projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 1.0f, 5.0f);
 		projection = projection * view * rotate;

@@ -40,6 +40,7 @@ GLFWwindow* init_window(){
     }
 	printf("Instructions -- >\n");
 	std::cout<<"- For all cube movements use ALT key as special key and for all rotations use SHIFT key as special key.\n";
+	std::cout<<"And for the opposite directions we need to use capital letters instead of small letters\n";
     std::cout<<"- Key mappings :\n";
 	std::cout<<"- ALT-l left down.\n- ALT-r right down.\n- ALT-u up right.\n- ALT-d down right.\n";
 	std::cout<<"- ALT-v vertical down.\n- ALT-h horizontal right.\n- ALT-f front clockwise.\n";

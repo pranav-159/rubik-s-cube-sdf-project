@@ -6,6 +6,7 @@
 
 ## Movements
 - For all cube movements use ALT key as special key and for all rotations use SHIFT key as special key.
+- And for movements in opposite directions we use capital letters.
 - Key mappings :
 	- ALT-l left down.
 	- ALT-r right down.
