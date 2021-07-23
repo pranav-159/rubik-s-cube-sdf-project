@@ -18,10 +18,9 @@ public:
 	static float gap;
     static float filledCube[NODATAPOINTS];
 	static struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] ;
-    static unsigned choice;
+    static unsigned choice; //This will be useful if you have some cube puzzles
 //	static choice_t choice;
 	static void buildCube();
-	void equateCUbes();
 
 };
 

@@ -1,9 +1,10 @@
 LIB_FLAGS = -Wall -lglfw -lX11 -lXrandr -lpthread -ldl 
+GTEST_FLAGS = -lgtest -lgtest_main 
 SRC = main
 .PHONY : clean 
 
-$(SRC) : $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o  opengl.h 
-	g++ -o $(SRC) $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o $(LIB_FLAGS)
+$(SRC) : $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o testing.o opengl.h
+	g++ -o $(SRC) $(SRC).cpp set_buffer.o data.o shaders.o window.o options.o movement.o glad.o testing.o $(LIB_FLAGS) $(GTEST_FLAGS)
 
 set_buffer.o : set_buffer.cpp opengl.h
 	g++ -c set_buffer.cpp 
@@ -22,6 +23,9 @@ options.o : options.cpp opengl.h
 
 movement.o : movement.cpp opengl.h
 	g++ -c movement.cpp 
+
+testing.o : testing.cpp opengl.h
+	g++ -c testing.cpp
 
 
 

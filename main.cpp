@@ -1,11 +1,11 @@
-/*TODO 
- * 1. Check the perspective matrix properly to get 3d feature.
- * */
 #include"opengl.h"
 
 
 
-int main(){
+
+int main(int argc, char *argv[]){
+
+	::testing::InitGoogleTest(&argc,argv);
 
     GLFWwindow* window = init_window();//creating a window
     if(window == NULL) std::cout<<"Error in creating the window \n";
@@ -81,7 +81,8 @@ int main(){
 
     glfwTerminate();
 
-    return 0;
+    return RUN_ALL_TESTS();
+
 
     
 }

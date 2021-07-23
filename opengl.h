@@ -13,6 +13,7 @@
 #include "data.h"
 #include <time.h>
 #include <algorithm>
+#include <gtest/gtest.h>
 #define NOMOVEMENTS 8 //This will be changed if new movements are added
 
 
