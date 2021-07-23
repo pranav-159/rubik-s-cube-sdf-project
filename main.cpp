@@ -2,10 +2,28 @@
  * 1. Check the perspective matrix properly to get 3d feature.
  * */
 #include"opengl.h"
+#include"menu.h"  
 
 
 
 int main(){
+  sf::RenderWindow window1(sf::VideoMode::getDesktopMode(), "RUBIK'S CUBE GAME");
+    
+  Menu menu(1900,900);
+
+  while (window1.isOpen())
+  {
+    sf::Event event;
+    while (window1.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed)
+      window1.close();
+
+      if(menu.getrect1().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+    
 
     GLFWwindow* window = init_window();//creating a window
     if(window == NULL) std::cout<<"Error in creating the window \n";
@@ -80,8 +98,32 @@ int main(){
     glDeleteProgram(shader_program);
 
     glfwTerminate();
+        }
+      }
+      if(menu.getrect2().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+          menu.instructions();
+        }
+      }
+      if(menu.getrect3().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+          window1.close();
+        }
+      }
+    }
+         
+    window1.clear();
 
-    return 0;
+    menu.draw(window1);
+
+    window1.display();
+  }
+  return 0;
+}
 
     
-}
+
