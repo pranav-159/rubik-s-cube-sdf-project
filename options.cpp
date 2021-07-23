@@ -1,13 +1,5 @@
-/*TODO
- * 1. Add undo option,
- * 2. Add the opposite directoins to the rotations
- * 3. Add an option to move between 3d(perspective) and 2d(orthographic) modes.
- * */
 #include"opengl.h"
 
-/**
- * Here we have a call back function which calls the suitable functions to change the view of the cube
- * **/
 
 options_t* options_t::instance;
 options_t* options_t::getOptionsInstance(){
@@ -15,6 +7,7 @@ options_t* options_t::getOptionsInstance(){
 	return instance;
 }
 
+//For keyboard inputs
 void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	movement_t* movementInstance = movement_t::getInstance();
 	options_t* options = options_t::getOptionsInstance();
@@ -92,6 +85,7 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	}
 }
 
+//Rotating the whole cube is equivalent in rotating the three coloumns towards left
 void options_t::rotateLeft(){
 	moveInstance->topLeft();
 	moveInstance->horizontalMiddleLeft();
@@ -115,7 +109,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
     glUniformMatrix4fv(scaleLoc, 1, GL_FALSE, glm::value_ptr(zoom));
 }
 
-//For getting different views of the cube by moving the mouse
+//For getting different views of the cube by clicking the mouse
 void mouse_callback(GLFWwindow* window,int button, int action, int mods){
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
 		options_t::getOptionsInstance()->differentAngleY();
@@ -125,25 +119,29 @@ void mouse_callback(GLFWwindow* window,int button, int action, int mods){
 	}
 }
 
-/*This function will be called when there is a mouse click on the -ve end position of the cube*/
+//shifts the view angle about Y axis
 void options_t::differentAngleY(){
-	switch(cameraStatusY){
-		case 0: cameraPos = glm::vec3(-2.0f,0.0f,2.0f);
-			    cameraStatusY = 1;
-				break;
-		case 1: cameraPos = glm::vec3(-2.0f,0.0f,-2.0f);
-			    cameraStatusY = 2;
-				break;
-		case 2: cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
-			    cameraStatusY = 3;
-				break;
-		case 3: cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
-			    cameraStatusY = 3;
-				break;
-		case 4: cameraPos = glm::vec3(0.0f,0.0f,2.0f);
-			    cameraStatusY = 0;
+		if(cameraStatusY == 0){
+			cameraPos = glm::vec3(-2.0f,0.0f,2.0f);
+			cameraStatusY = 1;
+		}
+		else if(cameraStatusY == 1){
+			cameraPos = glm::vec3(-2.0f,0.0f,-2.0f);
+			cameraStatusY = 2;
+		}
+		else if(cameraStatusY == 2){
+			cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
+			cameraStatusY = 3;
+		}
+		else if(cameraStatusY == 3){
+			cameraPos = glm::vec3(2.0f,0.0f,2.0f);
+			cameraStatusY = 4;
+		}
+		else if(cameraStatusY == 4){
+			cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+			cameraStatusY = 0;
+		}
 	}
-}
 
 void options_t::differentAngleX(){
 	switch(cameraStatusX){

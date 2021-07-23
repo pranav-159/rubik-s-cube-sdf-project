@@ -1,5 +1,3 @@
-/*TODO
- * 1. Need to add gaps in between peices to make the cube look good */
 #include"opengl.h"
 
 //choice_t data::choice;
@@ -26,6 +24,7 @@ void data::buildCube(){
 }
 
 
+//Position and Color coordinates of all the cube squares
 struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] = {
 //front face green color {{{
 

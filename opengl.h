@@ -71,10 +71,15 @@ public:
 	std::vector<unsigned>peiceNumbers;
 	std::vector<unsigned>peiceNumbersSide;
 	static movement_t* getInstance();
-	void swapColors(const unsigned x, const unsigned y);
+	//reverse if direction=1
 	void reverseDirection();
+	//Changes the colors of the indices provided in peiceNumbers and peiceNumbersSide so that it appears as if the peices are rotated
+	void swapColors(const unsigned x, const unsigned y);
 	void move();
 	void moveSide();
+	void undo_option();
+	void shuffle();
+	//Movements
 	void leftDown();
 	void rightDown();
 	void topLeft();
@@ -83,8 +88,6 @@ public:
 	void horizontalMiddleLeft();
 	void frontClockwise();
 	void backClockwise();
-	void undo_option();
-	void shuffle();
 };
 
 //This class takes care of additional options 
@@ -95,12 +98,15 @@ private:
 	glm::mat4 scale= glm::mat4(1.0f);
 	movement_t* moveInstance = movement_t::getInstance();
 public:
+	//camera quantities are used for getting differnt views of the cube
 	glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,2.0f);
 	glm::vec3 cameraTarget = glm::vec3(0.0f,0.0f,0.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f,1.0f,0.0f);
+	//cameraStatus keeps track of the placement of the camera
 	unsigned cameraStatusY=0;
 	unsigned cameraStatusX=0;
 	static options_t* getOptionsInstance();
+	//To completely rotate the cube along Y axis and X axis
 	void rotateLeft();
 	void rotateDown();
 	void differentAngleY(); //This function will change the values of cameraPos and camerUp 

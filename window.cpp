@@ -12,6 +12,7 @@ const unsigned int SCR_HEIGHT = 600;
 GLFWwindow* init_window(){
         // glfw: initialize and configure
     glfwInit();
+	//The below three function calls specify the minimum version of opengl required in the system inorder to render this graphic
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -21,7 +22,6 @@ GLFWwindow* init_window(){
 #endif
 
     // glfw window creation
-    // --------------------
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Rubik's Cube", NULL, NULL);
     if (window == NULL)
     {
@@ -38,6 +38,7 @@ GLFWwindow* init_window(){
         std::cout << "Failed to initialize GLAD" << std::endl;
         return NULL;
     }
+	//Display all instructions on console when the program starts
 	printf("Instructions -- >\n");
 	std::cout<<"- For all cube movements use ALT key as special key and for all rotations use SHIFT key as special key.\n";
 	std::cout<<"And for the opposite directions we need to use capital letters instead of small letters\n";

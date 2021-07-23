@@ -1,9 +1,4 @@
-/*TODO:
- * 1. Add the opposite movements for every written movement.
- * 2. Add undo option i.e., use the stack (history).
- * */
 #include"opengl.h"
-#include <utility>
 
 movement_t* movement_t::Instance;
 
@@ -14,6 +9,15 @@ movement_t* movement_t::getInstance(){
 
 
 
+void movement_t::swapColors(const unsigned x, const unsigned y){
+	for(unsigned j=0;j<4;j++){
+		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].rCol,tempMoveObj.splitCube[data::choice-1][y][j].rCol);
+		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].gCol,tempMoveObj.splitCube[data::choice-1][y][j].gCol);
+		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].bCol,tempMoveObj.splitCube[data::choice-1][y][j].bCol);
+	}
+}
+
+//changes the colors of indices mentioned in peiceNumbers 
 void movement_t::move(){
 	for(unsigned i=0;i<9;i++){
 		swapColors(peiceNumbers.at(i),peiceNumbers.at(i+3));
@@ -28,14 +32,8 @@ void movement_t::moveSide(){
 	data::buildCube();
 }
 
-void movement_t::swapColors(const unsigned x, const unsigned y){
-	for(unsigned j=0;j<4;j++){
-		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].rCol,tempMoveObj.splitCube[data::choice-1][y][j].rCol);
-		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].gCol,tempMoveObj.splitCube[data::choice-1][y][j].gCol);
-		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].bCol,tempMoveObj.splitCube[data::choice-1][y][j].bCol);
-	}
-}
 
+//This function is called if capital letters are used instead of small letters
 void movement_t::reverseDirection(){
 	std::reverse(peiceNumbers.begin(),peiceNumbers.end());
 	std::reverse(peiceNumbersSide.begin(),peiceNumbersSide.end());
@@ -121,6 +119,7 @@ void movement_t::backClockwise(){
 	if(!undoStatus)history.push(std::make_pair(8,direction));
 }
 
+//undoStatus acts as a lock, so that the movements made while undo_option is called doesnt get stored into the history stack
 void movement_t::undo_option(){
 	std::pair<unsigned,bool>historyElement = history.top();
 	history.pop();

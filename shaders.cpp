@@ -1,11 +1,7 @@
 #include"opengl.h"
 
 
-/**
- *  This uses a singleton design pattern because there should be only one shader creator in 
- *  the program  
- **/
-
+//This file has shader programs and contains the code that compiles the shaders and links them to the current program
 
     unsigned shader_t :: shader_program_id;
 

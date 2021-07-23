@@ -20,6 +20,7 @@ public:
 	static struct vectorCord splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES][4] ;
     static unsigned choice; //This will be useful if you have some cube puzzles
 //	static choice_t choice;
+	//copies the data from splitCube to filledCube which is passed to GPU
 	static void buildCube();
 
 };
