@@ -6,9 +6,9 @@
 
 int main(){
 
-  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "SFML works!");
+  sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "RUBIK'S-CUBE GAME");
     
-  Menu menu(window.getSize().x ,window.getSize().y);
+  Menu menu(1900,900);
 
   while (window.isOpen())
   {
