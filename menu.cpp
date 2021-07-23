@@ -7,7 +7,7 @@ Menu::Menu(float width ,float height)
      //error
    }
 
-   if(!texture.loadFromFile("Rubik's-cube.jpg"))
+   if(!texture.loadFromFile("Rubik's-cube.jpeg"))
    {
      //error
    }
