@@ -38,6 +38,15 @@ GLFWwindow* init_window(){
         std::cout << "Failed to initialize GLAD" << std::endl;
         return NULL;
     }
+	printf("Instructions -- >\n");
+	std::cout<<"- For all cube movements use ALT key as special key and for all rotations use SHIFT key as special key.\n";
+	std::cout<<"And for the opposite directions we need to use capital letters instead of small letters\n";
+    std::cout<<"- Key mappings :\n";
+	std::cout<<"- ALT-l left down.\n- ALT-r right down.\n- ALT-u up right.\n- ALT-d down right.\n";
+	std::cout<<"- ALT-v vertical down.\n- ALT-h horizontal right.\n- ALT-f front clockwise.\n";
+	std::cout<<"- ALT-b back clockwise.\n";
+	std::cout<<"- SHIFT-l rotate the whole cube towards left\n";
+	std::cout<<"- SHIFT-d rotate the whole cube towards down\n";
     return window;
 }
 

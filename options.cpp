@@ -1,3 +1,8 @@
+/*TODO
+ * 1. Add undo option,
+ * 2. Add the opposite directoins to the rotations
+ * 3. Add an option to move between 3d(perspective) and 2d(orthographic) modes.
+ * */
 #include"opengl.h"
 
 /**
@@ -14,44 +19,92 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 	movement_t* movementInstance = movement_t::getInstance();
 	options_t* options = options_t::getOptionsInstance();
 	if(modifier_key == GLFW_MOD_SHIFT){
-		//Add all the functions related to extra options like rotate right , undo etc..
-		options->rotateRight();
-		std::cout<<"Rotate right is called \n";
+		//Add all the functions related to extra options like rotate left , undo etc..
+		if(normal_key == 'L'){
+			options->rotateLeft();
+		}
+		if(normal_key == 'D'){
+			options->rotateDown();
+		}
+		if(normal_key == 'U'){
+			movementInstance->undo_option();
+		}
 	}
 	if(modifier_key == GLFW_MOD_ALT){
 		//Add all the functions related to movement options 
 		if(normal_key == 'l'){
-			std::cout<<"leftUp function is called \n";
-			movementInstance->leftUp();
+			movementInstance->leftDown();
+		}
+		else if(normal_key == 'L'){
+			movementInstance->direction = 1;
+			movementInstance->leftDown();
+			movementInstance->direction = 0;
 		}
 		else if(normal_key == 'r'){
-			std::cout<<"rightUp function is called \n";
-			movementInstance->rightUp();
+			movementInstance->rightDown();
+		}
+		else if(normal_key == 'R'){
+			movementInstance->direction = 1;
+			movementInstance->rightDown();
+			movementInstance->direction = 0;
 		}
 		else if(normal_key == 'u'){
-			std::cout<<"topRight function is called \n";
-			movementInstance->topRight();
+			movementInstance->topLeft();
 		}
-		else if(normal_key == 'b'){
-			std::cout<<"bottomRight function is called \n";
-			movementInstance->bottomRight();
+		else if(normal_key == 'U'){
+			movementInstance->direction = 1;
+			movementInstance->topLeft();
+			movementInstance->direction = 0;
+		}
+		else if(normal_key == 'd'){
+			movementInstance->bottomLeft();
+		}
+		else if(normal_key == 'D'){
+			movementInstance->direction = 1;
+			movementInstance->bottomLeft();
+			movementInstance->direction = 0;
+		}
+		else if(normal_key == 'v'){
+			movementInstance->verticalMiddleDown();
+		}
+		else if(normal_key == 'h'){
+			movementInstance->horizontalMiddleLeft();
 		}
 		else if(normal_key == 's'){
-			std::cout<<"shuffle function is called\n";
 			movementInstance->shuffle();
+		}
+		else if(normal_key == 'f'){
+			movementInstance->frontClockwise();
+		}
+		else if(normal_key == 'F'){
+			movementInstance->direction = 1;
+			movementInstance->frontClockwise();
+			movementInstance->direction = 0;
+		}
+		else if(normal_key == 'b'){
+			movementInstance->backClockwise();
+		}
+		else if(normal_key == 'B'){
+			movementInstance->direction = 1;
+			movementInstance->backClockwise();
+			movementInstance->direction = 0;
 		}
 	}
 }
 
-
-void options_t::rotateRight(){
-	movement_t* movement = movement_t::getInstance();
-	movement->angleDeg = 90.0f;
-	movement->rotateAbout = glm::vec3 (0.0f,1.0f,0.0f);
-	for(unsigned i=0 ; i<NOPEICES; i++) movement->peiceNumbers.push_back(i);
-	movement->move();
+void options_t::rotateLeft(){
+	moveInstance->topLeft();
+	moveInstance->horizontalMiddleLeft();
+	moveInstance->bottomLeft();
 }
 
+void options_t::rotateDown(){
+	moveInstance->leftDown();
+	moveInstance->verticalMiddleDown();
+	moveInstance->rightDown();
+}
+
+//For zooming in and out
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
 	static float scaleFactor=1;
 	glm::mat4 zoom = glm::mat4(1.0f);
@@ -62,3 +115,56 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
     glUniformMatrix4fv(scaleLoc, 1, GL_FALSE, glm::value_ptr(zoom));
 }
 
+//For getting different views of the cube by moving the mouse
+void mouse_callback(GLFWwindow* window,int button, int action, int mods){
+	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+		options_t::getOptionsInstance()->differentAngleY();
+	}
+	if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS){
+		options_t::getOptionsInstance()->differentAngleX();
+	}
+}
+
+/*This function will be called when there is a mouse click on the -ve end position of the cube*/
+void options_t::differentAngleY(){
+	switch(cameraStatusY){
+		case 0: cameraPos = glm::vec3(-2.0f,0.0f,2.0f);
+			    cameraStatusY = 1;
+				break;
+		case 1: cameraPos = glm::vec3(-2.0f,0.0f,-2.0f);
+			    cameraStatusY = 2;
+				break;
+		case 2: cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
+			    cameraStatusY = 3;
+				break;
+		case 3: cameraPos = glm::vec3(2.0f,0.0f,-2.0f);
+			    cameraStatusY = 3;
+				break;
+		case 4: cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+			    cameraStatusY = 0;
+	}
+}
+
+void options_t::differentAngleX(){
+	switch(cameraStatusX){
+		case 0: cameraPos = glm::vec3(0.0f,2.0f,2.0f);
+				cameraUp = glm::vec3(0.0f,0.707f,-0.707f);
+				cameraStatusX = 1;
+				break;
+		case 1: cameraPos = glm::vec3(0.0f,2.0f,-2.0f);
+				cameraUp = glm::vec3(0.0f,0.707f,0.707f);
+				cameraStatusX = 2;
+				break;
+		case 2: cameraPos = glm::vec3(0.0f,-2.0f,-2.0f);
+				cameraUp = glm::vec3(0.0f,0.707,-0.707f);
+				cameraStatusX = 3;
+				break;
+		case 3: cameraPos = glm::vec3(0.0f,-2.0f,2.0f);
+				cameraUp  = glm::vec3(0.0f,0.707f,0.707f);
+				cameraStatusX = 4;
+				break;
+		case 4: cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+				cameraUp = glm::vec3(0.0f,1.0f,0.0f);
+				cameraStatusX = 0;
+	}
+}

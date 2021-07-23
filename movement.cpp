@@ -1,11 +1,10 @@
+/*TODO:
+ * 1. Add the opposite movements for every written movement.
+ * 2. Add undo option i.e., use the stack (history).
+ * */
 #include"opengl.h"
+#include <utility>
 
-/**
- * This file  Should contain all the matrix that are used for transformation or movement of cube and we use a stack to
- * maintain the history of movments
- * **/
-
-std::stack<std::function<void()>> movement_t::history;
 movement_t* movement_t::Instance;
 
 movement_t* movement_t::getInstance(){
@@ -14,74 +13,145 @@ movement_t* movement_t::getInstance(){
 }
 
 
-/*
- * This function multiplies the rotate matrix to the elements of the vector(a class memeber) which
- * contains the index number of the piece that we want to rotate 
- * */
 
 void movement_t::move(){
-	movePeices = glm::rotate(movePeices,glm::radians(angleDeg),rotateAbout);
-	//Reason for bug:
-	//Here we need to just swap the colours of the pieces rather than the position coordinates of peices
-	for(unsigned j : peiceNumbers){
-		for(unsigned i=0; i<4; i++){
-			glm::vec4 tempVector(data::splitCube[data::choice-1][j][i].xCord,data::splitCube[data::choice-1][j][i].yCord,
-					data::splitCube[data::choice-1][j][i].zCord,1.0f);
-			tempVector = movePeices* tempVector ;
-			data::splitCube[data::choice -1][j][i].xCord = tempVector.x;
-			data::splitCube[data::choice -1][j][i].yCord = tempVector.y;
-			data::splitCube[data::choice -1][j][i].zCord = tempVector.z;
+	for(unsigned i=0;i<9;i++){
+		swapColors(peiceNumbers.at(i),peiceNumbers.at(i+3));
 	}
-}
 	data::buildCube();
 }
 
-/*
- * Here for leftUp function we need to rotate the left face and 12 pieces about the x axis
- * for other functions we need to just change the movepeices and peiceNumbers vector
- * */
-
-void movement_t::leftUp(){
-	angleDeg = -90.0f;
-	rotateAbout = glm::vec3 (1.0f,0.0f,0.0f);
-	peiceNumbers = {0,3,6,36,39,42,20,23,26,45,48,51};
-	for(unsigned i=27; i<36; i++) peiceNumbers.push_back(i);
-	move();
+void movement_t::moveSide(){
+	for(unsigned i=0;i<6;i++){
+		swapColors(peiceNumbersSide.at(i),peiceNumbersSide.at(i+2));
+	}
+	data::buildCube();
 }
 
-void movement_t::rightUp(){
-	angleDeg = 90.0f;
-	rotateAbout = glm::vec3(1.0f,0.0f,0.0f);
-	peiceNumbers = {2,5,8,38,41,44,47,50,53,18,21,24};
-	for(unsigned i=9;i<18;i++) peiceNumbers.push_back(i);
-	move();
+void movement_t::swapColors(const unsigned x, const unsigned y){
+	for(unsigned j=0;j<4;j++){
+		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].rCol,tempMoveObj.splitCube[data::choice-1][y][j].rCol);
+		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].gCol,tempMoveObj.splitCube[data::choice-1][y][j].gCol);
+		std::swap(tempMoveObj.splitCube[data::choice-1][x][j].bCol,tempMoveObj.splitCube[data::choice-1][y][j].bCol);
+	}
 }
 
-void movement_t::topRight(){
-	angleDeg = 90.0f;
-	rotateAbout = glm::vec3(0.0f,1.0f,0.0f);
-	peiceNumbers = {0,1,2,9,10,11,18,19,20,27,28,29};
-	for(unsigned i=36;i<45;i++) peiceNumbers.push_back(i);
-	move();
+void movement_t::reverseDirection(){
+	std::reverse(peiceNumbers.begin(),peiceNumbers.end());
+	std::reverse(peiceNumbersSide.begin(),peiceNumbersSide.end());
 }
 
-void movement_t::bottomRight(){
-	angleDeg = 90.0f;
-	rotateAbout = glm::vec3(0.0f,1.0f,0.0f);
-	peiceNumbers = {6,7,8,15,16,17,24,25,26,33,34,35};
-	for(unsigned i=45;i<54;i++) peiceNumbers.push_back(i);
+void movement_t::leftDown(){
+	peiceNumbers = {0,3,6,36,39,42,26,23,20,45,48,51};
+	peiceNumbersSide = {29,32,27,28,33,30,35,34};
+	if(direction == 1){
+		reverseDirection();
+	}
 	move();
+	moveSide();
+	if(!undoStatus)history.push(std::make_pair(1,direction));
+
 }
 
-/*This function will call some rotate functions 20 times randomly each time , a program runs*/
+void movement_t::rightDown(){
+	peiceNumbers = {2,5,8,38,41,44,24,21,18,47,50,53};
+	peiceNumbersSide = {9,10,11,14,17,16,15,12};
+	if(direction == 1){
+		reverseDirection();
+	}
+	move();
+	moveSide();
+	if(!undoStatus)history.push(std::make_pair(2,direction));
+}
+
+void movement_t::topLeft(){
+	peiceNumbers = {0,1,2,27,28,29,18,19,20,9,10,11};
+	peiceNumbersSide = {36,37,38,41,44,43,42,39};
+	if(direction == 1){
+		reverseDirection();
+	}
+	move();
+	moveSide();
+	if(!undoStatus)history.push(std::make_pair(3,direction));
+}
+
+void movement_t::bottomLeft(){
+	peiceNumbers = {6,7,8,33,34,35,24,25,26,15,16,17};
+	peiceNumbersSide = {47,46,45,48,51,52,53,50};
+	if(direction == 1){
+		reverseDirection();
+	}
+	move();
+	moveSide();
+	if(!undoStatus)	history.push(std::make_pair(4,direction));
+}
+
+
+void movement_t::verticalMiddleDown(){
+	peiceNumbers = {1,4,7,37,40,43,25,22,19,46,49,52};
+	move();
+	if(!undoStatus)history.push(std::make_pair(5,direction));
+}
+
+void movement_t::horizontalMiddleLeft(){
+	peiceNumbers = {3,4,5,30,31,32,21,22,23,12,13,14};
+	move();
+	if(!undoStatus)history.push(std::make_pair(6,direction));
+}
+
+void movement_t::frontClockwise(){
+	peiceNumbers = {29,32,35,45,46,47,15,12,9,44,43,42};
+	peiceNumbersSide = {0,1,6,3,8,7,2,5};
+	if(direction == 1){
+		reverseDirection();
+	}
+	move();
+	moveSide();
+	if(!undoStatus)history.push(std::make_pair(7,direction));
+}
+
+void movement_t::backClockwise(){
+	peiceNumbers = {38,37,36,27,30,33,51,52,53,17,14,11};
+	peiceNumbersSide = {18,19,20,23,26,25,24,21};
+	if(direction == 1){
+		reverseDirection();
+	}
+	move();
+	moveSide();
+	if(!undoStatus)history.push(std::make_pair(8,direction));
+}
+
+void movement_t::undo_option(){
+	std::pair<unsigned,bool>historyElement = history.top();
+	history.pop();
+	undoStatus = 1;
+	direction = (historyElement.second - 1) % 2;
+	switch(historyElement.first){
+		case 1: leftDown();break;
+		case 2: rightDown(); break;
+		case 3: topLeft(); break;
+		case 4: bottomLeft(); break;
+		case 5 : verticalMiddleDown(); break;
+		case 6 : horizontalMiddleLeft();break;
+		case 7 : frontClockwise();break;
+		case 8 : backClockwise();
+	}
+	undoStatus = 0;
+}
+
+/*This function will call some rotate functions 20 times randomly each time  */
 void movement_t::shuffle(){
 	std::srand(time(0));
 	for(unsigned i=0;i<20;i++){
 	switch( rand() % NOMOVEMENTS){
-		case 0 : leftUp();  break;
-		case 1 : rightUp(); break;
-		case 3 : topRight(); break;
-		case 4 : bottomRight(); break;
+		case 0 : leftDown();  break;
+		case 1 : rightDown(); break;
+		case 2 : topLeft(); break;
+		case 3 : bottomLeft(); break;
+		case 4 : verticalMiddleDown(); break;
+		case 5 : horizontalMiddleLeft();break;
+		case 6 : frontClockwise();break;
+		case 7 : backClockwise();
 	}
 	}
 }

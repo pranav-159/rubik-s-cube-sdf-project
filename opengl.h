@@ -12,7 +12,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "data.h"
 #include <time.h>
-#define NOMOVEMENTS 4 //This will be changed if new movements are added
+#include <algorithm>
+#include <gtest/gtest.h>
+#define NOMOVEMENTS 8 //This will be changed if new movements are added
 
 
 
@@ -24,6 +26,7 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key);//D
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 void processInput(GLFWwindow *window); //Defined in window.cpp file
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);//Defined in window.cpp file
+void mouse_callback(GLFWwindow *window, int button, int action, int mods);
 
 //a singleton class because we should have only one shader
 //This class creates the shaders and atlast what we want is the id of shader program created
@@ -52,18 +55,6 @@ class set_buffer{
 };
 
 
-//This class takes care of additional options 
-class options_t{
-private:
-	static options_t* instance;
-	options_t()=default;
-	glm::mat4 scale= glm::mat4(1.0f);
-public:
-	static options_t* getOptionsInstance();
-	void rotateRight();
-
-};
-
 
 
 //we should have only one history maintainer and one set ofmovement matrix
@@ -71,22 +62,50 @@ public:
 class movement_t{
 private:
 	static movement_t* Instance;
-	static std::stack<std::function<void()>>history;
+	data tempMoveObj;
+	std::stack<std::pair<unsigned,bool>> history;
 	movement_t()=default;
-	glm::mat4 movePeices = glm::mat4(1.0f); //rotation matrix
+	bool undoStatus = 0;
 public:
+	bool direction=0 ;// 0 if it is in the standard direction and 1 if it is in opposite direction
 	std::vector<unsigned>peiceNumbers;
-	float angleDeg;
-	glm::vec3 rotateAbout;
-	//need to add the actual movement matrices here
+	std::vector<unsigned>peiceNumbersSide;
 	static movement_t* getInstance();
+	void swapColors(const unsigned x, const unsigned y);
+	void reverseDirection();
 	void move();
-	void leftUp();
-	void rightUp();
-	void topRight();
-	void bottomRight();
+	void moveSide();
+	void leftDown();
+	void rightDown();
+	void topLeft();
+	void bottomLeft();
+	void verticalMiddleDown();
+	void horizontalMiddleLeft();
+	void frontClockwise();
+	void backClockwise();
 	void undo_option();
 	void shuffle();
+};
+
+//This class takes care of additional options 
+class options_t{
+private:
+	static options_t* instance;
+	options_t()=default;
+	glm::mat4 scale= glm::mat4(1.0f);
+	movement_t* moveInstance = movement_t::getInstance();
+public:
+	glm::vec3 cameraPos = glm::vec3(0.0f,0.0f,2.0f);
+	glm::vec3 cameraTarget = glm::vec3(0.0f,0.0f,0.0f);
+	glm::vec3 cameraUp = glm::vec3(0.0f,1.0f,0.0f);
+	unsigned cameraStatusY=0;
+	unsigned cameraStatusX=0;
+	static options_t* getOptionsInstance();
+	void rotateLeft();
+	void rotateDown();
+	void differentAngleY(); //This function will change the values of cameraPos and camerUp 
+	void differentAngleX();
+
 };
 
 #endif
