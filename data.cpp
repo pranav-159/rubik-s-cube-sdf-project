@@ -263,8 +263,8 @@ struct vectorCord data::splitCube[static_cast<int>(choice_t::noCubes)][NOPEICES]
 
 
 
-        //bottom face orange colour
-         - cubeSize/2,     - cubeSize/2,       cubeSize/2,   1.0f, 0.647f, 0.0f,
+        //bottom face
+        - cubeSize/2,     - cubeSize/2,       cubeSize/2,   1.0f, 0.647f, 0.0f,
     - cubeSize/6-2*gap/3,     - cubeSize/2,       cubeSize/2,   1.0f, 0.647f, 0.0f,
     - cubeSize/6-2*gap/3,     - cubeSize/2,   cubeSize/6+2*gap/3,   1.0f, 0.647f, 0.0f,
         - cubeSize/2,     - cubeSize/2,   cubeSize/6+2*gap/3,   1.0f, 0.647f, 0.0f,

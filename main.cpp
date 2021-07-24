@@ -1,11 +1,29 @@
 #include"opengl.h"
+#include"menu.h"  
 
 
 
 
 int main(int argc, char *argv[]){
 
-//	::testing::InitGoogleTest(&argc,argv);
+int main(){
+  sf::RenderWindow window1(sf::VideoMode::getDesktopMode(), "RUBIK'S CUBE GAME");
+    
+  Menu menu(1900,900);
+
+  while (window1.isOpen())
+  {
+    sf::Event event;
+    while (window1.pollEvent(event))
+    {
+      if (event.type == sf::Event::Closed)
+      window1.close();
+
+      if(menu.getrect1().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+    
 
     GLFWwindow* window = init_window();//creating a window
     if(window == NULL) std::cout<<"Error in creating the window \n";
@@ -78,10 +96,42 @@ int main(int argc, char *argv[]){
     glDeleteProgram(shader_program);
 
     glfwTerminate();
+        }
+      }
+      else if(menu.getrect2().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+          menu.instructions();
+        }
+      }
+      else if(menu.getrect3().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      {
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+          window1.close();
+        }
+      }
+    }
+         
+    window1.clear();
 
+<<<<<<< HEAD
  //   return RUN_ALL_TESTS();
  	return 0;
+=======
+<<<<<<< HEAD
+    return RUN_ALL_TESTS();
+>>>>>>> Debugging
 
+=======
+    menu.draw(window1);
+>>>>>>> 4c54cd79b0a81118f356b2c91b71dcbd53de23c7
+
+    window1.display();
+  }
+  return 0;
+}
 
     
-}
+
