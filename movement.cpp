@@ -1,4 +1,5 @@
 #include"opengl.h"
+#define NOSHUFFLE 30
 
 movement_t* movement_t::Instance;
 
@@ -121,10 +122,14 @@ void movement_t::backClockwise(){
 
 //undoStatus acts as a lock, so that the movements made while undo_option is called doesnt get stored into the history stack
 void movement_t::undo_option(){
+	if(history.empty()){
+		printf("There are no moves saved in the history to undo \n");
+	}
+	else{
 	std::pair<unsigned,bool>historyElement = history.top();
 	history.pop();
 	undoStatus = 1;
-	direction = (historyElement.second - 1) % 2;
+	direction = std::abs(historyElement.second - 1);
 	switch(historyElement.first){
 		case 1: leftDown();break;
 		case 2: rightDown(); break;
@@ -135,13 +140,15 @@ void movement_t::undo_option(){
 		case 7 : frontClockwise();break;
 		case 8 : backClockwise();
 	}
+	}
 	undoStatus = 0;
 }
 
 /*This function will call some rotate functions 20 times randomly each time  */
 void movement_t::shuffle(){
+	undoStatus = 1;
 	std::srand(time(0));
-	for(unsigned i=0;i<20;i++){
+	for(unsigned i=0;i<NOSHUFFLE;i++){
 	switch( rand() % NOMOVEMENTS){
 		case 0 : leftDown();  break;
 		case 1 : rightDown(); break;
@@ -153,4 +160,5 @@ void movement_t::shuffle(){
 		case 7 : backClockwise();
 	}
 	}
+	undoStatus = 0;
 }
