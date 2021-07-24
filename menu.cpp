@@ -96,7 +96,7 @@ void Menu::instructions(){
   t.setPosition(sf::Vector2f(100 , 25));
   t.setFont( fonts );
   t.setFillColor(sf::Color::Red);
-  t.setCharacterSize(25);
+  t.setCharacterSize(40);
   text.push_back(t);
 
   t.setString("ALT + l    left down");
@@ -164,7 +164,7 @@ void Menu::instructions(){
   text.push_back(t);
 
   t.setString("SHIFT + U  moves to back step");
-  t.setPosition(sf::Vector2f(100 , 75));
+  t.setPosition(sf::Vector2f(800 , 225));
   text.push_back(t);
 
   while(window2.isOpen())
