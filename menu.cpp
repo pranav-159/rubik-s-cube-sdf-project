@@ -92,38 +92,66 @@ void Menu::instructions(){
           
   fonts.loadFromFile("Yaldevi.ttf");
           
-  t.setString("ALT + l    left down");
+  t.setString("ALT + s    shuffle the cube");
   t.setPosition(sf::Vector2f(100 , 25));
   t.setFont( fonts );
   t.setFillColor(sf::Color::Red);
-  t.setCharacterSize(50);
+  t.setCharacterSize(25);
   text.push_back(t);
 
-  t.setString("ALT + r    right down");
+  t.setString("ALT + l    left down");
+  t.setPosition(sf::Vector2f(100 , 75));
+  text.push_back(t);
+
+  t.setString("ALT + L    left up");
   t.setPosition(sf::Vector2f(100 , 125));
   text.push_back(t);
 
-  t.setString("ALT + u    up right");
+  t.setString("ALT + r    right down");
+  t.setPosition(sf::Vector2f(100 , 175));
+  text.push_back(t);
+
+  t.setString("ALT + R    right up");
   t.setPosition(sf::Vector2f(100 , 225));
   text.push_back(t);
 
-  t.setString("ALT + d    down right");
+  t.setString("ALT + u    up right");
+  t.setPosition(sf::Vector2f(100 , 275));
+  text.push_back(t);
+
+  t.setString("ALT + U    up left");
   t.setPosition(sf::Vector2f(100 , 325));
   text.push_back(t);
 
-  t.setString("ALT + v    vertical down.");
+  t.setString("ALT + d    down right");
+  t.setPosition(sf::Vector2f(100 , 375));
+  text.push_back(t);
+
+  t.setString("ALT + D    down left");
   t.setPosition(sf::Vector2f(100 , 425));
   text.push_back(t);
 
-  t.setString("ALT + h    horizontal right");
+  t.setString("ALT + f    front clockwise");
+  t.setPosition(sf::Vector2f(100 , 475));
+  text.push_back(t);
+
+  t.setString("ALT + F    front anticlockwise");
   t.setPosition(sf::Vector2f(100 , 525));
   text.push_back(t);
 
-  t.setString("ALT + f    front clockwise");
+  t.setString("ALT + b    back clockwise");
+  t.setPosition(sf::Vector2f(100 , 575));
+  text.push_back(t);
+  
+  t.setString("ALT + B    back anticlockwise");
   t.setPosition(sf::Vector2f(100 , 625));
   text.push_back(t);
 
-  t.setString("ALT + b    back clockwise");
+  t.setString("ALT + v    vertical down");
+  t.setPosition(sf::Vector2f(100 , 675));
+  text.push_back(t);
+
+  t.setString("ALT + h    horizontal right");
   t.setPosition(sf::Vector2f(100 , 725));
   text.push_back(t);
 
@@ -133,6 +161,10 @@ void Menu::instructions(){
 
   t.setString("SHIFT + d  rotate the whole cube towards down");
   t.setPosition(sf::Vector2f(800 , 125));
+  text.push_back(t);
+
+  t.setString("SHIFT + U  moves to back step");
+  t.setPosition(sf::Vector2f(100 , 75));
   text.push_back(t);
 
   while(window2.isOpen())
