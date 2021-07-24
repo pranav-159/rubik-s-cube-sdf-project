@@ -60,8 +60,18 @@ void key_callback(GLFWwindow *window, unsigned normal_key, int modifier_key){
 		else if(normal_key == 'v'){
 			movementInstance->verticalMiddleDown();
 		}
+		else if(normal_key == 'V'){
+			movementInstance->direction = 1;
+			movementInstance->verticalMiddleDown();
+			movementInstance->direction = 0;
+		}
 		else if(normal_key == 'h'){
 			movementInstance->horizontalMiddleLeft();
+		}
+		else if(normal_key == 'H'){
+			movementInstance->direction = 1;
+			movementInstance->horizontalMiddleLeft();
+			movementInstance->direction = 0;
 		}
 		else if(normal_key == 's'){
 			movementInstance->shuffle();

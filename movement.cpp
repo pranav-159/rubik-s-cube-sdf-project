@@ -8,7 +8,8 @@ movement_t* movement_t::getInstance(){
 	return Instance;
 }
 
-
+enum class movementDirection  {leftDown,rightDown,topLeft,bottomLeft,verticalMiddleDown,horizontalMiddleLeft,frontClockwise,
+								backClockwise};
 
 void movement_t::swapColors(const unsigned x, const unsigned y){
 	for(unsigned j=0;j<4;j++){
@@ -48,7 +49,7 @@ void movement_t::leftDown(){
 	}
 	move();
 	moveSide();
-	if(!undoStatus)history.push(std::make_pair(1,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::leftDown,direction));
 
 }
 
@@ -60,7 +61,7 @@ void movement_t::rightDown(){
 	}
 	move();
 	moveSide();
-	if(!undoStatus)history.push(std::make_pair(2,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::rightDown,direction));
 }
 
 void movement_t::topLeft(){
@@ -71,7 +72,7 @@ void movement_t::topLeft(){
 	}
 	move();
 	moveSide();
-	if(!undoStatus)history.push(std::make_pair(3,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::topLeft,direction));
 }
 
 void movement_t::bottomLeft(){
@@ -82,20 +83,26 @@ void movement_t::bottomLeft(){
 	}
 	move();
 	moveSide();
-	if(!undoStatus)	history.push(std::make_pair(4,direction));
+	if(!undoStatus)	history.push(std::make_pair((int)movementDirection::bottomLeft,direction));
 }
 
 
 void movement_t::verticalMiddleDown(){
 	peiceNumbers = {1,4,7,37,40,43,25,22,19,46,49,52};
+	if(direction == 1){
+		std::reverse(peiceNumbers.begin(),peiceNumbers.end());
+	}
 	move();
-	if(!undoStatus)history.push(std::make_pair(5,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::verticalMiddleDown,direction));
 }
 
 void movement_t::horizontalMiddleLeft(){
 	peiceNumbers = {3,4,5,30,31,32,21,22,23,12,13,14};
+	if(direction == 1){
+		std::reverse(peiceNumbers.begin(),peiceNumbers.end());
+	}
 	move();
-	if(!undoStatus)history.push(std::make_pair(6,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::horizontalMiddleLeft,direction));
 }
 
 void movement_t::frontClockwise(){
@@ -106,7 +113,7 @@ void movement_t::frontClockwise(){
 	}
 	move();
 	moveSide();
-	if(!undoStatus)history.push(std::make_pair(7,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::frontClockwise,direction));
 }
 
 void movement_t::backClockwise(){
@@ -117,7 +124,7 @@ void movement_t::backClockwise(){
 	}
 	move();
 	moveSide();
-	if(!undoStatus)history.push(std::make_pair(8,direction));
+	if(!undoStatus)history.push(std::make_pair((int)movementDirection::backClockwise,direction));
 }
 
 //undoStatus acts as a lock, so that the movements made while undo_option is called doesnt get stored into the history stack
@@ -129,35 +136,35 @@ void movement_t::undo_option(){
 	std::pair<unsigned,bool>historyElement = history.top();
 	history.pop();
 	undoStatus = 1;
-	direction = std::abs(historyElement.second - 1);
+	direction = std::abs(historyElement.second - 1);//This will reverse the direction of motion
 	switch(historyElement.first){
-		case 1: leftDown();break;
-		case 2: rightDown(); break;
-		case 3: topLeft(); break;
-		case 4: bottomLeft(); break;
-		case 5 : verticalMiddleDown(); break;
-		case 6 : horizontalMiddleLeft();break;
-		case 7 : frontClockwise();break;
-		case 8 : backClockwise();
+		case (int)movementDirection::leftDown 			: leftDown();break;
+		case (int)movementDirection::rightDown			: rightDown(); break;
+		case (int)movementDirection::topLeft			: topLeft(); break;
+		case (int)movementDirection::bottomLeft			: bottomLeft(); break;
+		case (int)movementDirection::verticalMiddleDown	: verticalMiddleDown(); break;
+		case (int)movementDirection::horizontalMiddleLeft : horizontalMiddleLeft();break;
+		case (int)movementDirection::frontClockwise 	: frontClockwise();break;
+		case (int)movementDirection::backClockwise 		: backClockwise();
 	}
 	}
 	undoStatus = 0;
 }
 
-/*This function will call some rotate functions 20 times randomly each time  */
+/*This function will call some rotate functions 30 times randomly each time  */
 void movement_t::shuffle(){
 	undoStatus = 1;
 	std::srand(time(0));
 	for(unsigned i=0;i<NOSHUFFLE;i++){
 	switch( rand() % NOMOVEMENTS){
-		case 0 : leftDown();  break;
-		case 1 : rightDown(); break;
-		case 2 : topLeft(); break;
-		case 3 : bottomLeft(); break;
-		case 4 : verticalMiddleDown(); break;
-		case 5 : horizontalMiddleLeft();break;
-		case 6 : frontClockwise();break;
-		case 7 : backClockwise();
+		case (int)movementDirection::leftDown 			: leftDown();break;
+		case (int)movementDirection::rightDown			: rightDown(); break;
+		case (int)movementDirection::topLeft			: topLeft(); break;
+		case (int)movementDirection::bottomLeft			: bottomLeft(); break;
+		case (int)movementDirection::verticalMiddleDown	: verticalMiddleDown(); break;
+		case (int)movementDirection::horizontalMiddleLeft : horizontalMiddleLeft();break;
+		case (int)movementDirection::frontClockwise 	: frontClockwise();break;
+		case (int)movementDirection::backClockwise 		: backClockwise();
 	}
 	}
 	undoStatus = 0;
