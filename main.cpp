@@ -100,14 +100,14 @@ int main(){
     glfwTerminate();
         }
       }
-      if(menu.getrect2().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      else if(menu.getrect2().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
       {
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
           menu.instructions();
         }
       }
-      if(menu.getrect3().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
+      else if(menu.getrect3().getGlobalBounds().contains(window1.mapPixelToCoords(sf::Mouse::getPosition(window1))))
       {
         if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {

@@ -10,8 +10,6 @@ class Menu
        ~Menu();
        void instructions();
        void draw (sf::RenderWindow &window);
-       void MoveUp();
-       void MoveDown();
        sf::RectangleShape getrect1();
        sf::RectangleShape getrect2();
        sf::RectangleShape getrect3();

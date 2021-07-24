@@ -3,7 +3,7 @@
 
 Menu::Menu(float width ,float height)
 {
-   if(!font.loadFromFile("Dosis-Light.ttf"))
+   if(!font.loadFromFile("Yaldevi.ttf"))
    {
      //error
    }
@@ -90,41 +90,49 @@ void Menu::instructions(){
   sf::Text t;
   sf::Font fonts;
           
-  fonts.loadFromFile("Dosis-Light.ttf");
+  fonts.loadFromFile("Yaldevi.ttf");
           
-  t.setString("ALT + L    left down");
+  t.setString("ALT + l    left down");
   t.setPosition(sf::Vector2f(100 , 25));
   t.setFont( fonts );
   t.setFillColor(sf::Color::Red);
   t.setCharacterSize(50);
   text.push_back(t);
 
-  t.setString("ALT + R    right down");
+  t.setString("ALT + r    right down");
   t.setPosition(sf::Vector2f(100 , 125));
   text.push_back(t);
 
-  t.setString("ALT + U    up right");
+  t.setString("ALT + u    up right");
   t.setPosition(sf::Vector2f(100 , 225));
   text.push_back(t);
 
-  t.setString("ALT + D    down right");
+  t.setString("ALT + d    down right");
   t.setPosition(sf::Vector2f(100 , 325));
   text.push_back(t);
 
-  t.setString("ALT + V    vertical down.");
+  t.setString("ALT + v    vertical down.");
   t.setPosition(sf::Vector2f(100 , 425));
   text.push_back(t);
 
-  t.setString("ALT + H    horizontal right");
+  t.setString("ALT + h    horizontal right");
   t.setPosition(sf::Vector2f(100 , 525));
   text.push_back(t);
 
-  t.setString("ALT + F    front clockwise");
+  t.setString("ALT + f    front clockwise");
   t.setPosition(sf::Vector2f(100 , 625));
   text.push_back(t);
 
-  t.setString("ALT + B    back clockwise");
+  t.setString("ALT + b    back clockwise");
   t.setPosition(sf::Vector2f(100 , 725));
+  text.push_back(t);
+
+  t.setString("SHIFT + l  rotate the whole cube towards left");
+  t.setPosition(sf::Vector2f(800 , 25));
+  text.push_back(t);
+
+  t.setString("SHIFT + d  rotate the whole cube towards down");
+  t.setPosition(sf::Vector2f(800 , 125));
   text.push_back(t);
 
   while(window2.isOpen())
